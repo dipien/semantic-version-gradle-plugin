@@ -1,1 +1,1 @@
-# semantic-versioning-gradle-plugin
+# Semantic Versioning Gradle Plugin
