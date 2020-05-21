@@ -1,7 +1,7 @@
 version = '1.0.0'
 
 ext.GITHUB_REPOSITORY_OWNER = "maxirosson"
-ext.GITHUB_REPOSITORY_NAME = "semantic-versioning-gradle-plugin"
+ext.GITHUB_REPOSITORY_NAME = "semantic-version-gradle-plugin"
 
 ext.PUBLICATION_CONFIGURATION_ENABLED = true
 ext.JAVADOC_PUBLICATION_ENABLED = true

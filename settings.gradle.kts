@@ -2,6 +2,6 @@ plugins {
     id("com.gradle.enterprise").version("3.1.1")
 }
 
-include(":semantic-versioning-gradle-plugin")
+include(":semantic-version-gradle-plugin")
 
 apply(from = java.io.File(settingsDir, "buildCacheSettings.gradle"))
