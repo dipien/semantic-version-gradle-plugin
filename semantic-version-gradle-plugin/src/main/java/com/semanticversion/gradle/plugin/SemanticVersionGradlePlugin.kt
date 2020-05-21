@@ -14,6 +14,5 @@ class SemanticVersionGradlePlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
         extension = project.extensions.create(EXTENSION_NAME, SemanticVersionGradlePluginExtension::class.java, project)
-
     }
 }
