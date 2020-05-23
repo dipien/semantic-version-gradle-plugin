@@ -1,11 +1,9 @@
 package com.semanticversion.gradle.plugin
 
-import com.semanticversion.gradle.plugin.commons.CommandExecutor
-import com.semanticversion.gradle.plugin.commons.ExtendedExecResult
+import com.semanticversion.gradle.plugin.commons.GitHelper
 import com.semanticversion.gradle.plugin.commons.PropertyResolver
 import org.junit.Assert
 import org.junit.Test
-import java.io.File
 
 class VersionTest {
 
@@ -15,13 +13,13 @@ class VersionTest {
         Assert.assertEquals(1, version.versionMajor)
         Assert.assertEquals(2, version.versionMinor)
         Assert.assertEquals(3, version.versionPatch)
-        Assert.assertEquals("1.2.3", version.toString())
+        Assert.assertEquals("1.2.3-SNAPSHOT", version.toString())
 
         version = createVersion("111.222.333")
         Assert.assertEquals(111, version.versionMajor)
         Assert.assertEquals(222, version.versionMinor)
         Assert.assertEquals(333, version.versionPatch)
-        Assert.assertEquals("111.222.333", version.toString())
+        Assert.assertEquals("111.222.333-SNAPSHOT", version.toString())
     }
 
     @Test(expected = RuntimeException::class)
@@ -179,29 +177,44 @@ class VersionTest {
     }
 
     private fun createVersion(baseVersion: String): Version {
-        val commandExecutor = object: CommandExecutor {
-            override fun execute(command: String, workingDirectory: File?, logStandardOutput: Boolean, logErrorOutput: Boolean, ignoreExitValue: Boolean): ExtendedExecResult {
+        val gitHelper = object : GitHelper {
+            override fun getGitBranch(): String? {
+                return null
+            }
+        }
+        val propertyResolver = object : PropertyResolver {
+            override fun getStringProp(propertyName: String, defaultValue: String?): String? {
+                return defaultValue
+            }
+
+            override fun getRequiredStringProp(propertyName: String): String {
                 TODO("Not yet implemented")
             }
 
-        }
-        val propertyResolver = object : PropertyResolver(null) {
+            override fun getRequiredStringProp(propertyName: String, defaultValue: String): String {
+                return defaultValue
+            }
+
+            override fun getRequiredBooleanProp(propertyName: String, defaultValue: Boolean): Boolean {
+                return defaultValue
+            }
+
+            override fun getRequiredIntegerProp(propertyName: String): Int {
+                TODO("Not yet implemented")
+            }
+
             override fun getIntegerProp(propertyName: String, defaultValue: Int?): Int? {
                 return defaultValue
             }
 
-            override fun getBooleanProp(propertyName: String?, defaultValue: Boolean?): Boolean {
-                return defaultValue!!
+            override fun getDoubleProp(propertyName: String, defaultValue: Double?): Double? {
+                return defaultValue
             }
 
-            override fun getStringProp(propertyName: String?, defaultValue: String?): String {
-                return defaultValue!!
-            }
-
-            override fun getStringProp(propertyName: String?): String {
-                return ""
+            override fun getStringListProp(propertyName: String, defaultValue: List<String>?): List<String>? {
+                return defaultValue
             }
         }
-        return Version(propertyResolver, commandExecutor, baseVersion)
+        return Version(propertyResolver, gitHelper, baseVersion)
     }
 }

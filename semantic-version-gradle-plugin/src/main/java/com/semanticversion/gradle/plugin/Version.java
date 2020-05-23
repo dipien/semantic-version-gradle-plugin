@@ -2,7 +2,6 @@ package com.semanticversion.gradle.plugin;
 
 import com.jdroid.java.date.DateUtils;
 import com.jdroid.java.utils.TypeUtils;
-import com.semanticversion.gradle.plugin.commons.CommandExecutor;
 import com.semanticversion.gradle.plugin.commons.GitHelper;
 import com.semanticversion.gradle.plugin.commons.PropertyResolver;
 
@@ -39,20 +38,20 @@ public class Version {
 		}
 	}
 
-	public Version(PropertyResolver propertyResolver, CommandExecutor commandExecutor, String baseVersion) {
+	public Version(PropertyResolver propertyResolver, GitHelper gitHelper, String baseVersion) {
 		maximumVersion = propertyResolver.getIntegerProp("MAXIMUM_VERSION", getDefaultMaximumVersion());
 
 		parseBaseVersion(baseVersion);
 
-		isSnapshot = propertyResolver.getBooleanProp("SNAPSHOT", true);
-		isVersionTimestampEnabled = propertyResolver.getBooleanProp("VERSION_TIMESTAMP_ENABLED", false);
-		isLocal = propertyResolver.getBooleanProp("LOCAL", false);
+		isSnapshot = propertyResolver.getRequiredBooleanProp("SNAPSHOT", true);
+		isVersionTimestampEnabled = propertyResolver.getRequiredBooleanProp("VERSION_TIMESTAMP_ENABLED", false);
+		isLocal = propertyResolver.getRequiredBooleanProp("LOCAL", false);
 		featureBranchPrefix = propertyResolver.getStringProp("FEATURE_BRANCH_PREFIX", "feature/");
 		
-		versionClassifier = propertyResolver.getStringProp("VERSION_CLASSIFIER");
+		versionClassifier = propertyResolver.getStringProp("VERSION_CLASSIFIER", null);
 		if (versionClassifier == null) {
 			
-			String gitBranch = GitHelper.getGitBranch(propertyResolver, commandExecutor);
+			String gitBranch = gitHelper.getGitBranch();
 			boolean isFeatureBranch = gitBranch != null && gitBranch.startsWith(featureBranchPrefix);
 			if (isFeatureBranch) {
 				featureName = gitBranch.replace(featureBranchPrefix, "");
