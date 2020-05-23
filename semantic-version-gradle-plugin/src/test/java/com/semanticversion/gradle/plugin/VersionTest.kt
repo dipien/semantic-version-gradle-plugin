@@ -1,8 +1,8 @@
 package com.semanticversion.gradle.plugin
 
 import com.google.common.truth.Truth
-import com.semanticversion.gradle.plugin.commons.GitHelper
-import com.semanticversion.gradle.plugin.commons.PropertyResolver
+import com.semanticversion.gradle.plugin.common.FakeGitHelper
+import com.semanticversion.gradle.plugin.common.FakePropertyResolver
 import org.junit.Test
 
 class VersionTest {
@@ -33,6 +33,22 @@ class VersionTest {
         Truth.assertThat(version.versionClassifier).isEqualTo("SNAPSHOT")
         Truth.assertThat(version.baseVersion).isEqualTo("111.222.333")
         Truth.assertThat(version.toString()).isEqualTo("111.222.333-SNAPSHOT")
+    }
+
+    @Test
+    fun `GIVEN a valid snapshot version WHEN creating a version using the splits constructor THEN it is successfully created`() {
+        val version = Version(1, 2, 3)
+
+        Truth.assertThat(version.versionMajor).isEqualTo(1)
+        Truth.assertThat(version.versionMinor).isEqualTo(2)
+        Truth.assertThat(version.versionPatch).isEqualTo(3)
+        Truth.assertThat(version.isSnapshot).isFalse()
+        Truth.assertThat(version.isLocal).isFalse()
+        Truth.assertThat(version.isVersionTimestampEnabled).isFalse()
+        Truth.assertThat(version.featureName).isNull()
+        Truth.assertThat(version.versionClassifier).isNull()
+        Truth.assertThat(version.baseVersion).isEqualTo("1.2.3")
+        Truth.assertThat(version.toString()).isEqualTo("1.2.3")
     }
 
     @Test(expected = RuntimeException::class)
@@ -226,44 +242,8 @@ class VersionTest {
     }
 
     private fun createVersion(baseVersion: String): Version {
-        val gitHelper = object : GitHelper {
-            override fun getGitBranch(): String? {
-                return null
-            }
-        }
-        val propertyResolver = object : PropertyResolver {
-            override fun getStringProp(propertyName: String, defaultValue: String?): String? {
-                return defaultValue
-            }
-
-            override fun getRequiredStringProp(propertyName: String): String {
-                TODO("Not yet implemented")
-            }
-
-            override fun getRequiredStringProp(propertyName: String, defaultValue: String): String {
-                return defaultValue
-            }
-
-            override fun getRequiredBooleanProp(propertyName: String, defaultValue: Boolean): Boolean {
-                return defaultValue
-            }
-
-            override fun getRequiredIntegerProp(propertyName: String): Int {
-                TODO("Not yet implemented")
-            }
-
-            override fun getIntegerProp(propertyName: String, defaultValue: Int?): Int? {
-                return defaultValue
-            }
-
-            override fun getDoubleProp(propertyName: String, defaultValue: Double?): Double? {
-                return defaultValue
-            }
-
-            override fun getStringListProp(propertyName: String, defaultValue: List<String>?): List<String>? {
-                return defaultValue
-            }
-        }
+        val propertyResolver = FakePropertyResolver()
+        val gitHelper = FakeGitHelper()
         return Version(propertyResolver, gitHelper, baseVersion)
     }
 }
