@@ -14,6 +14,7 @@ buildscript {
 dependencies {
 	compile(Libs.JDROID_JAVA_CORE)
 	testCompile(Libs.JUNIT)
+	testCompile(Libs.TRUTH)
 }
 
 gradlePlugin {

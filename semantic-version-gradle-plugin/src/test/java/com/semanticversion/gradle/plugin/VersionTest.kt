@@ -1,8 +1,8 @@
 package com.semanticversion.gradle.plugin
 
+import com.google.common.truth.Truth
 import com.semanticversion.gradle.plugin.commons.GitHelper
 import com.semanticversion.gradle.plugin.commons.PropertyResolver
-import org.junit.Assert
 import org.junit.Test
 
 class VersionTest {
@@ -10,16 +10,17 @@ class VersionTest {
     @Test
     fun validVersion() {
         var version = createVersion("1.2.3")
-        Assert.assertEquals(1, version.versionMajor)
-        Assert.assertEquals(2, version.versionMinor)
-        Assert.assertEquals(3, version.versionPatch)
-        Assert.assertEquals("1.2.3-SNAPSHOT", version.toString())
+
+        Truth.assertThat(version.versionMajor).isEqualTo(1)
+        Truth.assertThat(version.versionMinor).isEqualTo(2)
+        Truth.assertThat(version.versionPatch).isEqualTo(3)
+        Truth.assertThat(version.toString()).isEqualTo("1.2.3-SNAPSHOT")
 
         version = createVersion("111.222.333")
-        Assert.assertEquals(111, version.versionMajor)
-        Assert.assertEquals(222, version.versionMinor)
-        Assert.assertEquals(333, version.versionPatch)
-        Assert.assertEquals("111.222.333-SNAPSHOT", version.toString())
+        Truth.assertThat(version.versionMajor).isEqualTo(111)
+        Truth.assertThat(version.versionMinor).isEqualTo(222)
+        Truth.assertThat(version.versionPatch).isEqualTo(333)
+        Truth.assertThat(version.toString()).isEqualTo("111.222.333-SNAPSHOT")
     }
 
     @Test(expected = RuntimeException::class)
@@ -56,9 +57,9 @@ class VersionTest {
     fun incrementMajor() {
         val version = createVersion("1.2.3")
         version.incrementMajor()
-        Assert.assertEquals(2, version.versionMajor)
-        Assert.assertEquals(0, version.versionMinor)
-        Assert.assertEquals(0, version.versionPatch)
+        Truth.assertThat(version.versionMajor).isEqualTo(2)
+        Truth.assertThat(version.versionMinor).isEqualTo(0)
+        Truth.assertThat(version.versionPatch).isEqualTo(0)
     }
 
     @Test(expected = RuntimeException::class)
@@ -71,15 +72,15 @@ class VersionTest {
     fun incrementMinor() {
         var version = createVersion("1.2.3")
         version.incrementMinor()
-        Assert.assertEquals(1, version.versionMajor)
-        Assert.assertEquals(3, version.versionMinor)
-        Assert.assertEquals(0, version.versionPatch)
+        Truth.assertThat(version.versionMajor).isEqualTo(1)
+        Truth.assertThat(version.versionMinor).isEqualTo(3)
+        Truth.assertThat(version.versionPatch).isEqualTo(0)
 
         version = createVersion("1.999.3")
         version.incrementMinor()
-        Assert.assertEquals(2, version.versionMajor)
-        Assert.assertEquals(0, version.versionMinor)
-        Assert.assertEquals(0, version.versionPatch)
+        Truth.assertThat(version.versionMajor).isEqualTo(2)
+        Truth.assertThat(version.versionMinor).isEqualTo(0)
+        Truth.assertThat(version.versionPatch).isEqualTo(0)
     }
 
     @Test(expected = RuntimeException::class)
@@ -92,15 +93,15 @@ class VersionTest {
     fun incrementPatch() {
         var version = createVersion("1.2.3")
         version.incrementPatch()
-        Assert.assertEquals(1, version.versionMajor)
-        Assert.assertEquals(2, version.versionMinor)
-        Assert.assertEquals(4, version.versionPatch)
+        Truth.assertThat(version.versionMajor).isEqualTo(1)
+        Truth.assertThat(version.versionMinor).isEqualTo(2)
+        Truth.assertThat(version.versionPatch).isEqualTo(4)
 
         version = createVersion("1.2.999")
         version.incrementPatch()
-        Assert.assertEquals(1, version.versionMajor)
-        Assert.assertEquals(3, version.versionMinor)
-        Assert.assertEquals(0, version.versionPatch)
+        Truth.assertThat(version.versionMajor).isEqualTo(1)
+        Truth.assertThat(version.versionMinor).isEqualTo(3)
+        Truth.assertThat(version.versionPatch).isEqualTo(0)
     }
 
     @Test(expected = RuntimeException::class)
@@ -112,38 +113,38 @@ class VersionTest {
     @Test
     fun `GIVEN a stable version WHEN creating a version using the full version`() {
         var version = Version("1.2.3")
-        Assert.assertEquals(1, version.versionMajor)
-        Assert.assertEquals(2, version.versionMinor)
-        Assert.assertEquals(3, version.versionPatch)
-        Assert.assertEquals("1.2.3", version.toString())
+        Truth.assertThat(version.versionMajor).isEqualTo(1)
+        Truth.assertThat(version.versionMinor).isEqualTo(2)
+        Truth.assertThat(version.versionPatch).isEqualTo(3)
+        Truth.assertThat(version.toString()).isEqualTo("1.2.3")
 
         version = Version("111.222.333")
-        Assert.assertEquals(111, version.versionMajor)
-        Assert.assertEquals(222, version.versionMinor)
-        Assert.assertEquals(333, version.versionPatch)
-        Assert.assertEquals("111.222.333", version.toString())
+        Truth.assertThat(version.versionMajor).isEqualTo(111)
+        Truth.assertThat(version.versionMinor).isEqualTo(222)
+        Truth.assertThat(version.versionPatch).isEqualTo(333)
+        Truth.assertThat(version.toString()).isEqualTo("111.222.333")
     }
 
     @Test
     fun `GIVEN a snapshot version WHEN creating a version using the full version`() {
         val version = Version("1.2.3-SNAPSHOT")
-        Assert.assertEquals(1, version.versionMajor)
-        Assert.assertEquals(2, version.versionMinor)
-        Assert.assertEquals(3, version.versionPatch)
-        Assert.assertEquals("SNAPSHOT", version.versionClassifier)
-        Assert.assertTrue(version.isSnapshot)
-        Assert.assertEquals("1.2.3-SNAPSHOT", version.toString())
+        Truth.assertThat(version.versionMajor).isEqualTo(1)
+        Truth.assertThat(version.versionMinor).isEqualTo(2)
+        Truth.assertThat(version.versionPatch).isEqualTo(3)
+        Truth.assertThat(version.versionClassifier).isEqualTo("SNAPSHOT")
+        Truth.assertThat(version.isSnapshot).isTrue()
+        Truth.assertThat(version.toString()).isEqualTo("1.2.3-SNAPSHOT")
     }
 
     @Test
     fun `GIVEN a non stable version WHEN creating a version using the full version`() {
         val version = Version("1.2.3-BETA")
-        Assert.assertEquals(1, version.versionMajor)
-        Assert.assertEquals(2, version.versionMinor)
-        Assert.assertEquals(3, version.versionPatch)
-        Assert.assertEquals("BETA", version.versionClassifier)
-        Assert.assertFalse(version.isSnapshot)
-        Assert.assertEquals("1.2.3-BETA", version.toString())
+        Truth.assertThat(version.versionMajor).isEqualTo(1)
+        Truth.assertThat(version.versionMinor).isEqualTo(2)
+        Truth.assertThat(version.versionPatch).isEqualTo(3)
+        Truth.assertThat(version.versionClassifier).isEqualTo("BETA")
+        Truth.assertThat(version.isSnapshot).isFalse()
+        Truth.assertThat(version.toString()).isEqualTo("1.2.3-BETA")
     }
 
     @Test(expected = RuntimeException::class)
