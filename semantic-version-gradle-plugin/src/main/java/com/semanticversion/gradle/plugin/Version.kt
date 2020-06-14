@@ -6,12 +6,21 @@ import com.semanticversion.gradle.plugin.commons.GitHelper
 import com.semanticversion.gradle.plugin.commons.PropertyResolver
 
 open class Version {
+
+    companion object {
+        const val VERSION_CLASSIFIER_SEPARATOR = "-"
+        const val SNAPSHOT_CLASSIFIER = "SNAPSHOT"
+        const val LOCAL_CLASSIFIER = "LOCAL"
+        const val BASE_VERSION_SEPARATOR = "."
+        const val VERSION_TIMESTAMP_FORMAT = "YYYYMMddHHmmss"
+    }
+
     var versionMajor: Int? = null
     var versionMinor: Int? = null
     var versionPatch: Int? = null
     var versionClassifier: String? = null
     var isVersionTimestampEnabled: Boolean = false
-    var isSnapshot: Boolean = false
+    var isSnapshot: Boolean = true
     var featureName: String? = null
     var featureBranchPrefix: String? = null
     var isLocal: Boolean = false
@@ -21,25 +30,30 @@ open class Version {
         get() = 999
 
     val baseVersion: String
-        get() = versionMajor.toString() + "." + versionMinor + "." + versionPatch
+        get() = versionMajor.toString() + BASE_VERSION_SEPARATOR + versionMinor + BASE_VERSION_SEPARATOR + versionPatch
 
     constructor(versionMajor: Int, versionMinor: Int, versionPatch: Int) {
         maximumVersion = defaultMaximumVersion
         this.versionMajor = versionMajor
         this.versionMinor = versionMinor
         this.versionPatch = versionPatch
+        this.isSnapshot = false
     }
 
     constructor(version: String) {
         maximumVersion = defaultMaximumVersion
-        val split = version.split("-")
+        val split = version.split(VERSION_CLASSIFIER_SEPARATOR)
         val baseVersion = split[0]
         parseBaseVersion(baseVersion)
         if (split.size > 1) {
             versionClassifier = split[1]
-            isSnapshot = versionClassifier == "SNAPSHOT"
+            isSnapshot = versionClassifier == SNAPSHOT_CLASSIFIER
 
             // TODO Add support to this
+            isLocal = false
+            isVersionTimestampEnabled = false
+        } else {
+            isSnapshot = false
             isLocal = false
             isVersionTimestampEnabled = false
         }
@@ -48,7 +62,7 @@ open class Version {
     constructor(propertyResolver: PropertyResolver, gitHelper: GitHelper, baseVersion: String) {
         maximumVersion = propertyResolver.getIntegerProp("MAXIMUM_VERSION", defaultMaximumVersion)
         parseBaseVersion(baseVersion)
-        isSnapshot = propertyResolver.getRequiredBooleanProp("SNAPSHOT", true)
+
         versionClassifier = propertyResolver.getStringProp("VERSION_CLASSIFIER", null)
         if (versionClassifier == null) {
 
@@ -67,9 +81,9 @@ open class Version {
                 if (versionClassifier == null) {
                     versionClassifier = ""
                 } else {
-                    versionClassifier += "-"
+                    versionClassifier += VERSION_CLASSIFIER_SEPARATOR
                 }
-                versionClassifier += "LOCAL"
+                versionClassifier += LOCAL_CLASSIFIER
             }
 
             isVersionTimestampEnabled = propertyResolver.getRequiredBooleanProp("VERSION_TIMESTAMP_ENABLED", isVersionTimestampEnabled)
@@ -77,24 +91,30 @@ open class Version {
                 if (versionClassifier == null) {
                     versionClassifier = ""
                 } else {
-                    versionClassifier += "-"
+                    versionClassifier += VERSION_CLASSIFIER_SEPARATOR
                 }
-                versionClassifier += format(now(), "YYYYMMddHHmmss")
+                versionClassifier += format(now(), VERSION_TIMESTAMP_FORMAT)
             }
 
+            isSnapshot = propertyResolver.getRequiredBooleanProp("SNAPSHOT", true)
             if (isSnapshot) {
                 if (versionClassifier == null) {
                     versionClassifier = ""
                 } else {
-                    versionClassifier += "-"
+                    versionClassifier += VERSION_CLASSIFIER_SEPARATOR
                 }
-                versionClassifier += "SNAPSHOT"
+                versionClassifier += SNAPSHOT_CLASSIFIER
             }
+        } else {
+            isSnapshot = versionClassifier == SNAPSHOT_CLASSIFIER
+            // TODO Add support to this
+            isLocal = false
+            isVersionTimestampEnabled = false
         }
     }
 
     private fun parseBaseVersion(baseVersion: String) {
-        val versionSplit = baseVersion.split(".")
+        val versionSplit = baseVersion.split(BASE_VERSION_SEPARATOR)
         if (versionSplit.size != 3) {
             throw RuntimeException("The version [$baseVersion] is not a valid Semantic Versioning")
         }
@@ -142,7 +162,7 @@ open class Version {
     override fun toString(): String {
         var versionName = baseVersion
         if (!versionClassifier.isNullOrEmpty()) {
-            versionName += "-$versionClassifier"
+            versionName += "${VERSION_CLASSIFIER_SEPARATOR}$versionClassifier"
         }
         return versionName
     }
