@@ -10,7 +10,9 @@ class CommandExecutorImpl(private val project: Project, private val logLevel: Lo
 
     @Suppress("UNCHECKED_CAST")
     override fun execute(command: String, workingDirectory: File?, logStandardOutput: Boolean, logErrorOutput: Boolean, ignoreExitValue: Boolean): ExtendedExecResult {
-        log("Executing command: $command")
+        if (logStandardOutput) {
+            log("Executing command: $command")
+        }
 
         val workDir = workingDirectory ?: project.rootProject.projectDir
 
@@ -21,18 +23,14 @@ class CommandExecutorImpl(private val project: Project, private val logLevel: Lo
             execSpec.workingDir = workDir
             execSpec.setCommandLine(*Commandline.translateCommandline(command) as Array<Any>)
             execSpec.isIgnoreExitValue = true
-            if (logStandardOutput) {
-                execSpec.standardOutput = standardOutputStream
-            }
-            if (logErrorOutput) {
-                execSpec.errorOutput = errorOutputStream
-            }
+            execSpec.standardOutput = standardOutputStream
+            execSpec.errorOutput = errorOutputStream
         }
-        if (standardOutputStream.size() > 0) {
+        if (logStandardOutput && standardOutputStream.size() > 0) {
             log(standardOutputStream.toString())
         }
 
-        if (errorOutputStream.size() > 0) {
+        if (logErrorOutput && errorOutputStream.size() > 0) {
             project.logger.error(errorOutputStream.toString())
         }
 

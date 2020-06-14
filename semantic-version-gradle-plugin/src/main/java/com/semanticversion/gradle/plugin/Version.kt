@@ -49,17 +49,20 @@ open class Version {
         maximumVersion = propertyResolver.getIntegerProp("MAXIMUM_VERSION", defaultMaximumVersion)
         parseBaseVersion(baseVersion)
         isSnapshot = propertyResolver.getRequiredBooleanProp("SNAPSHOT", true)
-        isVersionTimestampEnabled = propertyResolver.getRequiredBooleanProp("VERSION_TIMESTAMP_ENABLED", false)
-        isLocal = propertyResolver.getRequiredBooleanProp("LOCAL", false)
-        featureBranchPrefix = propertyResolver.getStringProp("FEATURE_BRANCH_PREFIX", "feature/")
         versionClassifier = propertyResolver.getStringProp("VERSION_CLASSIFIER", null)
         if (versionClassifier == null) {
-            val gitBranch = gitHelper.getGitBranch()
-            val isFeatureBranch = gitBranch?.startsWith(featureBranchPrefix!!) ?: false
-            if (isFeatureBranch) {
-                featureName = gitBranch!!.replace(featureBranchPrefix!!, "")
-                versionClassifier = featureName
+
+            featureBranchPrefix = propertyResolver.getStringProp("FEATURE_BRANCH_PREFIX", "feature/")
+            if (!featureBranchPrefix.isNullOrEmpty()) {
+                val gitBranch = gitHelper.getGitBranch()
+                val isFeatureBranch = gitBranch?.startsWith(featureBranchPrefix!!) ?: false
+                if (isFeatureBranch) {
+                    featureName = gitBranch!!.replace(featureBranchPrefix!!, "")
+                    versionClassifier = featureName
+                }
             }
+
+            isLocal = propertyResolver.getRequiredBooleanProp("LOCAL", isLocal)
             if (isLocal) {
                 if (versionClassifier == null) {
                     versionClassifier = ""
@@ -68,6 +71,8 @@ open class Version {
                 }
                 versionClassifier += "LOCAL"
             }
+
+            isVersionTimestampEnabled = propertyResolver.getRequiredBooleanProp("VERSION_TIMESTAMP_ENABLED", isVersionTimestampEnabled)
             if (isVersionTimestampEnabled) {
                 if (versionClassifier == null) {
                     versionClassifier = ""
@@ -76,6 +81,7 @@ open class Version {
                 }
                 versionClassifier += format(now(), "YYYYMMddHHmmss")
             }
+
             if (isSnapshot) {
                 if (versionClassifier == null) {
                     versionClassifier = ""

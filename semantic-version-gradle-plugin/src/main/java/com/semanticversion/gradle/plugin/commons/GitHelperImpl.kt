@@ -5,7 +5,7 @@ class GitHelperImpl(private val propertyResolver: PropertyResolver, private val 
     override fun getGitBranch(): String? {
         var gitBranch = propertyResolver.getStringProp("GIT_BRANCH", null)
         if (gitBranch.isNullOrEmpty()) {
-            gitBranch = commandExecutor.execute("git symbolic-ref HEAD").getStandardOutput()
+            gitBranch = commandExecutor.execute("git symbolic-ref HEAD", logStandardOutput = false).getStandardOutput()
         }
         gitBranch = gitBranch.trim { it <= ' ' }
         gitBranch = gitBranch.replace("origin/", "")

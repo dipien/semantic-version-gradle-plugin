@@ -9,7 +9,7 @@ open class PrintVersionTask : AbstractTask() {
     }
 
     init {
-        description = "Prints the current version"
+        description = "Prints the project version"
     }
 
     override fun onExecute() {

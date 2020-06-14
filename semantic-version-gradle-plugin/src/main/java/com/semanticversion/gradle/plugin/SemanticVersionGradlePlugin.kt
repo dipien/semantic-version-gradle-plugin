@@ -29,7 +29,7 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
         }
 
         if (project.version == Project.DEFAULT_VERSION) {
-            project.logger.warn("Version not specified on project " + project.name + " or its root project. Assigned v0.1.0 as default version")
+            project.logger.warn("Version not specified on project [" + project.name + "] or its root project. Assigned v0.1.0 as default version")
             project.version = "0.1.0"
         }
 
