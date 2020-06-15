@@ -244,7 +244,6 @@ class VersionTest {
     private fun createVersion(baseVersion: String): Version {
         val propertyResolver = FakePropertyResolver()
         val gitHelper = FakeGitHelper()
-        val extension = SemanticVersionGradlePluginExtension(propertyResolver)
-        return Version(extension, gitHelper, baseVersion)
+        return Version(propertyResolver, gitHelper, baseVersion)
     }
 }
