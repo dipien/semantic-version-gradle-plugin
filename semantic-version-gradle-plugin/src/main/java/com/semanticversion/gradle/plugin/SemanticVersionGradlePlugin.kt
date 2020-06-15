@@ -20,9 +20,9 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
         this.project = project
-        extension = project.extensions.create(EXTENSION_NAME, SemanticVersionGradlePluginExtension::class.java, project)
-
         propertyResolver = PropertyResolverImpl(project)
+
+        extension = project.extensions.create(EXTENSION_NAME, SemanticVersionGradlePluginExtension::class.java, propertyResolver)
 
         if (project.version == Project.DEFAULT_VERSION) {
             project.version = project.rootProject.version
