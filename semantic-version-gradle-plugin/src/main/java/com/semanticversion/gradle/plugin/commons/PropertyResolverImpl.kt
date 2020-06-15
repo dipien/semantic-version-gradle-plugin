@@ -24,6 +24,10 @@ class PropertyResolverImpl(private val project: Project) : PropertyResolver {
         return getIntegerProp(propertyName, null) ?: throw IllegalStateException("$propertyName is required")
     }
 
+    override fun getRequiredIntegerProp(propertyName: String, defaultValue: Int): Int {
+        return getIntegerProp(propertyName, defaultValue)!!
+    }
+
     override fun getIntegerProp(propertyName: String, defaultValue: Int?): Int? {
         val value = getProp(propertyName)
         return if (value == null) {

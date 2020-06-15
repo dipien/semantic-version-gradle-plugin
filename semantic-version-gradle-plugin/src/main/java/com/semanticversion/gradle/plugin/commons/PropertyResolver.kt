@@ -12,6 +12,8 @@ interface PropertyResolver {
 
     fun getRequiredIntegerProp(propertyName: String): Int
 
+    fun getRequiredIntegerProp(propertyName: String, defaultValue: Int): Int
+
     fun getIntegerProp(propertyName: String, defaultValue: Int? = null): Int?
 
     fun getDoubleProp(propertyName: String, defaultValue: Double? = null): Double?

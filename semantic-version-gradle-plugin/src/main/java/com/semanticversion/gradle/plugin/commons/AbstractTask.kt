@@ -15,6 +15,10 @@ abstract class AbstractTask : DefaultTask() {
     @get:Internal
     protected lateinit var gitHelper: GitHelper
 
+    init {
+        group = "Semantic Version"
+    }
+
     @TaskAction
     fun doExecute() {
         commandExecutor = CommandExecutorImpl(project, LogLevel.LIFECYCLE)

@@ -23,6 +23,10 @@ class FakePropertyResolver : PropertyResolver {
         TODO("Not yet implemented")
     }
 
+    override fun getRequiredIntegerProp(propertyName: String, defaultValue: Int): Int {
+        return defaultValue
+    }
+
     override fun getIntegerProp(propertyName: String, defaultValue: Int?): Int? {
         return defaultValue
     }
