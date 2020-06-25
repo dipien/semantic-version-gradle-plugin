@@ -29,11 +29,11 @@ class FakePropertyResolver(private val properties: Map<String, String> = emptyMa
     }
 
     override fun getIntegerProp(propertyName: String, defaultValue: Int?): Int? {
-        return properties.getOrDefault(propertyName, defaultValue).toString().toIntOrNull()
+        return properties.getOrDefault(propertyName, defaultValue).toString().toIntOrNull() ?: defaultValue
     }
 
     override fun getDoubleProp(propertyName: String, defaultValue: Double?): Double? {
-        return properties.getOrDefault(propertyName, defaultValue).toString().toDoubleOrNull()
+        return properties.getOrDefault(propertyName, defaultValue).toString().toDoubleOrNull() ?: defaultValue
     }
 
     override fun getStringListProp(propertyName: String, defaultValue: List<String>?): List<String>? {
