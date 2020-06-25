@@ -1,14 +1,11 @@
-package com.semanticversion.gradle.plugin.android
+package com.semanticversion.android
 
-import com.semanticversion.gradle.plugin.Version
-import com.semanticversion.gradle.plugin.commons.GitHelper
-import com.semanticversion.gradle.plugin.commons.PropertyResolver
+import com.semanticversion.common.GitHelper
+import com.semanticversion.common.PropertyResolver
+import com.semanticversion.Version
 
-class AndroidVersion(
-    propertyResolver: PropertyResolver,
-    gitHelper: GitHelper,
-    baseVersion: String
-) : Version(propertyResolver, gitHelper, baseVersion) {
+class AndroidVersion(propertyResolver: PropertyResolver, gitHelper: GitHelper, baseVersion: String) :
+    Version(propertyResolver, gitHelper, baseVersion) {
 
     var versionCodePrefix: Int? = null
     var versionCodeExtraBit: Int? = null

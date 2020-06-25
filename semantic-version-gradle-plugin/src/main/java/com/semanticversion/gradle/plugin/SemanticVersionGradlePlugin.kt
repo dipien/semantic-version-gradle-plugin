@@ -1,8 +1,9 @@
 package com.semanticversion.gradle.plugin
 
+import com.semanticversion.Version
+import com.semanticversion.common.PropertyResolver
 import com.semanticversion.gradle.plugin.commons.CommandExecutorImpl
 import com.semanticversion.gradle.plugin.commons.GitHelperImpl
-import com.semanticversion.gradle.plugin.commons.PropertyResolver
 import com.semanticversion.gradle.plugin.commons.PropertyResolverImpl
 import org.gradle.api.Plugin
 import org.gradle.api.Project

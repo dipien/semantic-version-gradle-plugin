@@ -1,5 +1,7 @@
 package com.semanticversion.gradle.plugin
 
+import com.semanticversion.Version
+
 open class IncrementMinorVersionTask : AbstractIncrementVersionTask() {
 
     companion object {

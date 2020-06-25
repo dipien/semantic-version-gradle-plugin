@@ -1,8 +1,8 @@
 package com.semanticversion.gradle.plugin
 
-import com.semanticversion.gradle.plugin.android.AndroidVersion
-import com.semanticversion.gradle.plugin.commons.GitHelper
-import com.semanticversion.gradle.plugin.commons.PropertyResolver
+import com.semanticversion.android.AndroidVersion
+import com.semanticversion.common.GitHelper
+import com.semanticversion.common.PropertyResolver
 
 open class SemanticVersionGradlePluginExtension(val propertyResolver: PropertyResolver, val gitHelper: GitHelper, val baseVersion: String) {
 

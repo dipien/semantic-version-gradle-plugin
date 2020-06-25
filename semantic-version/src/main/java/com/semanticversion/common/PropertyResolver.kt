@@ -1,4 +1,4 @@
-package com.semanticversion.gradle.plugin.commons
+package com.semanticversion.common
 
 interface PropertyResolver {
 

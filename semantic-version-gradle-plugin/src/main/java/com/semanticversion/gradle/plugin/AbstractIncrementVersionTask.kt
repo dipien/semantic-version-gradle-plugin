@@ -1,6 +1,7 @@
 package com.semanticversion.gradle.plugin
 
 import com.jdroid.java.utils.FileUtils
+import com.semanticversion.Version
 import com.semanticversion.gradle.plugin.commons.AbstractTask
 import com.semanticversion.gradle.plugin.commons.propertyResolver
 import java.util.regex.Pattern

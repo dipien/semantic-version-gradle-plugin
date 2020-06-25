@@ -1,5 +1,8 @@
 package com.semanticversion.gradle.plugin.commons
 
+import com.semanticversion.common.GitHelper
+import com.semanticversion.common.PropertyResolver
+
 class GitHelperImpl(private val propertyResolver: PropertyResolver, private val commandExecutor: CommandExecutor) : GitHelper {
 
     override fun getGitBranch(): String? {

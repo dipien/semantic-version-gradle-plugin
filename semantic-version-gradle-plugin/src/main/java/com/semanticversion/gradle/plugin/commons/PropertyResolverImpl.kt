@@ -1,5 +1,6 @@
 package com.semanticversion.gradle.plugin.commons
 
+import com.semanticversion.common.PropertyResolver
 import org.gradle.api.Project
 
 class PropertyResolverImpl(private val project: Project) : PropertyResolver {

@@ -1,9 +1,9 @@
-package com.semanticversion.gradle.plugin
+package com.semanticversion
 
 import com.jdroid.java.date.DateUtils.format
 import com.jdroid.java.date.DateUtils.now
-import com.semanticversion.gradle.plugin.commons.GitHelper
-import com.semanticversion.gradle.plugin.commons.PropertyResolver
+import com.semanticversion.common.GitHelper
+import com.semanticversion.common.PropertyResolver
 
 open class Version {
 
@@ -162,7 +162,7 @@ open class Version {
     override fun toString(): String {
         var versionName = baseVersion
         if (!versionClassifier.isNullOrEmpty()) {
-            versionName += "${VERSION_CLASSIFIER_SEPARATOR}$versionClassifier"
+            versionName += "$VERSION_CLASSIFIER_SEPARATOR$versionClassifier"
         }
         return versionName
     }

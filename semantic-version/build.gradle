@@ -1,51 +1,27 @@
-ext.PROJECT_NAME = "Semantic Version Gradle Plugin"
-ext.ARTIFACT_ID = "semantic-version-gradle-plugin"
+ext.PROJECT_NAME = "Semantic Version Library"
+ext.ARTIFACT_ID = "semantic-version"
 group = "com.jdroidtools"
 
-apply plugin: "com.jdroidtools.gradle.plugin"
-apply plugin: "com.gradle.plugin-publish"
+apply plugin: 'com.jdroidtools.java.library'
 
 buildscript {
 	dependencies {
-		classpath(BuildLibs.JDROID_GRADLE_PROJECT_PLUGIN)
+		classpath(BuildLibs.JDROID_GRADLE_JAVA_PLUGIN)
 	}
 }
 
 dependencies {
-	compile(project(":semantic-version"))
 	compile(Libs.JDROID_JAVA_CORE)
 	testCompile(Libs.JUNIT)
 	testCompile(Libs.TRUTH)
-}
-
-gradlePlugin {
-	plugins {
-		semanticVersionPlugin {
-			id = "com.jdroidtools.semanticversion"
-			implementationClass = "com.semanticversion.gradle.plugin.SemanticVersionGradlePlugin"
-		}
-	}
-}
-
-pluginBundle {
-	website = "https://jdroidtools.com/"
-	vcsUrl = "https://github.com/maxirosson/semantic-version-gradle-plugin"
-	description = "Gradle Plugin to handle Semantic Version"
-	tags = ["gradle", "plugin", "semantic", "version"]
-
-	plugins {
-		semanticVersionPlugin {
-			displayName = "Semantic Version Gradle Plugin"
-		}
-	}
 }
 
 jdroid {
 	publishingPom = new Action<org.gradle.api.publish.maven.MavenPom>() {
 		@Override
 		public void execute(org.gradle.api.publish.maven.MavenPom mavenPom) {
-			mavenPom.getName().set("semantic-version-gradle-plugin");
-			mavenPom.getDescription().set("Gradle Plugin to handle Semantic Version");
+			mavenPom.getName().set("semantic-version");
+			mavenPom.getDescription().set("Library to handle Semantic Version");
 
 			mavenPom.getUrl().set("https://jdroidtools.com");
 			mavenPom.getInceptionYear().set("2020");

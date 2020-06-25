@@ -1,5 +1,6 @@
 package com.semanticversion.gradle.plugin.android
 
+import com.semanticversion.android.AndroidVersion
 import com.semanticversion.gradle.plugin.common.FakeGitHelper
 import com.semanticversion.gradle.plugin.common.FakePropertyResolver
 import org.junit.Assert

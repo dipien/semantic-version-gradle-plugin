@@ -1,5 +1,6 @@
 package com.semanticversion.gradle.plugin.commons
 
+import com.semanticversion.common.GitHelper
 import com.semanticversion.gradle.plugin.SemanticVersionGradlePlugin
 import com.semanticversion.gradle.plugin.SemanticVersionGradlePluginExtension
 import org.gradle.api.DefaultTask
