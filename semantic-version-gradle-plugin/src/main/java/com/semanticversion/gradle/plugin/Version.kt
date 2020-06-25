@@ -26,7 +26,7 @@ open class Version {
     var isLocal: Boolean = false
     var maximumVersion: Int?
 
-    protected val defaultMaximumVersion: Int
+    protected open val defaultMaximumVersion: Int
         get() = 999
 
     val baseVersion: String

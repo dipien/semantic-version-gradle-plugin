@@ -22,8 +22,6 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
         this.project = project
         propertyResolver = PropertyResolverImpl(project)
 
-        extension = project.extensions.create(EXTENSION_NAME, SemanticVersionGradlePluginExtension::class.java, propertyResolver)
-
         if (project.version == Project.DEFAULT_VERSION) {
             project.version = project.rootProject.version
         }
@@ -33,17 +31,17 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
             project.version = "0.1.0"
         }
 
+        val gitHelper = GitHelperImpl(propertyResolver, CommandExecutorImpl(project, LogLevel.LIFECYCLE))
+
         val baseVersion = Version(project.version.toString()).baseVersion
-        val version = createVersion(baseVersion)
+        val version = Version(propertyResolver, gitHelper, baseVersion)
         project.version = version.toString()
+
+        extension = project.extensions.create(EXTENSION_NAME, SemanticVersionGradlePluginExtension::class.java, propertyResolver, gitHelper, baseVersion)
 
         project.tasks.create(PrintVersionTask.TASK_NAME, PrintVersionTask::class.java)
         project.tasks.create(IncrementMajorVersionTask.TASK_NAME, IncrementMajorVersionTask::class.java)
         project.tasks.create(IncrementMinorVersionTask.TASK_NAME, IncrementMinorVersionTask::class.java)
         project.tasks.create(IncrementPatchVersionTask.TASK_NAME, IncrementPatchVersionTask::class.java)
-    }
-
-    protected fun createVersion(baseVersion: String): Version {
-        return Version(propertyResolver, GitHelperImpl(propertyResolver, CommandExecutorImpl(project, LogLevel.LIFECYCLE)), baseVersion)
     }
 }
