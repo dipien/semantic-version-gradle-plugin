@@ -1,3 +1,5 @@
 package com.semanticversion.gradle.plugin
 
-open class SemanticVersionGradlePluginExtension
+import org.gradle.api.Project
+
+open class SemanticVersionGradlePluginExtension(project: Project)

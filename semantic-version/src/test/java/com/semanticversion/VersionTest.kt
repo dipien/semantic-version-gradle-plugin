@@ -1,9 +1,8 @@
-package com.semanticversion.gradle.plugin
+package com.semanticversion
 
 import com.google.common.truth.Truth
-import com.semanticversion.Version
-import com.semanticversion.gradle.plugin.common.FakeGitHelper
-import com.semanticversion.gradle.plugin.common.FakePropertyResolver
+import com.semanticversion.common.FakeGitHelper
+import com.semanticversion.common.FakePropertyResolver
 import org.junit.Test
 
 class VersionTest {

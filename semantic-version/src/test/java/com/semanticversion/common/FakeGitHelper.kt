@@ -1,6 +1,4 @@
-package com.semanticversion.gradle.plugin.common
-
-import com.semanticversion.common.GitHelper
+package com.semanticversion.common
 
 class FakeGitHelper : GitHelper {
     override fun getGitBranch(): String? {

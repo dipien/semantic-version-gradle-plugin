@@ -1,6 +1,4 @@
-package com.semanticversion.gradle.plugin.common
-
-import com.semanticversion.common.PropertyResolver
+package com.semanticversion.common
 
 class FakePropertyResolver(private val properties: Map<String, String> = emptyMap()) : PropertyResolver {
 

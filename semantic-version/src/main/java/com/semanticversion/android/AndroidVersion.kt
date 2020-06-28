@@ -34,13 +34,26 @@ class AndroidVersion : Version {
     override val defaultMaximumVersion: Int
         get() = 99
 
-    constructor(propertyResolver: PropertyResolver, gitHelper: GitHelper, baseVersion: String) : super(propertyResolver, gitHelper, baseVersion) {
-        versionCodePrefix = propertyResolver.getIntegerProp("VERSION_CODE_PREFIX")
+    constructor(
+        propertyResolver: PropertyResolver,
+        gitHelper: GitHelper,
+        baseVersion: String,
+        versionCodePrefix: Int?,
+        minSdkVersionAsVersionCodePrefix: Boolean,
+        versionCodeExtraBit: Int,
+        minSdkVersion: Int
+    ) : super(propertyResolver, gitHelper, baseVersion) {
         if (versionCodePrefix == null) {
-            versionCodePrefix = propertyResolver.getIntegerProp("MIN_SDK_VERSION", 0)
+            if (minSdkVersionAsVersionCodePrefix) {
+                this.versionCodePrefix = minSdkVersion
+            } else {
+                this.versionCodePrefix = 0
+            }
+        } else {
+            this.versionCodePrefix = versionCodePrefix
         }
-        versionCodeExtraBit = propertyResolver.getIntegerProp("VERSION_CODE_EXTRA_BIT", 0)
-        versionCode = versionCodePrefix!! * 10000000 + versionCodeExtraBit!! * 1000000 + versionMajor!! * 10000 + versionMinor!! * 100 + versionPatch!!
+        this.versionCodeExtraBit = versionCodeExtraBit
+        versionCode = this.versionCodePrefix!! * 10000000 + this.versionCodeExtraBit!! * 1000000 + versionMajor!! * 10000 + versionMinor!! * 100 + versionPatch!!
     }
 
     constructor(versionCode: Int) : super(fromVersionCodeToVersionName(versionCode)) {
