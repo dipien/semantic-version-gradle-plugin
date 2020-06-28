@@ -36,7 +36,23 @@ class VersionTest {
     }
 
     @Test
-    fun `GIVEN a valid snapshot version WHEN creating a version using the splits constructor THEN it is successfully created`() {
+    fun `GIVEN a valid non snapshot version WHEN creating a version THEN it is successfully created`() {
+        val version = createVersion("1.2.3", snapshot = false)
+
+        Truth.assertThat(version.versionMajor).isEqualTo(1)
+        Truth.assertThat(version.versionMinor).isEqualTo(2)
+        Truth.assertThat(version.versionPatch).isEqualTo(3)
+        Truth.assertThat(version.isSnapshot).isFalse()
+        Truth.assertThat(version.isLocal).isFalse()
+        Truth.assertThat(version.isVersionTimestampEnabled).isFalse()
+        Truth.assertThat(version.featureName).isNull()
+        Truth.assertThat(version.versionClassifier).isNull()
+        Truth.assertThat(version.baseVersion).isEqualTo("1.2.3")
+        Truth.assertThat(version.toString()).isEqualTo("1.2.3")
+    }
+
+    @Test
+    fun `GIVEN a valid version WHEN creating a version using the splits constructor THEN it is successfully created`() {
         val version = Version(1, 2, 3)
 
         Truth.assertThat(version.versionMajor).isEqualTo(1)
@@ -241,10 +257,11 @@ class VersionTest {
         createVersion("1.2.3333")
     }
 
-    private fun createVersion(baseVersion: String): Version {
+    private fun createVersion(baseVersion: String, snapshot: Boolean = true): Version {
         val propertyResolver = FakePropertyResolver()
         val gitHelper = FakeGitHelper()
         val semanticVersionConfig = SemanticVersionConfig(propertyResolver)
+        semanticVersionConfig.snapshot = snapshot
         return Version(semanticVersionConfig, gitHelper, baseVersion)
     }
 }
