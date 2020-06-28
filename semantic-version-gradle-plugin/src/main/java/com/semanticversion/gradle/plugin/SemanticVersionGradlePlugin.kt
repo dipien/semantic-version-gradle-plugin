@@ -1,11 +1,11 @@
 package com.semanticversion.gradle.plugin
 
+import com.semanticversion.SemanticVersionConfig
 import com.semanticversion.Version
 import com.semanticversion.common.GitHelper
-import com.semanticversion.common.PropertyResolver
 import com.semanticversion.gradle.plugin.commons.CommandExecutorImpl
 import com.semanticversion.gradle.plugin.commons.GitHelperImpl
-import com.semanticversion.gradle.plugin.commons.PropertyResolverImpl
+import com.semanticversion.gradle.plugin.commons.propertyResolver
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.logging.LogLevel
@@ -17,15 +17,13 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
     }
 
     protected lateinit var project: Project
-    protected lateinit var propertyResolver: PropertyResolver
     protected lateinit var gitHelper: GitHelper
     protected lateinit var baseVersion: String
-    protected lateinit var extension: SemanticVersionGradlePluginExtension
 
     override fun apply(project: Project) {
         this.project = project
-        propertyResolver = PropertyResolverImpl(project)
-        gitHelper = GitHelperImpl(propertyResolver, CommandExecutorImpl(project, LogLevel.LIFECYCLE))
+
+        gitHelper = GitHelperImpl(project.propertyResolver, CommandExecutorImpl(project, LogLevel.LIFECYCLE))
 
         if (project.version == Project.DEFAULT_VERSION) {
             project.version = project.rootProject.version
@@ -37,22 +35,16 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
         }
 
         baseVersion = Version(project.version.toString()).baseVersion
-        val version = Version(propertyResolver, gitHelper, baseVersion)
+        val version = Version(SemanticVersionConfig(project.propertyResolver), gitHelper, baseVersion)
         project.version = version.toString()
 
         project.subprojects.forEach {
             it.version = version.toString()
         }
 
-        extension = project.extensions.create(EXTENSION_NAME, getExtensionClass(), project)
-
         project.tasks.create(PrintVersionTask.TASK_NAME, PrintVersionTask::class.java)
         project.tasks.create(IncrementMajorVersionTask.TASK_NAME, IncrementMajorVersionTask::class.java)
         project.tasks.create(IncrementMinorVersionTask.TASK_NAME, IncrementMinorVersionTask::class.java)
         project.tasks.create(IncrementPatchVersionTask.TASK_NAME, IncrementPatchVersionTask::class.java)
-    }
-
-    protected open fun getExtensionClass(): Class<out SemanticVersionGradlePluginExtension> {
-        return SemanticVersionGradlePluginExtension::class.java
     }
 }

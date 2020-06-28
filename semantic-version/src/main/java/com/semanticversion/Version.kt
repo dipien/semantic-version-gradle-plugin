@@ -3,7 +3,6 @@ package com.semanticversion
 import com.jdroid.java.date.DateUtils.format
 import com.jdroid.java.date.DateUtils.now
 import com.semanticversion.common.GitHelper
-import com.semanticversion.common.PropertyResolver
 
 open class Version {
 
@@ -59,14 +58,14 @@ open class Version {
         }
     }
 
-    constructor(propertyResolver: PropertyResolver, gitHelper: GitHelper, baseVersion: String) {
-        maximumVersion = propertyResolver.getIntegerProp("MAXIMUM_VERSION", defaultMaximumVersion)
+    constructor(config: SemanticVersionConfig, gitHelper: GitHelper, baseVersion: String) {
+        maximumVersion = config.maximumVersion
         parseBaseVersion(baseVersion)
 
-        versionClassifier = propertyResolver.getStringProp("VERSION_CLASSIFIER", null)
+        versionClassifier = config.versionClassifier
         if (versionClassifier == null) {
 
-            featureBranchPrefix = propertyResolver.getStringProp("FEATURE_BRANCH_PREFIX", "feature/")
+            featureBranchPrefix = config.featureBranchPrefix
             if (!featureBranchPrefix.isNullOrEmpty()) {
                 val gitBranch = gitHelper.getGitBranch()
                 val isFeatureBranch = gitBranch?.startsWith(featureBranchPrefix!!) ?: false
@@ -76,7 +75,7 @@ open class Version {
                 }
             }
 
-            isLocal = propertyResolver.getRequiredBooleanProp("LOCAL", isLocal)
+            isLocal = config.local
             if (isLocal) {
                 if (versionClassifier == null) {
                     versionClassifier = ""
@@ -86,7 +85,7 @@ open class Version {
                 versionClassifier += LOCAL_CLASSIFIER
             }
 
-            isVersionTimestampEnabled = propertyResolver.getRequiredBooleanProp("VERSION_TIMESTAMP_ENABLED", isVersionTimestampEnabled)
+            isVersionTimestampEnabled = config.versionTimestampEnabled
             if (isVersionTimestampEnabled) {
                 if (versionClassifier == null) {
                     versionClassifier = ""
@@ -96,7 +95,7 @@ open class Version {
                 versionClassifier += format(now(), VERSION_TIMESTAMP_FORMAT)
             }
 
-            isSnapshot = propertyResolver.getRequiredBooleanProp("SNAPSHOT", true)
+            isSnapshot = config.snapshot
             if (isSnapshot) {
                 if (versionClassifier == null) {
                     versionClassifier = ""

@@ -1,7 +1,7 @@
 package com.semanticversion.android
 
+import com.semanticversion.SemanticVersionConfig
 import com.semanticversion.common.GitHelper
-import com.semanticversion.common.PropertyResolver
 import com.semanticversion.Version
 
 class AndroidVersion : Version {
@@ -35,24 +35,22 @@ class AndroidVersion : Version {
         get() = 99
 
     constructor(
-        propertyResolver: PropertyResolver,
+        extension: SemanticVersionAndroidExtension,
+        config: SemanticVersionConfig,
         gitHelper: GitHelper,
         baseVersion: String,
-        versionCodePrefix: Int?,
-        minSdkVersionAsVersionCodePrefix: Boolean,
-        versionCodeExtraBit: Int,
         minSdkVersion: Int
-    ) : super(propertyResolver, gitHelper, baseVersion) {
-        if (versionCodePrefix == null) {
-            if (minSdkVersionAsVersionCodePrefix) {
+    ) : super(config, gitHelper, baseVersion) {
+        if (extension.versionCodePrefix == null) {
+            if (extension.minSdkVersionAsVersionCodePrefix) {
                 this.versionCodePrefix = minSdkVersion
             } else {
                 this.versionCodePrefix = 0
             }
         } else {
-            this.versionCodePrefix = versionCodePrefix
+            this.versionCodePrefix = extension.versionCodePrefix
         }
-        this.versionCodeExtraBit = versionCodeExtraBit
+        this.versionCodeExtraBit = extension.versionCodeExtraBit
         versionCode = this.versionCodePrefix!! * 10000000 + this.versionCodeExtraBit!! * 1000000 + versionMajor!! * 10000 + versionMinor!! * 100 + versionPatch!!
     }
 

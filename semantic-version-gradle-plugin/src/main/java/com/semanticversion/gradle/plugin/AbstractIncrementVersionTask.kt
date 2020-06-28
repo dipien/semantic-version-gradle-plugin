@@ -1,6 +1,7 @@
 package com.semanticversion.gradle.plugin
 
 import com.jdroid.java.utils.FileUtils
+import com.semanticversion.SemanticVersionConfig
 import com.semanticversion.Version
 import com.semanticversion.gradle.plugin.commons.AbstractTask
 import com.semanticversion.gradle.plugin.commons.propertyResolver
@@ -18,7 +19,7 @@ abstract class AbstractIncrementVersionTask : AbstractTask() {
                 val versionMatcher = versionPattern.matcher(line)
                 if (versionMatcher.find()) {
                     val versionText = versionMatcher.group(1)
-                    val version = Version(project.propertyResolver, gitHelper, versionText)
+                    val version = Version(SemanticVersionConfig(project.propertyResolver), gitHelper, versionText)
                     incrementVersion(version)
                     val newLineContent = versionMatcher.replaceFirst("version = '" + version.baseVersion + "'")
                     lines.add(newLineContent)

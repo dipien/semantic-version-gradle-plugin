@@ -1,8 +1,6 @@
 package com.semanticversion.gradle.plugin.commons
 
 import com.semanticversion.common.GitHelper
-import com.semanticversion.gradle.plugin.SemanticVersionGradlePlugin
-import com.semanticversion.gradle.plugin.SemanticVersionGradlePluginExtension
 import org.gradle.api.DefaultTask
 import org.gradle.api.logging.LogLevel
 import org.gradle.api.tasks.Internal
@@ -25,11 +23,6 @@ abstract class AbstractTask : DefaultTask() {
         commandExecutor = CommandExecutorImpl(project, LogLevel.LIFECYCLE)
         gitHelper = GitHelperImpl(project.propertyResolver, commandExecutor)
         onExecute()
-    }
-
-    @Internal
-    protected fun getExtension(): SemanticVersionGradlePluginExtension {
-        return project.extensions.getByName(SemanticVersionGradlePlugin.EXTENSION_NAME) as SemanticVersionGradlePluginExtension
     }
 
     protected abstract fun onExecute()
