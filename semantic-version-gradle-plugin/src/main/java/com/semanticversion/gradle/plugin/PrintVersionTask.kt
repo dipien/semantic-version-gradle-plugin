@@ -13,6 +13,6 @@ open class PrintVersionTask : AbstractTask() {
     }
 
     override fun onExecute() {
-        println(project.version)
+        println("Version: " + project.version)
     }
 }

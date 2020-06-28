@@ -5,18 +5,25 @@ import com.semanticversion.SemanticVersionConfig
 import com.semanticversion.android.AndroidVersion
 import com.semanticversion.gradle.plugin.SemanticVersionGradlePlugin
 import com.semanticversion.android.SemanticVersionAndroidExtension
+import com.semanticversion.gradle.plugin.PrintVersionTask
 import com.semanticversion.gradle.plugin.commons.propertyResolver
 import org.gradle.api.Project
 
 open class SemanticVersionAndroidGradlePlugin : SemanticVersionGradlePlugin() {
+
+    companion object {
+        fun getExtension(project: Project): SemanticVersionAndroidExtension {
+            return project.extensions.findByType(SemanticVersionAndroidExtension::class.java)!!
+        }
+    }
 
     override fun apply(project: Project) {
         super.apply(project)
 
         val semVerAndroidExtension = project.extensions.create(EXTENSION_NAME, SemanticVersionAndroidExtension::class.java, project.propertyResolver)
 
-        project.allprojects.forEach {
-            it.afterEvaluate {
+        project.allprojects.forEach { eachProject ->
+            eachProject.afterEvaluate {
                 val androidAppExtension = it.extensions.findByType(AppExtension::class.java)
                 if (androidAppExtension != null) {
                     androidAppExtension.defaultConfig.versionCode = AndroidVersion(
@@ -29,7 +36,9 @@ open class SemanticVersionAndroidGradlePlugin : SemanticVersionGradlePlugin() {
                 }
             }
         }
+    }
 
-        // TODO Add PrintVersion Code & name task/s
+    override fun createPrintTask() {
+        project.tasks.create(PrintVersionTask.TASK_NAME, PrintAndroidVersionTask::class.java)
     }
 }

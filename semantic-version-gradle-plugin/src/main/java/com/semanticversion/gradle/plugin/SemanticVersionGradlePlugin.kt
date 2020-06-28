@@ -42,9 +42,14 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
             it.version = version.toString()
         }
 
-        project.tasks.create(PrintVersionTask.TASK_NAME, PrintVersionTask::class.java)
         project.tasks.create(IncrementMajorVersionTask.TASK_NAME, IncrementMajorVersionTask::class.java)
         project.tasks.create(IncrementMinorVersionTask.TASK_NAME, IncrementMinorVersionTask::class.java)
         project.tasks.create(IncrementPatchVersionTask.TASK_NAME, IncrementPatchVersionTask::class.java)
+
+        createPrintTask()
+    }
+
+    protected open fun createPrintTask() {
+        project.tasks.create(PrintVersionTask.TASK_NAME, PrintVersionTask::class.java)
     }
 }
