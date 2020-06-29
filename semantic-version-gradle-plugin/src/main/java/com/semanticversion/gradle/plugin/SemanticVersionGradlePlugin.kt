@@ -1,6 +1,7 @@
 package com.semanticversion.gradle.plugin
 
 import com.semanticversion.SemanticVersionConfig
+import com.semanticversion.SemanticVersionExtension
 import com.semanticversion.Version
 import com.semanticversion.common.GitHelper
 import com.semanticversion.gradle.plugin.commons.CommandExecutorImpl
@@ -14,11 +15,16 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
 
     companion object {
         const val EXTENSION_NAME = "semanticVersion"
+
+        fun getExtension(project: Project): SemanticVersionExtension {
+            return project.extensions.findByType(SemanticVersionExtension::class.java)!!
+        }
     }
 
     protected lateinit var project: Project
     protected lateinit var gitHelper: GitHelper
     protected lateinit var baseVersion: String
+    protected lateinit var extension: SemanticVersionExtension
 
     override fun apply(project: Project) {
         this.project = project
@@ -42,11 +48,15 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
             it.version = version.toString()
         }
 
-        project.tasks.create(IncrementMajorVersionTask.TASK_NAME, IncrementMajorVersionTask::class.java)
-        project.tasks.create(IncrementMinorVersionTask.TASK_NAME, IncrementMinorVersionTask::class.java)
-        project.tasks.create(IncrementPatchVersionTask.TASK_NAME, IncrementPatchVersionTask::class.java)
+        extension = project.extensions.create(EXTENSION_NAME, getExtensionClass(), project.propertyResolver)
+
+        project.tasks.create(IncrementVersionTask.TASK_NAME, IncrementVersionTask::class.java)
 
         createPrintTask()
+    }
+
+    protected open fun getExtensionClass(): Class<out SemanticVersionExtension> {
+        return SemanticVersionExtension::class.java
     }
 
     protected open fun createPrintTask() {
