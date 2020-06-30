@@ -26,7 +26,6 @@ open class IncrementVersionTask : AbstractTask() {
     var versionIncrementBranch: String? = null
 
     @get:Input
-    @get:Optional
     @Option(description = "")
     var localVersionIncrement: Boolean = false
 
