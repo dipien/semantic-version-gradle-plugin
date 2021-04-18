@@ -1,5 +1,19 @@
 version: 2.1
 
+parameters:
+
+  releaseGradleFlags:
+    type: string
+    default: "--max-workers 1 -PSNAPSHOT=false -PLOCAL_UPLOAD=false -PRELEASE_BUILD_TYPE_ENABLED=true -PRELEASE_FAKE_ENABLED=true -PACCEPT_SNAPSHOT_DEPENDENCIES=false --stacktrace"
+
+  api:
+    type: boolean
+    default: false
+
+  release:
+    type: boolean
+    default: false
+
 references:
 
   working_dir: &working_dir
@@ -9,26 +23,20 @@ executors:
   jdk_executor:
     working_directory: *working_dir
     docker:
-      - image: circleci/openjdk:11-jdk
+      - image: cimg/openjdk:11.0
+        auth:
+          username: $DOCKERHUB_USER
+          password: $DOCKERHUB_PASSWORD
     environment:
       JVM_OPTS: -Xmx3200m
       GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.caching=true
 
-commands:
-  restore_gradle_cache:
-    steps:
-      - restore_cache:
-          keys:
-            - v2-gradle_cache-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ .Branch }}-{{ checksum "buildSrc/src/main/kotlin/Libs.kt" }}-{{ checksum "buildSrc/src/main/kotlin/BuildLibs.kt" }}
-            - v2-gradle_cache-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ .Branch }}
-            - v2-gradle_cache-
+orbs:
+  # https://circleci.com/developer/orbs/orb/eddiewebb/queue
+  queue: eddiewebb/queue@1.5.0
+  ruby: circleci/ruby@1.1.2
 
-  save_gradle_cache:
-    steps:
-      - save_cache:
-          key: v2-gradle_cache-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ .Branch }}-{{ checksum "buildSrc/src/main/kotlin/Libs.kt" }}-{{ checksum "buildSrc/src/main/kotlin/BuildLibs.kt" }}
-          paths:
-            - ~/.gradle
+commands:
 
   attach_to_workspace:
     steps:
@@ -42,23 +50,26 @@ commands:
           paths:
             - gradle-build-cache
 
-jobs:
-  gradleCache:
-    executor: jdk_executor
+  custom_checkout:
+    parameters:
+      switchToGradleBinaryDistributionEnabled:
+        type: boolean
+        default: true
     steps:
       - checkout
-      - restore_gradle_cache
-      - run:
-          name: Download dependencies
-          command: ./gradlew dependencies --stacktrace
-      - save_gradle_cache
-      - persist_gradle_build_cache
+      - when:
+          condition: << parameters.switchToGradleBinaryDistributionEnabled >>
+          steps:
+            - run:
+                name: Switch to Gradle Binary Distribution
+                command: sed -i -e 's/-all.zip/-bin.zip/' gradle/wrapper/gradle-wrapper.properties
+
+jobs:
 
   ktlint:
     executor: jdk_executor
     steps:
-      - checkout
-      - restore_gradle_cache
+      - custom_checkout
       - run:
           name: Ktlint
           command: ./gradlew ktlint --stacktrace
@@ -66,8 +77,7 @@ jobs:
   security:
     executor: jdk_executor
     steps:
-      - checkout
-      - restore_gradle_cache
+      - custom_checkout
       - run:
           name: Verify the integrity of the Gradle Wrapper JAR
           command: |
@@ -81,8 +91,7 @@ jobs:
   build:
     executor: jdk_executor
     steps:
-      - checkout
-      - restore_gradle_cache
+      - custom_checkout
       - attach_to_workspace
       - run:
           name: Assemble
@@ -95,8 +104,7 @@ jobs:
   test:
     executor: jdk_executor
     steps:
-      - checkout
-      - restore_gradle_cache
+      - custom_checkout
       - attach_to_workspace
       - run:
           name: Run tests
@@ -116,8 +124,7 @@ jobs:
   validatePlugins:
     executor: jdk_executor
     steps:
-      - checkout
-      - restore_gradle_cache
+      - custom_checkout
       - attach_to_workspace
       - run:
           name: Validate plugins
@@ -126,36 +133,67 @@ jobs:
   publish:
     executor: jdk_executor
     steps:
-      - checkout
-      - restore_gradle_cache
+      - custom_checkout
       - attach_to_workspace
+      - queue/until_front_of_line:
+          block-workflow: true
+          only-on-branch: master
       - run:
           name: Uploading to Nexus Sonatype
           command: ./gradlew publish -PLOCAL_UPLOAD=false --refresh-dependencies --stacktrace
 
+  release:
+    executor: jdk_executor
+    steps:
+      - custom_checkout
+      - run:
+          name: Close GitHub Milestone
+          command: ./gradlew :closeGitHubMilestone << pipeline.parameters.releaseGradleFlags >>
+      - ruby/install:
+          version: '2.7'
+      - run:
+          name: Install github_changelog_generator
+          command: gem install github_changelog_generator -v 1.13.2
+      - run:
+          name: Create GitHub Release
+          command: ./gradlew :createGitHubRelease << pipeline.parameters.releaseGradleFlags >>
+      #      - run:
+      #          name: Generate Changelog
+      #          command: ./gradlew :generateChangelog << pipeline.parameters.releaseGradleFlags >>
+      - run:
+          name: Copy Signing secret key ring file
+          command: sudo bash -c "echo '$SIGNING_SECRET_KEY_RING' | base64 -d > '$SIGNING_SECRET_KEY_RING_FILE'"
+      - run:
+          name: Publish on Sonatype
+          command: ./gradlew publish << pipeline.parameters.releaseGradleFlags >>
+      - run:
+          name: Publish on Gradle Plugins Portal
+          command: ./gradlew publishPlugins -PGRADLE_PLUGIN_PORTAL_ENABLED=true << pipeline.parameters.releaseGradleFlags >>
+      - run:
+          name: Close and Release Sonatype Repository
+          command: ./gradlew closeAndReleaseRepository << pipeline.parameters.releaseGradleFlags >>
+      - run:
+          name: Send merge pull request
+          command: ./gradlew sendMergePullRequest --stacktrace
+
   upgradeDependencies:
     executor: jdk_executor
     steps:
-      - checkout
-      - restore_gradle_cache
+      - custom_checkout
       - add_ssh_keys:
           fingerprints:
             - "83:20:2b:71:67:9c:01:43:fe:ad:82:dc:e0:b6:b4:61"
       - run:
           name: Upgrade Dependencies
-          command: ./gradlew upgradeDependencies -PpullRequestEnabled=true --stacktrace
+          command: ./gradlew upgradeDependencies --stacktrace
 
 workflows:
   commit:
+    unless: << pipeline.parameters.api >>
     jobs:
-      - gradleCache
       - security
-      - build:
-          requires:
-            - gradleCache
-      - ktlint:
-          requires:
-            - build
+      - ktlint
+      - build
       - test:
           requires:
             - build
@@ -183,3 +221,8 @@ workflows:
                 - master
     jobs:
       - upgradeDependencies
+
+  release:
+    when: << pipeline.parameters.release >>
+    jobs:
+      - release

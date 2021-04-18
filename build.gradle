@@ -1,18 +1,14 @@
 version = '1.0.0'
 
-ext.GITHUB_REPOSITORY_OWNER = "dipien"
 ext.GITHUB_REPOSITORY_NAME = "semantic-version-gradle-plugin"
 
-ext.PUBLICATION_CONFIGURATION_ENABLED = true
-ext.JAVADOC_PUBLICATION_ENABLED = true
-ext.SOURCES_PUBLICATION_ENABLED = true
-ext.SIGNING_PUBLICATION_ENABLED = true
-
+apply plugin: "com.dipien.component.builder"
 apply plugin: 'com.jdroidtools.root'
+apply plugin: "com.dipien.release"
 
 buildscript {
 	repositories {
-		jcenter()
+		mavenCentral()
 		def localMavenRepoEnabled = project.hasProperty('LOCAL_MAVEN_REPO_ENABLED') ? project.ext.get('LOCAL_MAVEN_REPO_ENABLED') : System.getenv('LOCAL_MAVEN_REPO_EMABLED')
 		boolean isLocalMavenRepoEnabled = localMavenRepoEnabled != null && localMavenRepoEnabled == "true"
 		if (isLocalMavenRepoEnabled) {
@@ -22,22 +18,20 @@ buildscript {
 			}
 		}
 		maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-		mavenCentral()
 		gradlePluginPortal()
 	}
 
 	dependencies {
+		classpath(BuildLibs.DIPIEN_COMPONENT_BUILDER)
 		classpath(BuildLibs.JDROID_GRADLE_ROOT_PLUGIN)
-
-		// TODO Remove this when upgraded to jdroid gradle plugin 2.4.0
-		classpath("com.gradle.publish:plugin-publish-plugin:0.11.0")
+		classpath(BuildLibs.RELEASE_GRADLE_PLUGIN)
 	}
 }
 
 allprojects {
 	buildscript {
 		repositories {
-			jcenter()
+			mavenCentral()
 			def localMavenRepoEnabled = project.hasProperty('LOCAL_MAVEN_REPO_ENABLED') ? project.ext.get('LOCAL_MAVEN_REPO_ENABLED') : System.getenv('LOCAL_MAVEN_REPO_EMABLED')
 			boolean isLocalMavenRepoEnabled = localMavenRepoEnabled != null && localMavenRepoEnabled == "true"
 			if (isLocalMavenRepoEnabled) {
@@ -47,13 +41,12 @@ allprojects {
 				}
 			}
 			maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-			mavenCentral()
 			gradlePluginPortal()
 		}
 	}
 
 	repositories {
-		jcenter()
+		mavenCentral()
 		google()
 		def localMavenRepoEnabled = project.hasProperty('LOCAL_MAVEN_REPO_ENABLED') ? project.ext.get('LOCAL_MAVEN_REPO_ENABLED') : System.getenv('LOCAL_MAVEN_REPO_EMABLED')
 		boolean isLocalMavenRepoEnabled = localMavenRepoEnabled != null && localMavenRepoEnabled == "true"
@@ -64,6 +57,5 @@ allprojects {
 			}
 		}
 		maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-		mavenCentral()
 	}
 }
