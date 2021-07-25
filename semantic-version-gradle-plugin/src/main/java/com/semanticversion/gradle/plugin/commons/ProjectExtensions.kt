@@ -3,7 +3,5 @@ package com.semanticversion.gradle.plugin.commons
 import com.semanticversion.common.PropertyResolver
 import org.gradle.api.Project
 
-private val propertyResolverCache = mutableMapOf<Project, PropertyResolver>()
-
 val Project.propertyResolver: PropertyResolver
-    get() = propertyResolverCache.getOrPut(this) { PropertyResolverImpl(this) }
+    get() = PropertyResolverImpl(this)

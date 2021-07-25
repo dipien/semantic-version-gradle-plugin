@@ -14,22 +14,18 @@ open class PrintAndroidVersionTask : AbstractTask() {
     }
 
     override fun onExecute() {
-        println("Version name: " + project.version)
+        println("Version: " + project.version)
 
-        var minSdkVersion: Int? = null
+        var versionName: String? = null
+        var versionCode: Int? = null
         project.allprojects.forEach {
             val androidAppExtension = it.extensions.findByType(AppExtension::class.java)
             if (androidAppExtension != null) {
-                minSdkVersion = androidAppExtension.defaultConfig.minSdkVersion.apiLevel
+                versionName = androidAppExtension.defaultConfig.versionName
+                versionCode = androidAppExtension.defaultConfig.versionCode
             }
         }
-
-        val androidVersion = AndroidVersion(
-            SemanticVersionAndroidGradlePlugin.getExtension(project),
-            SemanticVersionConfig(project.propertyResolver),
-            gitHelper,
-            Version(project.version.toString()).baseVersion,
-            minSdkVersion!!)
-        println("Version code: " + androidVersion.versionCode)
+        println("Version code: $versionCode")
+        println("Version name: $versionName")
     }
 }
