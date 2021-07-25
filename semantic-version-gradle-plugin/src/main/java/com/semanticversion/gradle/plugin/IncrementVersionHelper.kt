@@ -9,7 +9,6 @@ import com.semanticversion.common.GitHelper
 import com.semanticversion.gradle.plugin.commons.CommandExecutor
 import com.semanticversion.gradle.plugin.commons.propertyResolver
 import org.gradle.api.Project
-import java.lang.IllegalArgumentException
 import java.util.regex.Pattern
 
 object IncrementVersionHelper {
@@ -52,13 +51,13 @@ object IncrementVersionHelper {
         if (versionFound) {
             FileUtils.writeLines(buildGradleFile, lines)
             if (versionIncrementBranch != null) {
-                val gitHubUserName = semanticVersionExtension.gitUserName
-                if (gitHubUserName != null) {
-                    commandExecutor.execute("git config user.name $gitHubUserName")
+                val gitUserName = semanticVersionExtension.gitUserName
+                if (gitUserName != null) {
+                    commandExecutor.execute("git config user.name $gitUserName")
                 }
-                val gitHubUserEmail = semanticVersionExtension.gitEmail
-                if (gitHubUserEmail != null) {
-                    commandExecutor.execute("git config user.email $gitHubUserEmail")
+                val gitUserEmail = semanticVersionExtension.gitUserEmail
+                if (gitUserEmail != null) {
+                    commandExecutor.execute("git config user.email $gitUserEmail")
                 }
                 commandExecutor.execute("git diff HEAD")
                 commandExecutor.execute("git add " + buildGradleFile.absolutePath)

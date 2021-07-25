@@ -68,6 +68,13 @@ Print the project version. For Android projects, it also prints android app vers
 ./gradlew printVersion
 ```
 
+#### Increment version
+Increments the project version.
+
+```
+./gradlew incrementVersion --versionIncrementType=MAJOR
+```
+
 ## Donations
 
 Donations are greatly appreciated. You can help us to pay for our domain and this project development.

@@ -6,5 +6,5 @@ open class SemanticVersionExtension(propertyResolver: PropertyResolver) {
 
     var versionLocationPath: String = propertyResolver.getRequiredStringProp(::versionLocationPath.name, "./build.gradle")
     var gitUserName: String? = propertyResolver.getStringProp(::gitUserName.name)
-    var gitEmail: String? = propertyResolver.getStringProp(::gitEmail.name)
+    var gitUserEmail: String? = propertyResolver.getStringProp(::gitUserEmail.name)
 }
