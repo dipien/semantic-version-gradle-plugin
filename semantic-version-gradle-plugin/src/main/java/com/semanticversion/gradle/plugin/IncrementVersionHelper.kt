@@ -57,11 +57,11 @@ object IncrementVersionHelper {
         if (versionFound) {
             FileUtils.writeLines(buildGradleFile, lines)
             if (localVersionIncrement) {
-                val gitHubUserName = semanticVersionExtension.gitHubUserName
+                val gitHubUserName = semanticVersionExtension.gitUserName
                 if (gitHubUserName != null) {
                     commandExecutor.execute("git config user.name $gitHubUserName")
                 }
-                val gitHubUserEmail = semanticVersionExtension.gitHubUserEmail
+                val gitHubUserEmail = semanticVersionExtension.gitEmail
                 if (gitHubUserEmail != null) {
                     commandExecutor.execute("git config user.email $gitHubUserEmail")
                 }
