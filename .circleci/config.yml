@@ -14,6 +14,10 @@ parameters:
     type: boolean
     default: false
 
+  upgradeDependencies:
+    type: boolean
+    default: false
+
 references:
 
   working_dir: &working_dir
@@ -216,6 +220,11 @@ workflows:
             branches:
               only:
                 - master
+    jobs:
+      - upgradeDependencies
+
+  upgradeDependencies:
+    when: << pipeline.parameters.upgradeDependencies >>
     jobs:
       - upgradeDependencies
 
