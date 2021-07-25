@@ -8,15 +8,41 @@
 
 Add the following configuration to your root `build.gradle`, replacing X.Y.Z by the [latest version](https://github.com/dipien/semantic-version-gradle-plugin/releases/latest)
 
-Using the plugins DSL:
+### Using the plugins DSL
 
+For android app projects:
 ```groovy
 plugins {
-  id "com.dipien.semanticversion" version "X.Y.Z" // or "com.dipien.semanticversion.android" for android apps
+  id "com.dipien.semanticversion.android" version "X.Y.Z"
 }
 ```
 
-Using legacy plugin application:
+For non-android app projects:
+
+```groovy
+plugins {
+  id "com.dipien.semanticversion" version "X.Y.Z"
+}
+```
+
+### Using legacy plugin application
+
+For android app projects:
+
+```groovy
+buildscript {
+    repositories {
+        mavenCentral() // or gradlePluginPortal()
+    }
+    dependencies {
+        classpath("com.dipien:semantic-version-android-gradle-plugin:X.Y.Z")
+    }
+}
+    
+apply plugin: "com.dipien.semanticversion.android"
+```
+
+For non-android app projects:
 
 ```groovy
 buildscript {
@@ -28,8 +54,9 @@ buildscript {
     }
 }
     
-apply plugin: "com.dipien.semanticversion" // or "com.dipien.semanticversion.android" for android apps
+apply plugin: "com.dipien.semanticversion"
 ```
+
 ## Configure
 
 ### Tasks
