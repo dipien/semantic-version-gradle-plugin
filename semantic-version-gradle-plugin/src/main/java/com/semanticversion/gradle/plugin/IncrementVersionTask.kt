@@ -25,15 +25,10 @@ open class IncrementVersionTask : AbstractTask() {
     @Option(description = "")
     var versionIncrementBranch: String? = null
 
-    @get:Input
-    @Option(description = "")
-    var localVersionIncrement: Boolean = false
-
     override fun onExecute() {
         IncrementVersionHelper.increment(
             project, VersionIncrementType.valueOf(versionIncrementType.toUpperCase()),
             versionIncrementBranch,
-            localVersionIncrement,
             commandExecutor, gitHelper,
             SemanticVersionGradlePlugin.getExtension(project)
         )

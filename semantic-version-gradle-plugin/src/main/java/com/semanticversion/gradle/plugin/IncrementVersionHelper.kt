@@ -18,15 +18,10 @@ object IncrementVersionHelper {
         project: Project,
         versionIncrementType: VersionIncrementType,
         versionIncrementBranch: String?,
-        localVersionIncrement: Boolean,
         commandExecutor: CommandExecutor,
         gitHelper: GitHelper,
         semanticVersionExtension: SemanticVersionExtension
     ) {
-
-        if (!localVersionIncrement && versionIncrementBranch == null) {
-            throw IllegalArgumentException("versionIncrementBranch is required")
-        }
 
         val buildGradleFile = project.file(semanticVersionExtension.versionLocationPath)
         val versionPattern = Pattern.compile("^\\s?version\\s?=\\s?[\"\'](\\d\\d?\\.\\d\\d?\\.\\d\\d?)[\"\']")
@@ -43,7 +38,7 @@ object IncrementVersionHelper {
                         versionText
                     )
                     versionIncrementType.increment(version)
-                    val newLineContent = versionMatcher.replaceFirst("version = '" + version.baseVersion + "'")
+                    val newLineContent = versionMatcher.replaceFirst("""version = "${version.baseVersion}"""")
                     lines.add(newLineContent)
                     project.version = version.toString()
                     versionFound = true
@@ -56,7 +51,7 @@ object IncrementVersionHelper {
         }
         if (versionFound) {
             FileUtils.writeLines(buildGradleFile, lines)
-            if (localVersionIncrement) {
+            if (versionIncrementBranch != null) {
                 val gitHubUserName = semanticVersionExtension.gitUserName
                 if (gitHubUserName != null) {
                     commandExecutor.execute("git config user.name $gitHubUserName")
