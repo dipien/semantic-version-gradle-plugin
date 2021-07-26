@@ -95,11 +95,7 @@ class AndroidVersionTest {
 
     private fun createVersion(version: String, versionCodePrefix: Int? = null, versionCodeExtraBit: Int = 0, minSdkVersionAsVersionCodePrefix: Boolean = true): AndroidVersion {
         val propertyResolver = FakePropertyResolver()
-        val extension = SemanticVersionAndroidExtension(propertyResolver)
-        extension.versionCodePrefix = versionCodePrefix
-        extension.versionCodeExtraBit = versionCodeExtraBit
-        extension.minSdkVersionAsVersionCodePrefix = minSdkVersionAsVersionCodePrefix
         val semanticVersionConfig = SemanticVersionConfig(propertyResolver)
-        return AndroidVersion(version, extension, semanticVersionConfig, 21)
+        return AndroidVersion(version, versionCodePrefix, minSdkVersionAsVersionCodePrefix, versionCodeExtraBit, semanticVersionConfig, 21)
     }
 }

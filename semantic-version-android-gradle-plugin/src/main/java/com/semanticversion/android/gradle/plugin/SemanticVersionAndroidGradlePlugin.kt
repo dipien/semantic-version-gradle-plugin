@@ -21,13 +21,17 @@ open class SemanticVersionAndroidGradlePlugin : SemanticVersionGradlePlugin() {
     override fun apply(project: Project) {
         super.apply(project)
 
+        val semanticVersionAndroidExtension = extension as SemanticVersionAndroidExtension
+
         project.allprojects.forEach { eachProject ->
             eachProject.afterEvaluate {
                 val androidAppExtension = it.extensions.findByType(AppExtension::class.java)
                 if (androidAppExtension != null) {
                     androidAppExtension.defaultConfig.versionCode = AndroidVersion(
                         baseVersion,
-                        extension as SemanticVersionAndroidExtension,
+                        semanticVersionAndroidExtension.versionCodePrefix,
+                        semanticVersionAndroidExtension.minSdkVersionAsVersionCodePrefix,
+                        semanticVersionAndroidExtension.versionCodeExtraBit,
                         SemanticVersionConfig(project.propertyResolver),
                         androidAppExtension.defaultConfig.minSdkVersion.apiLevel).versionCode
                     androidAppExtension.defaultConfig.versionName = project.version.toString()

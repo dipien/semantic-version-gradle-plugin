@@ -34,22 +34,25 @@ class AndroidVersion : Version {
     override val defaultMaximumVersion: Int
         get() = 99
 
+
     constructor(
         baseVersion: String,
-        extension: SemanticVersionAndroidExtension,
+        versionCodePrefix: Int?,
+        minSdkVersionAsVersionCodePrefix: Boolean,
+        versionCodeExtraBit: Int,
         config: SemanticVersionConfig,
         minSdkVersion: Int
     ) : super(baseVersion, config) {
-        if (extension.versionCodePrefix == null) {
-            if (extension.minSdkVersionAsVersionCodePrefix) {
+        if (versionCodePrefix == null) {
+            if (minSdkVersionAsVersionCodePrefix) {
                 this.versionCodePrefix = minSdkVersion
             } else {
                 this.versionCodePrefix = 0
             }
         } else {
-            this.versionCodePrefix = extension.versionCodePrefix
+            this.versionCodePrefix = versionCodePrefix
         }
-        this.versionCodeExtraBit = extension.versionCodeExtraBit
+        this.versionCodeExtraBit = versionCodeExtraBit
         versionCode = this.versionCodePrefix!! * 10000000 + this.versionCodeExtraBit!! * 1000000 + versionMajor!! * 10000 + versionMinor!! * 100 + versionPatch!!
     }
 
