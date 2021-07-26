@@ -20,9 +20,9 @@ open class Version {
     var versionClassifier: String? = null
     var isVersionTimestampEnabled: Boolean = false
     var isSnapshot: Boolean = true
+    var isLocal: Boolean = false
     var featureName: String? = null
     var featureBranchPrefix: String? = null
-    var isLocal: Boolean = false
     var maximumVersion: Int?
 
     protected open val defaultMaximumVersion: Int
@@ -36,7 +36,7 @@ open class Version {
         this.versionMajor = versionMajor
         this.versionMinor = versionMinor
         this.versionPatch = versionPatch
-        this.isSnapshot = false
+        validateBaseVersion()
     }
 
     constructor(version: String) {
@@ -49,7 +49,7 @@ open class Version {
             isSnapshot = versionClassifier == SNAPSHOT_CLASSIFIER
 
             // TODO Add support to this
-            isLocal = false
+            isLocal = versionClassifier == LOCAL_CLASSIFIER
             isVersionTimestampEnabled = false
         } else {
             isSnapshot = false
@@ -58,7 +58,7 @@ open class Version {
         }
     }
 
-    constructor(config: SemanticVersionConfig, gitHelper: GitHelper, baseVersion: String) {
+    constructor(baseVersion: String, config: SemanticVersionConfig, gitHelper: GitHelper) {
         maximumVersion = config.maximumVersion ?: defaultMaximumVersion
         parseBaseVersion(baseVersion)
 
@@ -124,14 +124,18 @@ open class Version {
             throw RuntimeException("The version [$baseVersion] is not a valid Semantic Versioning")
         }
         versionMajor = versionSplit[0].toInt()
+        versionMinor = versionSplit[1].toInt()
+        versionPatch = versionSplit[2].toInt()
+        validateBaseVersion()
+    }
+
+    private fun validateBaseVersion() {
         if (versionMajor!! > maximumVersion!! || versionMajor!! < 0) {
             throw RuntimeException("The version major [$versionMajor] should be a number between 0 and $maximumVersion")
         }
-        versionMinor = versionSplit[1].toInt()
         if (versionMinor!! > maximumVersion!! || versionMinor!! < 0) {
             throw RuntimeException("The version minor [$versionMinor] should be a number between 0 and $maximumVersion")
         }
-        versionPatch = versionSplit[2].toInt()
         if (versionPatch!! > maximumVersion!! || versionPatch!! < 0) {
             throw RuntimeException("The version patch [$versionPatch] should be a number between 0 and $maximumVersion")
         }

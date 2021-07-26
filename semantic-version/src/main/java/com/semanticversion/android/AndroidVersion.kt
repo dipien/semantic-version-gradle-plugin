@@ -35,12 +35,12 @@ class AndroidVersion : Version {
         get() = 99
 
     constructor(
+        baseVersion: String,
         extension: SemanticVersionAndroidExtension,
         config: SemanticVersionConfig,
         gitHelper: GitHelper,
-        baseVersion: String,
         minSdkVersion: Int
-    ) : super(config, gitHelper, baseVersion) {
+    ) : super(baseVersion, config, gitHelper) {
         if (extension.versionCodePrefix == null) {
             if (extension.minSdkVersionAsVersionCodePrefix) {
                 this.versionCodePrefix = minSdkVersion

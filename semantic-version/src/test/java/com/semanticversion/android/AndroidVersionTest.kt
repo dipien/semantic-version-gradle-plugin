@@ -62,6 +62,6 @@ class AndroidVersionTest {
         extension.versionCodeExtraBit = versionCodeExtraBit
         extension.minSdkVersionAsVersionCodePrefix = minSdkVersionAsVersionCodePrefix
         val semanticVersionConfig = SemanticVersionConfig(propertyResolver)
-        return AndroidVersion(extension, semanticVersionConfig, gitHelper, version, 21)
+        return AndroidVersion(version, extension, semanticVersionConfig, gitHelper,21)
     }
 }

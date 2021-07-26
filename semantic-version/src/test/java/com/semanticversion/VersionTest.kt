@@ -51,6 +51,11 @@ class VersionTest {
         Truth.assertThat(version.toString()).isEqualTo("1.2.3")
     }
 
+    @Test(expected = RuntimeException::class)
+    fun `GIVEN an invalid version WHEN creating a version THEN it throws an exception`() {
+        createVersion("1.2.1234")
+    }
+
     @Test
     fun `GIVEN a valid version WHEN creating a version using the splits constructor THEN it is successfully created`() {
         val version = Version(1, 2, 3)
@@ -58,13 +63,18 @@ class VersionTest {
         Truth.assertThat(version.versionMajor).isEqualTo(1)
         Truth.assertThat(version.versionMinor).isEqualTo(2)
         Truth.assertThat(version.versionPatch).isEqualTo(3)
-        Truth.assertThat(version.isSnapshot).isFalse()
+        Truth.assertThat(version.isSnapshot).isTrue()
         Truth.assertThat(version.isLocal).isFalse()
         Truth.assertThat(version.isVersionTimestampEnabled).isFalse()
         Truth.assertThat(version.featureName).isNull()
         Truth.assertThat(version.versionClassifier).isNull()
         Truth.assertThat(version.baseVersion).isEqualTo("1.2.3")
         Truth.assertThat(version.toString()).isEqualTo("1.2.3")
+    }
+
+    @Test(expected = RuntimeException::class)
+    fun `GIVEN an invalid version WHEN creating a version using the splits constructor THEN it throws an exception`() {
+        Version(1, 2, 1234)
     }
 
     @Test(expected = RuntimeException::class)
@@ -197,12 +207,18 @@ class VersionTest {
         Truth.assertThat(version.versionMinor).isEqualTo(2)
         Truth.assertThat(version.versionPatch).isEqualTo(3)
         Truth.assertThat(version.toString()).isEqualTo("1.2.3")
+        Truth.assertThat(version.isSnapshot).isFalse()
+        Truth.assertThat(version.isLocal).isFalse()
+        Truth.assertThat(version.isVersionTimestampEnabled).isFalse()
 
         version = Version("111.222.333")
         Truth.assertThat(version.versionMajor).isEqualTo(111)
         Truth.assertThat(version.versionMinor).isEqualTo(222)
         Truth.assertThat(version.versionPatch).isEqualTo(333)
         Truth.assertThat(version.toString()).isEqualTo("111.222.333")
+        Truth.assertThat(version.isSnapshot).isFalse()
+        Truth.assertThat(version.isLocal).isFalse()
+        Truth.assertThat(version.isVersionTimestampEnabled).isFalse()
     }
 
     @Test
@@ -211,20 +227,24 @@ class VersionTest {
         Truth.assertThat(version.versionMajor).isEqualTo(1)
         Truth.assertThat(version.versionMinor).isEqualTo(2)
         Truth.assertThat(version.versionPatch).isEqualTo(3)
+        Truth.assertThat(version.toString()).isEqualTo("1.2.3-SNAPSHOT")
         Truth.assertThat(version.versionClassifier).isEqualTo("SNAPSHOT")
         Truth.assertThat(version.isSnapshot).isTrue()
-        Truth.assertThat(version.toString()).isEqualTo("1.2.3-SNAPSHOT")
+        Truth.assertThat(version.isLocal).isFalse()
+        Truth.assertThat(version.isVersionTimestampEnabled).isFalse()
     }
 
     @Test
-    fun `GIVEN a non stable version WHEN creating a version using the full version`() {
+    fun `GIVEN a beta version WHEN creating a version using the full version`() {
         val version = Version("1.2.3-BETA")
         Truth.assertThat(version.versionMajor).isEqualTo(1)
         Truth.assertThat(version.versionMinor).isEqualTo(2)
         Truth.assertThat(version.versionPatch).isEqualTo(3)
+        Truth.assertThat(version.toString()).isEqualTo("1.2.3-BETA")
         Truth.assertThat(version.versionClassifier).isEqualTo("BETA")
         Truth.assertThat(version.isSnapshot).isFalse()
-        Truth.assertThat(version.toString()).isEqualTo("1.2.3-BETA")
+        Truth.assertThat(version.isLocal).isFalse()
+        Truth.assertThat(version.isVersionTimestampEnabled).isFalse()
     }
 
     @Test(expected = RuntimeException::class)
@@ -262,6 +282,6 @@ class VersionTest {
         val gitHelper = FakeGitHelper()
         val semanticVersionConfig = SemanticVersionConfig(propertyResolver)
         semanticVersionConfig.snapshot = snapshot
-        return Version(semanticVersionConfig, gitHelper, baseVersion)
+        return Version(baseVersion, semanticVersionConfig, gitHelper)
     }
 }
