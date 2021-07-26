@@ -26,10 +26,9 @@ open class SemanticVersionAndroidGradlePlugin : SemanticVersionGradlePlugin() {
                 val androidAppExtension = it.extensions.findByType(AppExtension::class.java)
                 if (androidAppExtension != null) {
                     androidAppExtension.defaultConfig.versionCode = AndroidVersion(
+                        baseVersion,
                         extension as SemanticVersionAndroidExtension,
                         SemanticVersionConfig(project.propertyResolver),
-                        gitHelper,
-                        baseVersion,
                         androidAppExtension.defaultConfig.minSdkVersion.apiLevel).versionCode
                     androidAppExtension.defaultConfig.versionName = project.version.toString()
                 }

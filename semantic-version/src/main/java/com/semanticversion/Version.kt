@@ -18,11 +18,14 @@ open class Version {
     var versionMinor: Int? = null
     var versionPatch: Int? = null
     var versionClassifier: String? = null
-    var isVersionTimestampEnabled: Boolean = false
     var isSnapshot: Boolean = true
-    var isLocal: Boolean = false
-    var featureName: String? = null
-    var featureBranchPrefix: String? = null
+
+    // TODO Add support to this
+    // var isVersionTimestampEnabled: Boolean = false
+    // var isLocal: Boolean = false
+    // var featureName: String? = null
+    // var featureBranchPrefix: String? = null
+
     var maximumVersion: Int?
 
     protected open val defaultMaximumVersion: Int
@@ -48,56 +51,55 @@ open class Version {
             versionClassifier = split[1]
             isSnapshot = versionClassifier == SNAPSHOT_CLASSIFIER
 
-            // TODO Add support to this
-            isLocal = versionClassifier == LOCAL_CLASSIFIER
-            isVersionTimestampEnabled = false
+            // isLocal = versionClassifier == LOCAL_CLASSIFIER
+            // isVersionTimestampEnabled = false
         } else {
             isSnapshot = false
-            isLocal = false
-            isVersionTimestampEnabled = false
+            // isLocal = false
+            // isVersionTimestampEnabled = false
         }
     }
 
-    constructor(baseVersion: String, config: SemanticVersionConfig, gitHelper: GitHelper) {
+    constructor(baseVersion: String, config: SemanticVersionConfig) {
         maximumVersion = config.maximumVersion ?: defaultMaximumVersion
         parseBaseVersion(baseVersion)
 
         versionClassifier = config.versionClassifier
         if (versionClassifier == null) {
 
-            featureBranchPrefix = config.featureBranchPrefix
-            if (!featureBranchPrefix.isNullOrEmpty()) {
-                val gitBranch = gitHelper.getGitBranch()
-                val isFeatureBranch = gitBranch?.startsWith(featureBranchPrefix!!) ?: false
-                if (isFeatureBranch) {
-                    featureName = gitBranch!!.replace(featureBranchPrefix!!, "")
-                    versionClassifier = featureName
-                }
-            }
-
-            config.local?.let {
-                isLocal = it
-            }
-            if (isLocal) {
-                if (versionClassifier == null) {
-                    versionClassifier = ""
-                } else {
-                    versionClassifier += VERSION_CLASSIFIER_SEPARATOR
-                }
-                versionClassifier += LOCAL_CLASSIFIER
-            }
-
-            config.versionTimestampEnabled?.let {
-                isVersionTimestampEnabled = it
-            }
-            if (isVersionTimestampEnabled) {
-                if (versionClassifier == null) {
-                    versionClassifier = ""
-                } else {
-                    versionClassifier += VERSION_CLASSIFIER_SEPARATOR
-                }
-                versionClassifier += format(now(), VERSION_TIMESTAMP_FORMAT)
-            }
+            // featureBranchPrefix = config.featureBranchPrefix
+            // if (!featureBranchPrefix.isNullOrEmpty()) {
+            //     val gitBranch = gitHelper.getGitBranch()
+            //     val isFeatureBranch = gitBranch?.startsWith(featureBranchPrefix!!) ?: false
+            //     if (isFeatureBranch) {
+            //         featureName = gitBranch!!.replace(featureBranchPrefix!!, "")
+            //         versionClassifier = featureName
+            //     }
+            // }
+            //
+            // config.local?.let {
+            //     isLocal = it
+            // }
+            // if (isLocal) {
+            //     if (versionClassifier == null) {
+            //         versionClassifier = ""
+            //     } else {
+            //         versionClassifier += VERSION_CLASSIFIER_SEPARATOR
+            //     }
+            //     versionClassifier += LOCAL_CLASSIFIER
+            // }
+            //
+            // config.versionTimestampEnabled?.let {
+            //     isVersionTimestampEnabled = it
+            // }
+            // if (isVersionTimestampEnabled) {
+            //     if (versionClassifier == null) {
+            //         versionClassifier = ""
+            //     } else {
+            //         versionClassifier += VERSION_CLASSIFIER_SEPARATOR
+            //     }
+            //     versionClassifier += format(now(), VERSION_TIMESTAMP_FORMAT)
+            // }
 
             config.snapshot?.let {
                 isSnapshot = it
@@ -112,9 +114,8 @@ open class Version {
             }
         } else {
             isSnapshot = versionClassifier == SNAPSHOT_CLASSIFIER
-            // TODO Add support to this
-            isLocal = false
-            isVersionTimestampEnabled = false
+            // isLocal = false
+            // isVersionTimestampEnabled = false
         }
     }
 

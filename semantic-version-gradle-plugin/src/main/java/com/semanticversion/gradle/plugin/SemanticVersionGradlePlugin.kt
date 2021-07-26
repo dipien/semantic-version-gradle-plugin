@@ -41,7 +41,7 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
         }
 
         baseVersion = Version(project.version.toString()).baseVersion
-        val version = Version(SemanticVersionConfig(project.propertyResolver), gitHelper, baseVersion)
+        val version = Version(baseVersion, SemanticVersionConfig(project.propertyResolver))
         project.version = version.toString()
 
         project.subprojects.forEach {

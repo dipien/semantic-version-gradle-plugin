@@ -38,9 +38,8 @@ class AndroidVersion : Version {
         baseVersion: String,
         extension: SemanticVersionAndroidExtension,
         config: SemanticVersionConfig,
-        gitHelper: GitHelper,
         minSdkVersion: Int
-    ) : super(baseVersion, config, gitHelper) {
+    ) : super(baseVersion, config) {
         if (extension.versionCodePrefix == null) {
             if (extension.minSdkVersionAsVersionCodePrefix) {
                 this.versionCodePrefix = minSdkVersion

@@ -32,9 +32,8 @@ object IncrementVersionHelper {
                 if (versionMatcher.find()) {
                     val versionText = versionMatcher.group(1)
                     val version = Version(
-                        SemanticVersionConfig(project.propertyResolver),
-                        gitHelper,
-                        versionText
+                        versionText,
+                        SemanticVersionConfig(project.propertyResolver)
                     )
                     versionIncrementType.increment(version)
                     val newLineContent = versionMatcher.replaceFirst("""version = "${version.baseVersion}"""")
