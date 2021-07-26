@@ -1,7 +1,6 @@
 package com.semanticversion.android
 
 import com.semanticversion.SemanticVersionConfig
-import com.semanticversion.common.FakeGitHelper
 import com.semanticversion.common.FakePropertyResolver
 import org.junit.Assert
 import org.junit.Test
