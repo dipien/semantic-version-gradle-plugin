@@ -26,12 +26,15 @@ open class IncrementVersionTask : AbstractTask() {
     var versionIncrementBranch: String? = null
 
     override fun onExecute() {
+        val extension = SemanticVersionGradlePlugin.getExtension(project)
         IncrementVersionHelper.increment(
             project,
             VersionIncrementType.valueOf(versionIncrementType.toUpperCase()),
             versionIncrementBranch,
-            commandExecutor,
-            SemanticVersionGradlePlugin.getExtension(project)
+            extension.versionLocationPath,
+            extension.gitUserName,
+            extension.gitUserEmail,
+            commandExecutor
         )
     }
 }

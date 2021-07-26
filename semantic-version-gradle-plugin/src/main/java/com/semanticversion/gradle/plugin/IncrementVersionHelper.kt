@@ -2,7 +2,6 @@ package com.semanticversion.gradle.plugin
 
 import com.jdroid.java.utils.FileUtils
 import com.semanticversion.SemanticVersionConfig
-import com.semanticversion.SemanticVersionExtension
 import com.semanticversion.Version
 import com.semanticversion.VersionIncrementType
 import com.semanticversion.common.GitHelper
@@ -17,11 +16,13 @@ object IncrementVersionHelper {
         project: Project,
         versionIncrementType: VersionIncrementType,
         versionIncrementBranch: String?,
-        commandExecutor: CommandExecutor,
-        semanticVersionExtension: SemanticVersionExtension
+        versionLocationPath: String,
+        gitUserName: String?,
+        gitUserEmail: String?,
+        commandExecutor: CommandExecutor
     ) {
 
-        val buildGradleFile = project.file(semanticVersionExtension.versionLocationPath)
+        val buildGradleFile = project.file(versionLocationPath)
         val versionPattern = Pattern.compile("^\\s?version\\s?=\\s?[\"\'](\\d\\d?\\.\\d\\d?\\.\\d\\d?)[\"\']")
         val lines = mutableListOf<String>()
         var versionFound = false
@@ -49,11 +50,9 @@ object IncrementVersionHelper {
         if (versionFound) {
             FileUtils.writeLines(buildGradleFile, lines)
             if (versionIncrementBranch != null) {
-                val gitUserName = semanticVersionExtension.gitUserName
                 if (gitUserName != null) {
                     commandExecutor.execute("git config user.name $gitUserName")
                 }
-                val gitUserEmail = semanticVersionExtension.gitUserEmail
                 if (gitUserEmail != null) {
                     commandExecutor.execute("git config user.email $gitUserEmail")
                 }
