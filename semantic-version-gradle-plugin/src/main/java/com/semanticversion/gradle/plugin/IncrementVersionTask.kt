@@ -27,9 +27,10 @@ open class IncrementVersionTask : AbstractTask() {
 
     override fun onExecute() {
         IncrementVersionHelper.increment(
-            project, VersionIncrementType.valueOf(versionIncrementType.toUpperCase()),
+            project,
+            VersionIncrementType.valueOf(versionIncrementType.toUpperCase()),
             versionIncrementBranch,
-            commandExecutor, gitHelper,
+            commandExecutor,
             SemanticVersionGradlePlugin.getExtension(project)
         )
     }

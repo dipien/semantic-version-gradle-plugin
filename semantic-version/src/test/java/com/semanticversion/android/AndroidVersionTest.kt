@@ -53,6 +53,46 @@ class AndroidVersionTest {
         Assert.assertEquals("10.20.30", version.toString())
     }
 
+    @Test
+    fun `GIVEN valid version code with only 1 prefix WHEN creating an AndroidVersion THEN it is successfully created`() {
+        val versionCode = 1100203
+        val version = AndroidVersion(versionCode)
+        Assert.assertEquals(versionCode, version.versionCode)
+        Assert.assertEquals("10.2.3", version.toString())
+    }
+
+    @Test
+    fun `GIVEN valid version code without prefixes and two digits major WHEN creating an AndroidVersion THEN it is successfully created`() {
+        val versionCode = 100203
+        val version = AndroidVersion(versionCode)
+        Assert.assertEquals(versionCode, version.versionCode)
+        Assert.assertEquals("10.2.3", version.toString())
+    }
+
+    @Test
+    fun `GIVEN valid version code without prefixes WHEN creating an AndroidVersion THEN it is successfully created`() {
+        val versionCode = 10203
+        val version = AndroidVersion(versionCode)
+        Assert.assertEquals(versionCode, version.versionCode)
+        Assert.assertEquals("1.2.3", version.toString())
+    }
+
+    @Test
+    fun `GIVEN valid version code without major without prefixes WHEN creating an AndroidVersion THEN it is successfully created`() {
+        val versionCode = 203
+        val version = AndroidVersion(versionCode)
+        Assert.assertEquals(versionCode, version.versionCode)
+        Assert.assertEquals("0.2.3", version.toString())
+    }
+
+    @Test
+    fun `GIVEN valid version code without minor prefixes WHEN creating an AndroidVersion THEN it is successfully created`() {
+        val versionCode = 3
+        val version = AndroidVersion(versionCode)
+        Assert.assertEquals(versionCode, version.versionCode)
+        Assert.assertEquals("0.0.3", version.toString())
+    }
+
     private fun createVersion(version: String, versionCodePrefix: Int? = null, versionCodeExtraBit: Int = 0, minSdkVersionAsVersionCodePrefix: Boolean = true): AndroidVersion {
         val propertyResolver = FakePropertyResolver()
         val extension = SemanticVersionAndroidExtension(propertyResolver)

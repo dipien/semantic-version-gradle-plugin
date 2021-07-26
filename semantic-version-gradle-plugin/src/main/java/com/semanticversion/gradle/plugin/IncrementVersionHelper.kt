@@ -18,7 +18,6 @@ object IncrementVersionHelper {
         versionIncrementType: VersionIncrementType,
         versionIncrementBranch: String?,
         commandExecutor: CommandExecutor,
-        gitHelper: GitHelper,
         semanticVersionExtension: SemanticVersionExtension
     ) {
 

@@ -2,6 +2,7 @@ package com.semanticversion.android
 
 import com.semanticversion.SemanticVersionConfig
 import com.semanticversion.Version
+import kotlin.math.max
 
 class AndroidVersion : Version {
 
@@ -12,15 +13,15 @@ class AndroidVersion : Version {
 
             var beginIndex = versionCodeString.length - 2
             var endIndex = versionCodeString.length
-            val patch = Integer.parseInt(versionCodeString.substring(beginIndex, endIndex))
+            val patch = versionCodeString.substring(max(beginIndex, 0), max(endIndex, 0)).toIntOrNull() ?: 0
 
             beginIndex -= 2
             endIndex -= 2
-            val minor = Integer.parseInt(versionCodeString.substring(beginIndex, endIndex))
+            val minor = versionCodeString.substring(max(beginIndex, 0), max(endIndex, 0)).toIntOrNull() ?: 0
 
             beginIndex -= 2
             endIndex -= 2
-            val major = Integer.parseInt(versionCodeString.substring(beginIndex, endIndex))
+            val major = versionCodeString.substring(max(beginIndex, 0), max(endIndex, 0)).toIntOrNull() ?: 0
 
             return "$major.$minor.$patch"
         }
