@@ -1,7 +1,6 @@
 package com.semanticversion.android
 
 import com.semanticversion.SemanticVersionConfig
-import com.semanticversion.common.GitHelper
 import com.semanticversion.Version
 
 class AndroidVersion : Version {

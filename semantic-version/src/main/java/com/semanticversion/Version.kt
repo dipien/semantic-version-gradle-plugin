@@ -1,17 +1,13 @@
 package com.semanticversion
 
-import com.jdroid.java.date.DateUtils.format
-import com.jdroid.java.date.DateUtils.now
-import com.semanticversion.common.GitHelper
-
 open class Version {
 
     companion object {
         const val VERSION_CLASSIFIER_SEPARATOR = "-"
         const val SNAPSHOT_CLASSIFIER = "SNAPSHOT"
-        const val LOCAL_CLASSIFIER = "LOCAL"
         const val BASE_VERSION_SEPARATOR = "."
-        const val VERSION_TIMESTAMP_FORMAT = "YYYYMMddHHmmss"
+        // const val LOCAL_CLASSIFIER = "LOCAL"
+        // const val VERSION_TIMESTAMP_FORMAT = "YYYYMMddHHmmss"
     }
 
     var versionMajor: Int? = null
@@ -50,7 +46,6 @@ open class Version {
         if (split.size > 1) {
             versionClassifier = split[1]
             isSnapshot = versionClassifier == SNAPSHOT_CLASSIFIER
-
             // isLocal = versionClassifier == LOCAL_CLASSIFIER
             // isVersionTimestampEnabled = false
         } else {
@@ -66,7 +61,6 @@ open class Version {
 
         versionClassifier = config.versionClassifier
         if (versionClassifier == null) {
-
             // featureBranchPrefix = config.featureBranchPrefix
             // if (!featureBranchPrefix.isNullOrEmpty()) {
             //     val gitBranch = gitHelper.getGitBranch()
