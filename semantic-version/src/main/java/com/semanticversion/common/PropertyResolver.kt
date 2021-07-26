@@ -18,5 +18,7 @@ interface PropertyResolver {
 
     fun getDoubleProp(propertyName: String, defaultValue: Double? = null): Double?
 
+    fun getBooleanProp(propertyName: String, defaultValue: Boolean? = null): Boolean?
+
     fun getStringListProp(propertyName: String, defaultValue: List<String>? = null): List<String>?
 }

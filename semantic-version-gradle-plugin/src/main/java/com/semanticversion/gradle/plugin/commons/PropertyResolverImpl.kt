@@ -38,6 +38,15 @@ class PropertyResolverImpl(private val project: Project) : PropertyResolver {
         }
     }
 
+    override fun getBooleanProp(propertyName: String, defaultValue: Boolean?): Boolean? {
+        val value = getProp(propertyName)
+        return if (value == null || value.toString().isEmpty()) {
+            defaultValue
+        } else {
+            value.toString().toBoolean()
+        }
+    }
+
     override fun getDoubleProp(propertyName: String, defaultValue: Double?): Double? {
         val value = getProp(propertyName)
         return if (value == null || value.toString().isEmpty()) {

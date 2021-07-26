@@ -59,7 +59,7 @@ open class Version {
     }
 
     constructor(config: SemanticVersionConfig, gitHelper: GitHelper, baseVersion: String) {
-        maximumVersion = config.maximumVersion
+        maximumVersion = config.maximumVersion ?: defaultMaximumVersion
         parseBaseVersion(baseVersion)
 
         versionClassifier = config.versionClassifier
@@ -75,7 +75,9 @@ open class Version {
                 }
             }
 
-            isLocal = config.local
+            config.local?.let {
+                isLocal = it
+            }
             if (isLocal) {
                 if (versionClassifier == null) {
                     versionClassifier = ""
@@ -85,7 +87,9 @@ open class Version {
                 versionClassifier += LOCAL_CLASSIFIER
             }
 
-            isVersionTimestampEnabled = config.versionTimestampEnabled
+            config.versionTimestampEnabled?.let {
+                isVersionTimestampEnabled = it
+            }
             if (isVersionTimestampEnabled) {
                 if (versionClassifier == null) {
                     versionClassifier = ""
@@ -95,7 +99,9 @@ open class Version {
                 versionClassifier += format(now(), VERSION_TIMESTAMP_FORMAT)
             }
 
-            isSnapshot = config.snapshot
+            config.snapshot?.let {
+                isSnapshot = it
+            }
             if (isSnapshot) {
                 if (versionClassifier == null) {
                     versionClassifier = ""

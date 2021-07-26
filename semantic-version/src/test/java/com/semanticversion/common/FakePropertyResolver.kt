@@ -30,6 +30,14 @@ class FakePropertyResolver(private val properties: Map<String, String> = emptyMa
         return properties.getOrDefault(propertyName, defaultValue).toString().toIntOrNull() ?: defaultValue
     }
 
+    override fun getBooleanProp(propertyName: String, defaultValue: Boolean?): Boolean? {
+        return if (properties[propertyName] == null) {
+            defaultValue
+        } else {
+            properties[propertyName].toBoolean()
+        }
+    }
+
     override fun getDoubleProp(propertyName: String, defaultValue: Double?): Double? {
         return properties.getOrDefault(propertyName, defaultValue).toString().toDoubleOrNull() ?: defaultValue
     }

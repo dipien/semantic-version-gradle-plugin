@@ -75,6 +75,14 @@ Increments the project version.
 ./gradlew incrementVersion --versionIncrementType=MAJOR
 ```
 
+##### versionIncrementType option
+
+Define the type of increment. Possible values: MAJOR, MINOR, PATCH
+
+##### versionIncrementBranch option
+
+The branch where the version increment will be committed and pushed
+
 ## Donations
 
 Donations are greatly appreciated. You can help us to pay for our domain and this project development.

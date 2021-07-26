@@ -13,7 +13,7 @@ open class IncrementVersionTask : AbstractTask() {
     }
 
     init {
-        description = "Increments the version"
+        description = "Increment the project version"
     }
 
     @get:Input
