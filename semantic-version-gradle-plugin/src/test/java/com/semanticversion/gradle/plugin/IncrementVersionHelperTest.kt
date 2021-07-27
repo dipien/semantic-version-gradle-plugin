@@ -24,6 +24,7 @@ class IncrementVersionHelperTest {
     @Test
     fun `GIVEN a version file with a classifier WHEN incrementing the major THEN the version is properly incremented`() {
         testIncrement("version = \"1.0.0-SNAPSHOT\"\n", VersionIncrementType.MAJOR, "2.0.0-SNAPSHOT", "version = \"2.0.0-SNAPSHOT\"\n")
+        testIncrement("version = \"1.0.0-BETA\"\n", VersionIncrementType.PATCH, "1.0.1-BETA", "version = \"1.0.1-BETA\"\n")
     }
 
     @Test

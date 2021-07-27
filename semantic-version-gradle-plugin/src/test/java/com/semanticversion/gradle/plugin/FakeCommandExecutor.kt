@@ -2,6 +2,7 @@ package com.semanticversion.gradle.plugin
 
 import java.io.File
 import com.semanticversion.gradle.plugin.commons.CommandExecutor
+import com.semanticversion.gradle.plugin.commons.ExtendedExecResult
 
 class FakeCommandExecutor: CommandExecutor {
     override fun execute(
@@ -10,7 +11,7 @@ class FakeCommandExecutor: CommandExecutor {
         logStandardOutput: Boolean,
         logErrorOutput: Boolean,
         ignoreExitValue: Boolean
-    ): com.semanticversion.gradle.plugin.commons.ExtendedExecResult {
+    ): ExtendedExecResult {
         TODO("Not yet implemented")
     }
 }
