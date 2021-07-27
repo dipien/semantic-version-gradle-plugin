@@ -1,4 +1,4 @@
-package com.semanticversion.common
+package com.semanticversion.gradle.plugin.commons
 
 interface GitHelper {
 

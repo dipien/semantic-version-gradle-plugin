@@ -1,6 +1,6 @@
 package com.semanticversion.gradle.plugin.commons
 
-import com.semanticversion.common.GitHelper
+import com.semanticversion.gradle.plugin.commons.GitHelper
 import org.gradle.api.DefaultTask
 import org.gradle.api.logging.LogLevel
 import org.gradle.api.tasks.Internal

@@ -3,7 +3,7 @@ package com.semanticversion.gradle.plugin
 import com.semanticversion.SemanticVersionConfig
 import com.semanticversion.gradle.plugin.SemanticVersionExtension
 import com.semanticversion.Version
-import com.semanticversion.common.GitHelper
+import com.semanticversion.gradle.plugin.commons.GitHelper
 import com.semanticversion.gradle.plugin.commons.CommandExecutorImpl
 import com.semanticversion.gradle.plugin.commons.GitHelperImpl
 import com.semanticversion.gradle.plugin.commons.propertyResolver

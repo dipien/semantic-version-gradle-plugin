@@ -4,7 +4,7 @@ import com.jdroid.java.utils.FileUtils
 import com.semanticversion.SemanticVersionConfig
 import com.semanticversion.Version
 import com.semanticversion.VersionIncrementType
-import com.semanticversion.common.GitHelper
+import com.semanticversion.gradle.plugin.commons.GitHelper
 import com.semanticversion.gradle.plugin.commons.CommandExecutor
 import com.semanticversion.gradle.plugin.commons.propertyResolver
 import org.gradle.api.Project
