@@ -1,7 +1,7 @@
 package com.semanticversion.android.gradle.plugin
 
 import com.android.build.gradle.AppExtension
-import com.semanticversion.SemanticVersionConfig
+import com.semanticversion.android.AndroidSemanticVersionConfig
 import com.semanticversion.android.AndroidVersion
 import com.semanticversion.gradle.plugin.SemanticVersionGradlePlugin
 import com.semanticversion.android.gradle.plugin.SemanticVersionAndroidExtension
@@ -27,13 +27,16 @@ open class SemanticVersionAndroidGradlePlugin : SemanticVersionGradlePlugin() {
             eachProject.afterEvaluate {
                 val androidAppExtension = it.extensions.findByType(AppExtension::class.java)
                 if (androidAppExtension != null) {
-                    androidAppExtension.defaultConfig.versionCode = AndroidVersion(
-                        baseVersion,
+                    val config = AndroidSemanticVersionConfig(
+                        semanticVersionAndroidExtension.maximumVersion,
+                        semanticVersionAndroidExtension.versionClassifier,
+                        semanticVersionAndroidExtension.snapshot,
                         semanticVersionAndroidExtension.versionCodePrefix,
                         semanticVersionAndroidExtension.minSdkVersionAsVersionCodePrefix,
                         semanticVersionAndroidExtension.versionCodeExtraBit,
-                        SemanticVersionConfig(semanticVersionAndroidExtension.maximumVersion, semanticVersionAndroidExtension.versionClassifier, semanticVersionAndroidExtension.snapshot),
-                        androidAppExtension.defaultConfig.minSdkVersion.apiLevel).versionCode
+                        androidAppExtension.defaultConfig.minSdkVersion.apiLevel)
+
+                    androidAppExtension.defaultConfig.versionCode = AndroidVersion(baseVersion, config).versionCode
                     androidAppExtension.defaultConfig.versionName = project.version.toString()
                 }
             }

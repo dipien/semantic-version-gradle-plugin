@@ -1,6 +1,5 @@
 package com.semanticversion.android
 
-import com.semanticversion.SemanticVersionConfig
 import org.junit.Assert
 import org.junit.Test
 
@@ -93,6 +92,12 @@ class AndroidVersionTest {
     }
 
     private fun createVersion(version: String, versionCodePrefix: Int? = null, versionCodeExtraBit: Int = 0, minSdkVersionAsVersionCodePrefix: Boolean = true): AndroidVersion {
-        return AndroidVersion(version, versionCodePrefix, minSdkVersionAsVersionCodePrefix, versionCodeExtraBit, SemanticVersionConfig(), 21)
+        return AndroidVersion(version,
+                AndroidSemanticVersionConfig(null, null, null,
+                versionCodePrefix,
+                minSdkVersionAsVersionCodePrefix,
+                versionCodeExtraBit,
+                21)
+        )
     }
 }

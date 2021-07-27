@@ -1,6 +1,5 @@
 package com.semanticversion.android
 
-import com.semanticversion.SemanticVersionConfig
 import com.semanticversion.Version
 import kotlin.math.max
 
@@ -36,22 +35,18 @@ class AndroidVersion : Version {
 
     constructor(
         baseVersion: String,
-        versionCodePrefix: Int?,
-        minSdkVersionAsVersionCodePrefix: Boolean,
-        versionCodeExtraBit: Int,
-        config: SemanticVersionConfig,
-        minSdkVersion: Int
+        config: AndroidSemanticVersionConfig
     ) : super(baseVersion, config) {
-        if (versionCodePrefix == null) {
-            if (minSdkVersionAsVersionCodePrefix) {
-                this.versionCodePrefix = minSdkVersion
+        if (config.versionCodePrefix == null) {
+            if (config.minSdkVersionAsVersionCodePrefix) {
+                this.versionCodePrefix = config.minSdkVersion
             } else {
                 this.versionCodePrefix = 0
             }
         } else {
-            this.versionCodePrefix = versionCodePrefix
+            this.versionCodePrefix = config.versionCodePrefix
         }
-        this.versionCodeExtraBit = versionCodeExtraBit
+        this.versionCodeExtraBit = config.versionCodeExtraBit
         versionCode = this.versionCodePrefix!! * 10000000 + this.versionCodeExtraBit!! * 1000000 + versionMajor!! * 10000 + versionMinor!! * 100 + versionPatch!!
     }
 
