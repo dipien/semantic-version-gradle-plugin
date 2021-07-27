@@ -2,6 +2,8 @@
 
 # Semantic Version Gradle Plugin
 
+Gradle Plugin to automatically apply the [Semantic Versioning](https://semver.org/) scheme to a Gradle project.
+
 ## Features
 
 ## Setup
@@ -13,7 +15,7 @@ Add the following configuration to your root `build.gradle`, replacing X.Y.Z by 
 For android app projects:
 ```groovy
 plugins {
-  id "com.dipien.semanticversion.android" version "X.Y.Z"
+  id "com.dipien.android.semantic-version" version "X.Y.Z"
 }
 ```
 
@@ -21,7 +23,7 @@ For non-android app projects:
 
 ```groovy
 plugins {
-  id "com.dipien.semanticversion" version "X.Y.Z"
+  id "com.dipien.semantic-version" version "X.Y.Z"
 }
 ```
 
@@ -39,7 +41,7 @@ buildscript {
     }
 }
     
-apply plugin: "com.dipien.semanticversion.android"
+apply plugin: "com.dipien.android.semantic-version"
 ```
 
 For non-android app projects:
@@ -54,7 +56,7 @@ buildscript {
     }
 }
     
-apply plugin: "com.dipien.semanticversion"
+apply plugin: "com.dipien.semantic-version"
 ```
 
 ## Configure

@@ -1,9 +1,9 @@
 ext.PROJECT_NAME = "Semantic Version Gradle Plugin"
 description = "Gradle Plugin to handle Semantic Version"
 ext.ARTIFACT_ID = "semantic-version-gradle-plugin"
-ext.GRADLE_PLUGIN_ID = "com.dipien.semanticversion"
+ext.GRADLE_PLUGIN_ID = "com.dipien.semantic-version"
 ext.GRADLE_PLUGIN_IMPLEMENTATION_CLASS = "com.semanticversion.gradle.plugin.SemanticVersionGradlePlugin"
-ext.GRADLE_PLUGIN_PORTAL_TAGS = ["gradle", "plugin", "semantic", "version"]
+ext.GRADLE_PLUGIN_PORTAL_TAGS = ["gradle", "plugin", "semantic-versioning"]
 
 apply plugin: "com.jdroidtools.gradle.plugin"
 

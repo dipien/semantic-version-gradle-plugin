@@ -24,4 +24,4 @@ allprojects {
 
 version = "11.22.33"
 
-apply plugin: "com.dipien.semanticversion.android"
+apply plugin: "com.dipien.android.semantic-version"
