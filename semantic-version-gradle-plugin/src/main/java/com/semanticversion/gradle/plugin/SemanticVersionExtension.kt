@@ -1,4 +1,4 @@
-package com.semanticversion
+package com.semanticversion.gradle.plugin
 
 import com.semanticversion.common.PropertyResolver
 

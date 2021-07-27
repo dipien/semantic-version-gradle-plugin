@@ -1,7 +1,7 @@
 package com.semanticversion.gradle.plugin
 
 import com.semanticversion.SemanticVersionConfig
-import com.semanticversion.SemanticVersionExtension
+import com.semanticversion.gradle.plugin.SemanticVersionExtension
 import com.semanticversion.Version
 import com.semanticversion.common.GitHelper
 import com.semanticversion.gradle.plugin.commons.CommandExecutorImpl

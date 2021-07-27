@@ -1,7 +1,7 @@
-package com.semanticversion.android
+package com.semanticversion.android.gradle.plugin
 
-import com.semanticversion.SemanticVersionExtension
 import com.semanticversion.common.PropertyResolver
+import com.semanticversion.gradle.plugin.SemanticVersionExtension
 
 open class SemanticVersionAndroidExtension(propertyResolver: PropertyResolver) : SemanticVersionExtension(propertyResolver) {
 
