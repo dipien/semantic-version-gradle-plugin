@@ -34,7 +34,6 @@ class AndroidVersion : Version {
     override val defaultMaximumVersion: Int
         get() = 99
 
-
     constructor(
         baseVersion: String,
         versionCodePrefix: Int?,
