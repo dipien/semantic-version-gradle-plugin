@@ -47,7 +47,7 @@ object IncrementVersionHelper {
                 }
                 commandExecutor.execute("git diff HEAD")
                 commandExecutor.execute("git add " + versionFile.absolutePath)
-                commandExecutor.execute("git commit --no-gpg-sign -m \"Changed version to v" + Version(newVersion.toString()).baseVersion + "\"")
+                commandExecutor.execute("git commit --no-gpg-sign -m \"Changed version to v" + newVersion.toString() + "\"")
                 commandExecutor.execute("git push origin HEAD:$versionIncrementBranch")
             }
         } else {

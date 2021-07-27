@@ -73,8 +73,17 @@ Print the project version. For Android projects, it also prints android app vers
 #### Increment version
 Increments the project version.
 
+Examples:
+
+Increments the project MAJOR version.
 ```
 ./gradlew incrementVersion --versionIncrementType=MAJOR
+```
+
+Increments the project MINOR version and push the changes to the **master** branch
+
+```
+./gradlew incrementVersion --versionIncrementType=MINOR --versionIncrementBranch=master -PgitUserName=true -PgitUserEmail=email@mail.com
 ```
 
 ##### versionIncrementType option
@@ -84,6 +93,26 @@ Define the type of increment. Possible values: MAJOR, MINOR, PATCH
 ##### versionIncrementBranch option
 
 The branch where the version increment will be committed and pushed
+
+###### Git User Name
+
+The Git user name used by the commit command. Optional String. 
+You can configure it as a command line parameter, s a property on a `gradle.properties` file or as a System Environment property.
+
+    gitUserName = "user"
+    
+###### Git User Email
+
+The Git user email used by the commit command. Optional String.
+You can configure it as a command line parameter, s a property on a `gradle.properties` file or as a System Environment property.
+
+    gitUserEmail = "email@mail.com"
+
+###### GitHub Repository Owner
+
+The GitHub repository owner where the pull request will be created. Required String (only if `pullRequestEnabled` is `true`).
+
+    gitHubRepositoryOwner = "repo_owner"
 
 ## Donations
 
