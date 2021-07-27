@@ -17,7 +17,7 @@ object IncrementVersionHelper {
         gitUserEmail: String?,
         commandExecutor: CommandExecutor
     ): Version {
-        val versionPattern = Pattern.compile("^\\s?version\\s?=\\s?[\"\'](\\d\\d?\\.\\d\\d?\\.\\d\\d?)[\"\']")
+        val versionPattern = Pattern.compile("""^\s?version\s?=\s?["'](.+)["']""")
         val lines = mutableListOf<String>()
         var newVersion: Version? = null
         FileUtils.readLines(versionFile).forEach { line ->
@@ -27,7 +27,7 @@ object IncrementVersionHelper {
                     val versionText = versionMatcher.group(1)
                     newVersion = Version(versionText)
                     versionIncrementType.increment(newVersion!!)
-                    val newLineContent = versionMatcher.replaceFirst("""version = "${newVersion!!.baseVersion}"""")
+                    val newLineContent = versionMatcher.replaceFirst("""version = "${newVersion!!}"""")
                     lines.add(newLineContent)
                 } else {
                     lines.add(line)

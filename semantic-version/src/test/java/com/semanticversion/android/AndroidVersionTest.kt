@@ -30,7 +30,7 @@ class AndroidVersionTest {
     }
 
     @Test
-    fun `GIVEN a valid base version, with minSdkVersionAsVersionCodePrefix disableed WHEN creating an AndroidVersion THEN it is successfully created`() {
+    fun `GIVEN a valid base version, with minSdkVersionAsVersionCodePrefix disabled WHEN creating an AndroidVersion THEN it is successfully created`() {
         val version = createVersion("1.2.3", minSdkVersionAsVersionCodePrefix = false)
         Assert.assertEquals(10203, version.versionCode)
     }
