@@ -40,15 +40,16 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
             project.version = "0.1.0"
         }
 
+        extension = project.extensions.create(EXTENSION_NAME, getExtensionClass(), project.propertyResolver)
+
         baseVersion = Version(project.version.toString()).baseVersion
-        val version = Version(baseVersion, SemanticVersionConfig(project.propertyResolver))
+        val version = Version(baseVersion, SemanticVersionConfig(extension.maximumVersion, extension.versionClassifier, extension.snapshot))
         project.version = version.toString()
 
         project.subprojects.forEach {
             it.version = version.toString()
         }
 
-        extension = project.extensions.create(EXTENSION_NAME, getExtensionClass(), project.propertyResolver)
 
         project.tasks.create(IncrementVersionTask.TASK_NAME, IncrementVersionTask::class.java)
 

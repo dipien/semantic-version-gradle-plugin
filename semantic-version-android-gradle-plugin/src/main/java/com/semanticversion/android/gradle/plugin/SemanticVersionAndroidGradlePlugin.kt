@@ -32,7 +32,7 @@ open class SemanticVersionAndroidGradlePlugin : SemanticVersionGradlePlugin() {
                         semanticVersionAndroidExtension.versionCodePrefix,
                         semanticVersionAndroidExtension.minSdkVersionAsVersionCodePrefix,
                         semanticVersionAndroidExtension.versionCodeExtraBit,
-                        SemanticVersionConfig(project.propertyResolver),
+                        SemanticVersionConfig(semanticVersionAndroidExtension.maximumVersion, semanticVersionAndroidExtension.versionClassifier, semanticVersionAndroidExtension.snapshot),
                         androidAppExtension.defaultConfig.minSdkVersion.apiLevel).versionCode
                     androidAppExtension.defaultConfig.versionName = project.version.toString()
                 }

@@ -23,6 +23,7 @@ object IncrementVersionHelper {
     ) {
 
         val buildGradleFile = project.file(versionLocationPath)
+        // TODO Fix this pattern
         val versionPattern = Pattern.compile("^\\s?version\\s?=\\s?[\"\'](\\d\\d?\\.\\d\\d?\\.\\d\\d?)[\"\']")
         val lines = mutableListOf<String>()
         var versionFound = false
@@ -31,10 +32,7 @@ object IncrementVersionHelper {
                 val versionMatcher = versionPattern.matcher(line)
                 if (versionMatcher.find()) {
                     val versionText = versionMatcher.group(1)
-                    val version = Version(
-                        versionText,
-                        SemanticVersionConfig(project.propertyResolver)
-                    )
+                    val version = Version(versionText)
                     versionIncrementType.increment(version)
                     val newLineContent = versionMatcher.replaceFirst("""version = "${version.baseVersion}"""")
                     lines.add(newLineContent)

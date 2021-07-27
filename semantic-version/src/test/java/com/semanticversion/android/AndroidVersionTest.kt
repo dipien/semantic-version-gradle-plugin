@@ -1,7 +1,6 @@
 package com.semanticversion.android
 
 import com.semanticversion.SemanticVersionConfig
-import com.semanticversion.common.FakePropertyResolver
 import org.junit.Assert
 import org.junit.Test
 
@@ -94,8 +93,6 @@ class AndroidVersionTest {
     }
 
     private fun createVersion(version: String, versionCodePrefix: Int? = null, versionCodeExtraBit: Int = 0, minSdkVersionAsVersionCodePrefix: Boolean = true): AndroidVersion {
-        val propertyResolver = FakePropertyResolver()
-        val semanticVersionConfig = SemanticVersionConfig(propertyResolver)
-        return AndroidVersion(version, versionCodePrefix, minSdkVersionAsVersionCodePrefix, versionCodeExtraBit, semanticVersionConfig, 21)
+        return AndroidVersion(version, versionCodePrefix, minSdkVersionAsVersionCodePrefix, versionCodeExtraBit, SemanticVersionConfig(), 21)
     }
 }

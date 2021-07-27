@@ -1,7 +1,6 @@
 package com.semanticversion
 
 import com.google.common.truth.Truth
-import com.semanticversion.common.FakePropertyResolver
 import org.junit.Test
 
 class VersionTest {
@@ -277,9 +276,6 @@ class VersionTest {
     }
 
     private fun createVersion(baseVersion: String, snapshot: Boolean = true): Version {
-        val propertyResolver = FakePropertyResolver()
-        val semanticVersionConfig = SemanticVersionConfig(propertyResolver)
-        semanticVersionConfig.snapshot = snapshot
-        return Version(baseVersion, semanticVersionConfig)
+        return Version(baseVersion, SemanticVersionConfig(null, null, snapshot))
     }
 }
