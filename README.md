@@ -59,7 +59,39 @@ buildscript {
 apply plugin: "com.dipien.semantic-version"
 ```
 
-## Configure
+## Usage
+
+Define your project version on your root `build.gradle` using the  [Semantic Versioning](https://semver.org/) scheme but without any classifier:
+
+    version = "1.0.0"
+    
+By default, the SNAPSHOT classifier is enabled, so if your run the following command:
+
+```
+./gradlew printVersion
+```
+
+you will get this output:
+
+```
+> Task :printVersion
+Version: 1.0.0-SNAPSHOT
+```
+
+Use the `-Psnapshot=false` parameter any time you want to use an stable version. For example when publishing an artifact, generating the release android app bundle, etc.
+
+For example, if your run the following command:
+
+```
+./gradlew printVersion -Psnapshot=false
+```
+
+you will get this output:
+
+```
+> Task :printVersion
+Version: 1.0.0
+```
 
 ### Tasks
 
@@ -86,11 +118,11 @@ Increments the project MINOR version and push the changes to the **master** bran
 ./gradlew incrementVersion --versionIncrementType=MINOR --versionIncrementBranch=master -PgitUserName=true -PgitUserEmail=email@mail.com
 ```
 
-##### versionIncrementType option
+###### versionIncrementType option
 
 Define the type of increment. Possible values: MAJOR, MINOR, PATCH
 
-##### versionIncrementBranch option
+###### versionIncrementBranch option
 
 The branch where the version increment will be committed and pushed
 
