@@ -64,33 +64,11 @@ apply plugin: "com.dipien.semantic-version"
 Define your project version on your root `build.gradle` using the  [Semantic Versioning](https://semver.org/) scheme but without any classifier:
 
     version = "1.0.0"
-    
-By default, the SNAPSHOT classifier is enabled, so if your run the following command:
 
+By default, the SNAPSHOT classifier is enabled. Use the `-Psnapshot=false` parameter any time you want to use an stable version. For example when publishing an artifact, generating the release android app bundle, etc.
 ```
-./gradlew printVersion
-```
-
-you will get this output:
-
-```
-> Task :printVersion
-Version: 1.0.0-SNAPSHOT
-```
-
-Use the `-Psnapshot=false` parameter any time you want to use an stable version. For example when publishing an artifact, generating the release android app bundle, etc.
-
-For example, if your run the following command:
-
-```
-./gradlew printVersion -Psnapshot=false
-```
-
-you will get this output:
-
-```
-> Task :printVersion
-Version: 1.0.0
+./gradlew printVersion // OUTPUT: Version: 1.0.0-SNAPSHOT
+./gradlew printVersion -Psnapshot=false // OUTPUT: Version: 1.0.0
 ```
 
 ### Tasks
