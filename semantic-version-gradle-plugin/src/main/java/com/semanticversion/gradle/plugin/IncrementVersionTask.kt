@@ -27,8 +27,12 @@ open class IncrementVersionTask : AbstractTask() {
 
     override fun onExecute() {
         val extension = SemanticVersionGradlePlugin.getExtension(project)
+        var buildGradleFile = project.file("./build.gradle.kts")
+        if (!buildGradleFile.exists()) {
+            buildGradleFile = project.file("./build.gradle")
+        }
         val newVersion = IncrementVersionHelper.increment(
-            project.file(extension.versionLocationPath),
+            buildGradleFile,
             VersionIncrementType.valueOf(versionIncrementType.toUpperCase()),
             versionIncrementBranch,
             extension.gitUserName,

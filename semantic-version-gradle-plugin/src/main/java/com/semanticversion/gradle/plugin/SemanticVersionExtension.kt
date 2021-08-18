@@ -4,7 +4,6 @@ import com.semanticversion.gradle.plugin.commons.PropertyResolver
 
 open class SemanticVersionExtension(propertyResolver: PropertyResolver) {
 
-    var versionLocationPath: String = propertyResolver.getRequiredStringProp(::versionLocationPath.name, "./build.gradle")
     var gitUserName: String? = propertyResolver.getStringProp(::gitUserName.name)
     var gitUserEmail: String? = propertyResolver.getStringProp(::gitUserEmail.name)
 
