@@ -93,7 +93,7 @@ Increments the project MAJOR version.
 Increments the project MINOR version and push the changes to the **master** branch
 
 ```
-./gradlew incrementVersion --versionIncrementType=MINOR --versionIncrementBranch=master -PgitUserName=true -PgitUserEmail=email@mail.com
+./gradlew incrementVersion --versionIncrementType=MINOR --versionIncrementBranch=master -PgitUserName=userName -PgitUserEmail=email@mail.com
 ```
 
 ###### versionIncrementType option
@@ -117,12 +117,6 @@ The Git user email used by the commit command. Optional String.
 You can configure it as a command line parameter, s a property on a `gradle.properties` file or as a System Environment property.
 
     gitUserEmail = "email@mail.com"
-
-###### GitHub Repository Owner
-
-The GitHub repository owner where the pull request will be created. Required String (only if `pullRequestEnabled` is `true`).
-
-    gitHubRepositoryOwner = "repo_owner"
 
 ## Sponsor this project
 
