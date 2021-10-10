@@ -14,9 +14,9 @@ buildscript {
 }
 
 dependencies {
-	compile(project(":semantic-version-gradle-plugin"))
-	compile(Libs.JDROID_JAVA_CORE)
-	compile("com.android.tools.build:gradle:4.0.0")
-	testCompile(Libs.JUNIT)
-	testCompile(Libs.TRUTH)
+	implementation(project(":semantic-version-gradle-plugin"))
+	implementation(Libs.JDROID_JAVA_CORE)
+	implementation("com.android.tools.build:gradle:4.0.0")
+	testImplementation(Libs.JUNIT)
+	testImplementation(Libs.TRUTH)
 }

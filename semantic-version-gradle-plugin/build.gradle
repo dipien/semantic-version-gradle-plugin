@@ -14,8 +14,8 @@ buildscript {
 }
 
 dependencies {
-	compile(project(":semantic-version"))
-	compile(Libs.JDROID_JAVA_CORE)
-	testCompile(Libs.JUNIT)
-	testCompile(Libs.TRUTH)
+	implementation(project(":semantic-version"))
+	implementation(Libs.JDROID_JAVA_CORE)
+	testImplementation(Libs.JUNIT)
+	testImplementation(Libs.TRUTH)
 }

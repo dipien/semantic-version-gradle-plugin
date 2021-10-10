@@ -11,7 +11,7 @@ buildscript {
 }
 
 dependencies {
-	compile(Libs.JDROID_JAVA_CORE)
-	testCompile(Libs.JUNIT)
-	testCompile(Libs.TRUTH)
+	implementation(Libs.JDROID_JAVA_CORE)
+	testImplementation(Libs.JUNIT)
+	testImplementation(Libs.TRUTH)
 }
