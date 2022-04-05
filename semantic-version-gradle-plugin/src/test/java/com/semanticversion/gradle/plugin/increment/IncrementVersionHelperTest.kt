@@ -2,7 +2,7 @@ package com.semanticversion.gradle.plugin.increment
 
 import com.google.common.truth.Truth
 import com.semanticversion.VersionIncrementType
-import com.semanticversion.gradle.plugin.FakeCommandExecutor
+import com.semanticversion.gradle.plugin.FakeGitHelper
 import org.junit.Test
 import java.io.File
 
@@ -66,7 +66,7 @@ class IncrementVersionHelperTest {
             null,
             null,
             null,
-            FakeCommandExecutor()
+            FakeGitHelper()
         )
 
         Truth.assertThat(newVersion.toString()).isEqualTo(expectedVersion)
@@ -83,7 +83,7 @@ class IncrementVersionHelperTest {
             null,
             null,
             null,
-            FakeCommandExecutor()
+            FakeGitHelper()
         )
     }
 }
