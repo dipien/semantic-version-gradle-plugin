@@ -1,8 +1,8 @@
-package com.semanticversion.gradle.plugin
+package com.semanticversion.gradle.plugin.increment
 
 import com.google.common.truth.Truth
 import com.semanticversion.VersionIncrementType
-import com.semanticversion.gradle.plugin.increment.IncrementVersionHelper
+import com.semanticversion.gradle.plugin.FakeCommandExecutor
 import org.junit.Test
 import java.io.File
 
