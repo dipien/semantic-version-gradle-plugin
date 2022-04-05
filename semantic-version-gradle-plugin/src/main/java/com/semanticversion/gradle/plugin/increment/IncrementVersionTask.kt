@@ -38,7 +38,7 @@ open class IncrementVersionTask : AbstractTask() {
             versionIncrementBranch,
             extension.gitUserName,
             extension.gitUserEmail,
-            commandExecutor
+            gitHelper
         )
         project.version = newVersion.toString()
     }

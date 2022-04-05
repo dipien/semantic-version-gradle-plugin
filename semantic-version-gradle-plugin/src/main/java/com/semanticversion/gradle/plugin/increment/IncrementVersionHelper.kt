@@ -3,7 +3,7 @@ package com.semanticversion.gradle.plugin.increment
 import com.jdroid.java.utils.FileUtils
 import com.semanticversion.Version
 import com.semanticversion.VersionIncrementType
-import com.semanticversion.gradle.plugin.commons.CommandExecutor
+import com.semanticversion.gradle.plugin.commons.GitHelper
 import java.util.regex.Pattern
 import java.io.File
 
@@ -15,7 +15,7 @@ object IncrementVersionHelper {
         versionIncrementBranch: String?,
         gitUserName: String?,
         gitUserEmail: String?,
-        commandExecutor: CommandExecutor
+        gitHelper: GitHelper
     ): Version {
         val versionPattern = Pattern.compile("""^\s?version\s?=\s?["'](.+)["']""")
         val lines = mutableListOf<String>()
@@ -39,16 +39,16 @@ object IncrementVersionHelper {
         if (newVersion != null) {
             FileUtils.writeLines(versionFile, lines)
             if (versionIncrementBranch != null) {
-                if (gitUserName != null) {
-                    commandExecutor.execute("git config user.name $gitUserName")
+                if (!gitUserName.isNullOrBlank()) {
+                    gitHelper.configUserName(gitUserName)
                 }
-                if (gitUserEmail != null) {
-                    commandExecutor.execute("git config user.email $gitUserEmail")
+                if (!gitUserEmail.isNullOrBlank()) {
+                    gitHelper.configUserEmail(gitUserEmail)
                 }
-                commandExecutor.execute("git diff HEAD")
-                commandExecutor.execute("git add " + versionFile.absolutePath)
-                commandExecutor.execute("git commit --no-gpg-sign -m \"Changed project version to v" + newVersion.toString() + "\"")
-                commandExecutor.execute("git push origin HEAD:$versionIncrementBranch")
+                gitHelper.add(versionFile.absolutePath)
+                gitHelper.diffHead()
+                gitHelper.commit("Changed project version to v${newVersion.toString()}")
+                gitHelper.push(versionIncrementBranch)
             }
         } else {
             throw RuntimeException("Version not defined on " + versionFile.absolutePath)

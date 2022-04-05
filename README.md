@@ -92,7 +92,7 @@ Print the project version. For Android projects, it also prints android app vers
 ```
 
 #### Increment version
-Increments the project version.
+Increments the project version on the root **build.gradle.kts** or **build.gradle** file.
 
 Examples:
 
