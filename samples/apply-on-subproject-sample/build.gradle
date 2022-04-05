@@ -17,4 +17,4 @@ buildscript {
 
 version = "1.2.3"
 
-apply plugin: "com.dipien.semantic-version"
+

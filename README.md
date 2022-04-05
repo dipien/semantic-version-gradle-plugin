@@ -65,11 +65,22 @@ Define your project version on your root `build.gradle` using the  [Semantic Ver
 
     version = "1.0.0"
 
-By default, the SNAPSHOT classifier is enabled. Use the `-Psnapshot=false` parameter any time you want to use an stable version. For example when publishing an artifact, generating the release android app bundle, etc.
+By default, the SNAPSHOT classifier is enabled. Use the `-Psnapshot=false` parameter any time you want to assign an stable version. For example when publishing an artifact, generating the release android app bundle, etc.
 ```
 ./gradlew printVersion // OUTPUT: Version: 1.0.0-SNAPSHOT
 ./gradlew printVersion -Psnapshot=false // OUTPUT: Version: 1.0.0
 ```
+If the root project is not specifying an explicit version, a warning will be displayed and v0.1.0 is assigned as the default version.
+The plugin will assign the root project version to all its subprojects.
+
+## Configuration
+
+# maximumVersion
+
+The maximum number the MAJOR, MINOR or PATCH version can achieve. 
+If it is not specified, 99 is used for Android projects and 999 for non Android projects
+
+
 
 ### Tasks
 
@@ -107,14 +118,14 @@ The branch where the version increment will be committed and pushed
 ###### Git User Name
 
 The Git user name used by the commit command. Optional String. 
-You can configure it as a command line parameter, s a property on a `gradle.properties` file or as a System Environment property.
+You can configure it as a command line parameter, as a property on a `gradle.properties` file or as a System Environment property.
 
     gitUserName = "user"
     
 ###### Git User Email
 
 The Git user email used by the commit command. Optional String.
-You can configure it as a command line parameter, s a property on a `gradle.properties` file or as a System Environment property.
+You can configure it as a command line parameter, as a property on a `gradle.properties` file or as a System Environment property.
 
     gitUserEmail = "email@mail.com"
 

@@ -10,6 +10,7 @@ import com.semanticversion.gradle.plugin.commons.propertyResolver
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.logging.LogLevel
+import java.lang.RuntimeException
 
 open class SemanticVersionGradlePlugin : Plugin<Project> {
 
@@ -22,21 +23,22 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
     }
 
     protected lateinit var project: Project
-    protected lateinit var gitHelper: GitHelper
     protected lateinit var baseVersion: String
     protected lateinit var extension: SemanticVersionExtension
 
     override fun apply(project: Project) {
         this.project = project
 
-        gitHelper = GitHelperImpl(project.propertyResolver, CommandExecutorImpl(project, LogLevel.LIFECYCLE))
-
-        if (project.version == Project.DEFAULT_VERSION) {
-            project.version = project.rootProject.version
+        if (project != project.rootProject) {
+            throw RuntimeException("The Semantic Version Gradle plugin must be applied only on the root project")
         }
 
+        // if (project.version == Project.DEFAULT_VERSION) {
+        //     project.version = project.rootProject.version
+        // }
+
         if (project.version == Project.DEFAULT_VERSION) {
-            project.logger.warn("Version not specified on project [" + project.name + "] or its root project. Assigned v0.1.0 as default version")
+            project.logger.warn("Version not specified on project [${project.name}] or its root project. Assigned v0.1.0 as default version")
             project.version = "0.1.0"
         }
 
@@ -49,7 +51,6 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
         project.subprojects.forEach {
             it.version = version.toString()
         }
-
 
         project.tasks.create(IncrementVersionTask.TASK_NAME, IncrementVersionTask::class.java)
 
