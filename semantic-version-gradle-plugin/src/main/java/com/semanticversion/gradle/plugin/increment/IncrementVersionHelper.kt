@@ -1,4 +1,4 @@
-package com.semanticversion.gradle.plugin
+package com.semanticversion.gradle.plugin.increment
 
 import com.jdroid.java.utils.FileUtils
 import com.semanticversion.Version

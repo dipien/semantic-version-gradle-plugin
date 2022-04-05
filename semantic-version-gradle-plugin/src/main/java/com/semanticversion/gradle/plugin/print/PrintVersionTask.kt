@@ -1,4 +1,4 @@
-package com.semanticversion.gradle.plugin
+package com.semanticversion.gradle.plugin.print
 
 import com.semanticversion.gradle.plugin.commons.AbstractTask
 

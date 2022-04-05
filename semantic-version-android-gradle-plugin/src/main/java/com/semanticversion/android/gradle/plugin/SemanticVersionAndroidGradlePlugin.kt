@@ -4,7 +4,7 @@ import com.android.build.gradle.AppExtension
 import com.semanticversion.android.AndroidSemanticVersionConfig
 import com.semanticversion.android.AndroidVersion
 import com.semanticversion.gradle.plugin.SemanticVersionGradlePlugin
-import com.semanticversion.gradle.plugin.PrintVersionTask
+import com.semanticversion.gradle.plugin.print.PrintVersionTask
 import com.semanticversion.gradle.plugin.SemanticVersionExtension
 import org.gradle.api.Project
 

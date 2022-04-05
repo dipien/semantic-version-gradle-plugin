@@ -1,15 +1,12 @@
 package com.semanticversion.gradle.plugin
 
 import com.semanticversion.SemanticVersionConfig
-import com.semanticversion.gradle.plugin.SemanticVersionExtension
 import com.semanticversion.Version
-import com.semanticversion.gradle.plugin.commons.GitHelper
-import com.semanticversion.gradle.plugin.commons.CommandExecutorImpl
-import com.semanticversion.gradle.plugin.commons.GitHelperImpl
 import com.semanticversion.gradle.plugin.commons.propertyResolver
+import com.semanticversion.gradle.plugin.increment.IncrementVersionTask
+import com.semanticversion.gradle.plugin.print.PrintVersionTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.logging.LogLevel
 import java.lang.RuntimeException
 
 open class SemanticVersionGradlePlugin : Plugin<Project> {

@@ -1,6 +1,7 @@
-package com.semanticversion.gradle.plugin
+package com.semanticversion.gradle.plugin.increment
 
 import com.semanticversion.VersionIncrementType
+import com.semanticversion.gradle.plugin.SemanticVersionGradlePlugin
 import com.semanticversion.gradle.plugin.commons.AbstractTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
