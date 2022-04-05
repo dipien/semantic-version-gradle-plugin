@@ -117,7 +117,7 @@ The branch where the version increment will be committed and pushed
 
 ###### Git User Name
 
-The Git user name used by the commit command. Optional String. 
+The Git user name used by the commit command. Optional String.
 You can configure it as a command line parameter, as a property on a `gradle.properties` file or as a System Environment property.
 
     gitUserName = "user"

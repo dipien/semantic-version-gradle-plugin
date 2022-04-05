@@ -10,8 +10,8 @@ buildscript {
 	}
 	dependencies {
 		classpath("com.dipien:semantic-version-android-gradle-plugin:1.0.0-SNAPSHOT")
-		classpath("com.android.tools.build:gradle:4.2.2")
-		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21")
+		classpath("com.android.tools.build:gradle:7.1.2")
+		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
 	}
 }
 
