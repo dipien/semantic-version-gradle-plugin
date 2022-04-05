@@ -4,10 +4,8 @@ import com.android.build.gradle.AppExtension
 import com.semanticversion.android.AndroidSemanticVersionConfig
 import com.semanticversion.android.AndroidVersion
 import com.semanticversion.gradle.plugin.SemanticVersionGradlePlugin
-import com.semanticversion.android.gradle.plugin.SemanticVersionAndroidExtension
 import com.semanticversion.gradle.plugin.PrintVersionTask
 import com.semanticversion.gradle.plugin.SemanticVersionExtension
-import com.semanticversion.gradle.plugin.commons.propertyResolver
 import org.gradle.api.Project
 
 open class SemanticVersionAndroidGradlePlugin : SemanticVersionGradlePlugin() {
@@ -34,7 +32,7 @@ open class SemanticVersionAndroidGradlePlugin : SemanticVersionGradlePlugin() {
                         semanticVersionAndroidExtension.versionCodePrefix,
                         semanticVersionAndroidExtension.minSdkVersionAsVersionCodePrefix,
                         semanticVersionAndroidExtension.versionCodeExtraBit,
-                        androidAppExtension.defaultConfig.minSdkVersion.apiLevel)
+                        androidAppExtension.defaultConfig.minSdkVersion!!.apiLevel)
 
                     androidAppExtension.defaultConfig.versionCode = AndroidVersion(baseVersion, config).versionCode
                     androidAppExtension.defaultConfig.versionName = project.version.toString()

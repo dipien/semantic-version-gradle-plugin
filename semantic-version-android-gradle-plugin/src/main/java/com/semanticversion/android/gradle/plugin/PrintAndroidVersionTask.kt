@@ -1,11 +1,7 @@
 package com.semanticversion.android.gradle.plugin
 
 import com.android.build.gradle.AppExtension
-import com.semanticversion.SemanticVersionConfig
-import com.semanticversion.Version
-import com.semanticversion.android.AndroidVersion
 import com.semanticversion.gradle.plugin.commons.AbstractTask
-import com.semanticversion.gradle.plugin.commons.propertyResolver
 
 open class PrintAndroidVersionTask : AbstractTask() {
 
