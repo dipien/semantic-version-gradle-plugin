@@ -42,7 +42,7 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
         extension = project.extensions.create(EXTENSION_NAME, getExtensionClass(), project.propertyResolver)
 
         baseVersion = Version(project.version.toString()).baseVersion
-        val version = Version(baseVersion, SemanticVersionConfig(extension.maximumVersion, extension.versionClassifier, extension.snapshot, extension.alpha, extension.beta))
+        val version = Version(baseVersion, SemanticVersionConfig(extension.maximumVersion, extension.versionClassifier, extension.snapshot, extension.beta, extension.alpha))
         project.version = version.toString()
 
         project.subprojects.forEach {

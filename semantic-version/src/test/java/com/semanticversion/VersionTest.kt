@@ -39,7 +39,7 @@ class VersionTest {
 
     @Test
     fun `GIVEN a valid alpha version WHEN creating a version THEN it is successfully created`() {
-        var version = createVersion("1.2.3", snapshot = false, alpha = true)
+        val version = createVersion("1.2.3", snapshot = false, alpha = true)
 
         Truth.assertThat(version.versionMajor).isEqualTo(1)
         Truth.assertThat(version.versionMinor).isEqualTo(2)
@@ -57,7 +57,7 @@ class VersionTest {
 
     @Test
     fun `GIVEN a valid beta version WHEN creating a version THEN it is successfully created`() {
-        var version = createVersion("1.2.3", snapshot = false, beta = true)
+        val version = createVersion("1.2.3", snapshot = false, beta = true)
 
         Truth.assertThat(version.versionMajor).isEqualTo(1)
         Truth.assertThat(version.versionMinor).isEqualTo(2)
@@ -342,7 +342,7 @@ class VersionTest {
         createVersion("1.2.3333")
     }
 
-    private fun createVersion(baseVersion: String, snapshot: Boolean = true, alpha: Boolean = false, beta: Boolean = false): Version {
-        return Version(baseVersion, SemanticVersionConfig(null, null, snapshot, alpha, beta))
+    private fun createVersion(baseVersion: String, snapshot: Boolean = true, beta: Boolean = false, alpha: Boolean = false): Version {
+        return Version(baseVersion, SemanticVersionConfig(null, null, snapshot, beta, alpha))
     }
 }

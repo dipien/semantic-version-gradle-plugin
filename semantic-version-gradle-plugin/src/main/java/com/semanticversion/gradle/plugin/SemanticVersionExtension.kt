@@ -14,6 +14,6 @@ open class SemanticVersionExtension(propertyResolver: PropertyResolver) {
 
     var versionClassifier: String? = propertyResolver.getStringProp(::versionClassifier.name)
     var snapshot: Boolean? = propertyResolver.getBooleanProp(::snapshot.name)
-    var alpha: Boolean? = propertyResolver.getBooleanProp(::alpha.name)
     var beta: Boolean? = propertyResolver.getBooleanProp(::beta.name)
+    var alpha: Boolean? = propertyResolver.getBooleanProp(::alpha.name)
 }
