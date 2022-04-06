@@ -5,8 +5,8 @@ open class Version {
     companion object {
         const val VERSION_CLASSIFIER_SEPARATOR = "-"
         const val SNAPSHOT_CLASSIFIER = "SNAPSHOT"
-        const val ALPHA_CLASSIFIER = "ALPHA"
         const val BETA_CLASSIFIER = "BETA"
+        const val ALPHA_CLASSIFIER = "ALPHA"
         const val BASE_VERSION_SEPARATOR = "."
         // const val LOCAL_CLASSIFIER = "LOCAL"
         // const val VERSION_TIMESTAMP_FORMAT = "YYYYMMddHHmmss"
@@ -17,8 +17,8 @@ open class Version {
     var versionPatch: Int? = null
     var versionClassifier: String? = null
     var isSnapshot: Boolean = true
-    var isAlpha: Boolean = false
     var isBeta: Boolean = false
+    var isAlpha: Boolean = false
 
     // TODO Add support to this
     // var isVersionTimestampEnabled: Boolean = false
@@ -49,9 +49,7 @@ open class Version {
         parseBaseVersion(baseVersion)
         if (split.size > 1) {
             versionClassifier = split[1]
-            isSnapshot = versionClassifier == SNAPSHOT_CLASSIFIER
-            isAlpha = versionClassifier == ALPHA_CLASSIFIER
-            isBeta = versionClassifier == BETA_CLASSIFIER
+            parseVersionClassifier(versionClassifier!!)
             // isLocal = versionClassifier == LOCAL_CLASSIFIER
             // isVersionTimestampEnabled = false
         } else {
@@ -103,47 +101,63 @@ open class Version {
             //     versionClassifier += format(now(), VERSION_TIMESTAMP_FORMAT)
             // }
 
-            config.snapshot?.let {
-                isSnapshot = it
-            }
-            if (isSnapshot) {
-                if (versionClassifier == null) {
-                    versionClassifier = ""
+            if (config.alpha == true) {
+                versionClassifier = ALPHA_CLASSIFIER
+
+                isAlpha = true
+                isBeta = false
+                isSnapshot = false
+            } else {
+                if (config.beta == true) {
+                    versionClassifier = BETA_CLASSIFIER
+
+                    isAlpha = false
+                    isBeta = true
+                    isSnapshot = false
                 } else {
-                    versionClassifier += VERSION_CLASSIFIER_SEPARATOR
+                    if (config.snapshot == true) {
+                        versionClassifier = SNAPSHOT_CLASSIFIER
+
+                        isAlpha = false
+                        isBeta = false
+                        isSnapshot = true
+                    } else {
+                        isAlpha = false
+                        isBeta = false
+                        isSnapshot = false
+                    }
                 }
-                versionClassifier += SNAPSHOT_CLASSIFIER
             }
 
-            config.alpha?.let {
-                isAlpha = it
-            }
-            if (isAlpha) {
-                if (versionClassifier == null) {
-                    versionClassifier = ""
-                } else {
-                    versionClassifier += VERSION_CLASSIFIER_SEPARATOR
-                }
-                versionClassifier += ALPHA_CLASSIFIER
-            }
-
-            config.beta?.let {
-                isBeta = it
-            }
-            if (isBeta) {
-                if (versionClassifier == null) {
-                    versionClassifier = ""
-                } else {
-                    versionClassifier += VERSION_CLASSIFIER_SEPARATOR
-                }
-                versionClassifier += BETA_CLASSIFIER
-            }
         } else {
-            isSnapshot = versionClassifier == SNAPSHOT_CLASSIFIER
-            isAlpha = versionClassifier == ALPHA_CLASSIFIER
-            isBeta = versionClassifier == BETA_CLASSIFIER
+            parseVersionClassifier(versionClassifier!!)
             // isLocal = false
             // isVersionTimestampEnabled = false
+        }
+    }
+
+    private fun parseVersionClassifier(versionClassifier: String) {
+        when (versionClassifier) {
+            ALPHA_CLASSIFIER -> {
+                isSnapshot = false
+                isBeta = false
+                isAlpha = true
+            }
+            BETA_CLASSIFIER -> {
+                isSnapshot = false
+                isBeta = true
+                isAlpha = false
+            }
+            SNAPSHOT_CLASSIFIER -> {
+                isSnapshot = true
+                isBeta = false
+                isAlpha = false
+            }
+            else -> {
+                isSnapshot = false
+                isBeta = false
+                isAlpha = false
+            }
         }
     }
 
