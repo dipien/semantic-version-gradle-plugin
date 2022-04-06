@@ -128,7 +128,6 @@ open class Version {
                     }
                 }
             }
-
         } else {
             parseVersionClassifier(versionClassifier!!)
             // isLocal = false
