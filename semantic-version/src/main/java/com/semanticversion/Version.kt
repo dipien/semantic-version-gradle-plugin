@@ -5,6 +5,8 @@ open class Version {
     companion object {
         const val VERSION_CLASSIFIER_SEPARATOR = "-"
         const val SNAPSHOT_CLASSIFIER = "SNAPSHOT"
+        const val ALPHA_CLASSIFIER = "ALPHA"
+        const val BETA_CLASSIFIER = "BETA"
         const val BASE_VERSION_SEPARATOR = "."
         // const val LOCAL_CLASSIFIER = "LOCAL"
         // const val VERSION_TIMESTAMP_FORMAT = "YYYYMMddHHmmss"
@@ -15,6 +17,8 @@ open class Version {
     var versionPatch: Int? = null
     var versionClassifier: String? = null
     var isSnapshot: Boolean = true
+    var isAlpha: Boolean = false
+    var isBeta: Boolean = false
 
     // TODO Add support to this
     // var isVersionTimestampEnabled: Boolean = false
@@ -46,10 +50,14 @@ open class Version {
         if (split.size > 1) {
             versionClassifier = split[1]
             isSnapshot = versionClassifier == SNAPSHOT_CLASSIFIER
+            isAlpha = versionClassifier == ALPHA_CLASSIFIER
+            isBeta = versionClassifier == BETA_CLASSIFIER
             // isLocal = versionClassifier == LOCAL_CLASSIFIER
             // isVersionTimestampEnabled = false
         } else {
             isSnapshot = false
+            isAlpha = false
+            isBeta = false
             // isLocal = false
             // isVersionTimestampEnabled = false
         }
@@ -106,8 +114,34 @@ open class Version {
                 }
                 versionClassifier += SNAPSHOT_CLASSIFIER
             }
+
+            config.alpha?.let {
+                isAlpha = it
+            }
+            if (isAlpha) {
+                if (versionClassifier == null) {
+                    versionClassifier = ""
+                } else {
+                    versionClassifier += VERSION_CLASSIFIER_SEPARATOR
+                }
+                versionClassifier += ALPHA_CLASSIFIER
+            }
+
+            config.beta?.let {
+                isBeta = it
+            }
+            if (isBeta) {
+                if (versionClassifier == null) {
+                    versionClassifier = ""
+                } else {
+                    versionClassifier += VERSION_CLASSIFIER_SEPARATOR
+                }
+                versionClassifier += BETA_CLASSIFIER
+            }
         } else {
             isSnapshot = versionClassifier == SNAPSHOT_CLASSIFIER
+            isAlpha = versionClassifier == ALPHA_CLASSIFIER
+            isBeta = versionClassifier == BETA_CLASSIFIER
             // isLocal = false
             // isVersionTimestampEnabled = false
         }

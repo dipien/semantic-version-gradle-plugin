@@ -29,6 +29,8 @@ open class SemanticVersionAndroidGradlePlugin : SemanticVersionGradlePlugin() {
                         semanticVersionAndroidExtension.maximumVersion,
                         semanticVersionAndroidExtension.versionClassifier,
                         semanticVersionAndroidExtension.snapshot,
+                        semanticVersionAndroidExtension.alpha,
+                        semanticVersionAndroidExtension.beta,
                         semanticVersionAndroidExtension.versionCodePrefix,
                         semanticVersionAndroidExtension.minSdkVersionAsVersionCodePrefix,
                         semanticVersionAndroidExtension.versionCodeExtraBit,

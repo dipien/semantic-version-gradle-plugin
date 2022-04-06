@@ -13,6 +13,8 @@ class VersionTest {
         Truth.assertThat(version.versionMinor).isEqualTo(2)
         Truth.assertThat(version.versionPatch).isEqualTo(3)
         Truth.assertThat(version.isSnapshot).isTrue()
+        Truth.assertThat(version.isAlpha).isFalse()
+        Truth.assertThat(version.isBeta).isFalse()
         // Truth.assertThat(version.isLocal).isFalse()
         // Truth.assertThat(version.isVersionTimestampEnabled).isFalse()
         // Truth.assertThat(version.featureName).isNull()
@@ -25,12 +27,50 @@ class VersionTest {
         Truth.assertThat(version.versionMinor).isEqualTo(222)
         Truth.assertThat(version.versionPatch).isEqualTo(333)
         Truth.assertThat(version.isSnapshot).isTrue()
+        Truth.assertThat(version.isAlpha).isFalse()
+        Truth.assertThat(version.isBeta).isFalse()
         // Truth.assertThat(version.isLocal).isFalse()
         // Truth.assertThat(version.isVersionTimestampEnabled).isFalse()
         // Truth.assertThat(version.featureName).isNull()
         Truth.assertThat(version.versionClassifier).isEqualTo("SNAPSHOT")
         Truth.assertThat(version.baseVersion).isEqualTo("111.222.333")
         Truth.assertThat(version.toString()).isEqualTo("111.222.333-SNAPSHOT")
+    }
+
+    @Test
+    fun `GIVEN a valid alpha version WHEN creating a version THEN it is successfully created`() {
+        var version = createVersion("1.2.3", snapshot = false, alpha = true)
+
+        Truth.assertThat(version.versionMajor).isEqualTo(1)
+        Truth.assertThat(version.versionMinor).isEqualTo(2)
+        Truth.assertThat(version.versionPatch).isEqualTo(3)
+        Truth.assertThat(version.isSnapshot).isFalse()
+        Truth.assertThat(version.isAlpha).isTrue()
+        Truth.assertThat(version.isBeta).isFalse()
+        // Truth.assertThat(version.isLocal).isFalse()
+        // Truth.assertThat(version.isVersionTimestampEnabled).isFalse()
+        // Truth.assertThat(version.featureName).isNull()
+        Truth.assertThat(version.versionClassifier).isEqualTo("ALPHA")
+        Truth.assertThat(version.baseVersion).isEqualTo("1.2.3")
+        Truth.assertThat(version.toString()).isEqualTo("1.2.3-ALPHA")
+    }
+
+    @Test
+    fun `GIVEN a valid beta version WHEN creating a version THEN it is successfully created`() {
+        var version = createVersion("1.2.3", snapshot = false, beta = true)
+
+        Truth.assertThat(version.versionMajor).isEqualTo(1)
+        Truth.assertThat(version.versionMinor).isEqualTo(2)
+        Truth.assertThat(version.versionPatch).isEqualTo(3)
+        Truth.assertThat(version.isSnapshot).isFalse()
+        Truth.assertThat(version.isAlpha).isFalse()
+        Truth.assertThat(version.isBeta).isTrue()
+        // Truth.assertThat(version.isLocal).isFalse()
+        // Truth.assertThat(version.isVersionTimestampEnabled).isFalse()
+        // Truth.assertThat(version.featureName).isNull()
+        Truth.assertThat(version.versionClassifier).isEqualTo("BETA")
+        Truth.assertThat(version.baseVersion).isEqualTo("1.2.3")
+        Truth.assertThat(version.toString()).isEqualTo("1.2.3-BETA")
     }
 
     @Test
@@ -41,6 +81,8 @@ class VersionTest {
         Truth.assertThat(version.versionMinor).isEqualTo(2)
         Truth.assertThat(version.versionPatch).isEqualTo(3)
         Truth.assertThat(version.isSnapshot).isFalse()
+        Truth.assertThat(version.isAlpha).isFalse()
+        Truth.assertThat(version.isBeta).isFalse()
         // Truth.assertThat(version.isLocal).isFalse()
         // Truth.assertThat(version.isVersionTimestampEnabled).isFalse()
         // Truth.assertThat(version.featureName).isNull()
@@ -62,6 +104,8 @@ class VersionTest {
         Truth.assertThat(version.versionMinor).isEqualTo(2)
         Truth.assertThat(version.versionPatch).isEqualTo(3)
         Truth.assertThat(version.isSnapshot).isTrue()
+        Truth.assertThat(version.isAlpha).isFalse()
+        Truth.assertThat(version.isBeta).isFalse()
         // Truth.assertThat(version.isLocal).isFalse()
         // Truth.assertThat(version.isVersionTimestampEnabled).isFalse()
         // Truth.assertThat(version.featureName).isNull()
@@ -206,6 +250,8 @@ class VersionTest {
         Truth.assertThat(version.versionPatch).isEqualTo(3)
         Truth.assertThat(version.toString()).isEqualTo("1.2.3")
         Truth.assertThat(version.isSnapshot).isFalse()
+        Truth.assertThat(version.isAlpha).isFalse()
+        Truth.assertThat(version.isBeta).isFalse()
         // Truth.assertThat(version.isLocal).isFalse()
         // Truth.assertThat(version.isVersionTimestampEnabled).isFalse()
 
@@ -215,6 +261,8 @@ class VersionTest {
         Truth.assertThat(version.versionPatch).isEqualTo(333)
         Truth.assertThat(version.toString()).isEqualTo("111.222.333")
         Truth.assertThat(version.isSnapshot).isFalse()
+        Truth.assertThat(version.isAlpha).isFalse()
+        Truth.assertThat(version.isBeta).isFalse()
         // Truth.assertThat(version.isLocal).isFalse()
         // Truth.assertThat(version.isVersionTimestampEnabled).isFalse()
     }
@@ -228,6 +276,8 @@ class VersionTest {
         Truth.assertThat(version.toString()).isEqualTo("1.2.3-SNAPSHOT")
         Truth.assertThat(version.versionClassifier).isEqualTo("SNAPSHOT")
         Truth.assertThat(version.isSnapshot).isTrue()
+        Truth.assertThat(version.isAlpha).isFalse()
+        Truth.assertThat(version.isBeta).isFalse()
         // Truth.assertThat(version.isLocal).isFalse()
         // Truth.assertThat(version.isVersionTimestampEnabled).isFalse()
     }
@@ -241,6 +291,23 @@ class VersionTest {
         Truth.assertThat(version.toString()).isEqualTo("1.2.3-BETA")
         Truth.assertThat(version.versionClassifier).isEqualTo("BETA")
         Truth.assertThat(version.isSnapshot).isFalse()
+        Truth.assertThat(version.isAlpha).isFalse()
+        Truth.assertThat(version.isBeta).isTrue()
+        // Truth.assertThat(version.isLocal).isFalse()
+        // Truth.assertThat(version.isVersionTimestampEnabled).isFalse()
+    }
+
+    @Test
+    fun `GIVEN a alpha version WHEN creating a version using the full version`() {
+        val version = Version("1.2.3-ALPHA")
+        Truth.assertThat(version.versionMajor).isEqualTo(1)
+        Truth.assertThat(version.versionMinor).isEqualTo(2)
+        Truth.assertThat(version.versionPatch).isEqualTo(3)
+        Truth.assertThat(version.toString()).isEqualTo("1.2.3-ALPHA")
+        Truth.assertThat(version.versionClassifier).isEqualTo("ALPHA")
+        Truth.assertThat(version.isSnapshot).isFalse()
+        Truth.assertThat(version.isAlpha).isTrue()
+        Truth.assertThat(version.isBeta).isFalse()
         // Truth.assertThat(version.isLocal).isFalse()
         // Truth.assertThat(version.isVersionTimestampEnabled).isFalse()
     }
@@ -275,7 +342,7 @@ class VersionTest {
         createVersion("1.2.3333")
     }
 
-    private fun createVersion(baseVersion: String, snapshot: Boolean = true): Version {
-        return Version(baseVersion, SemanticVersionConfig(null, null, snapshot))
+    private fun createVersion(baseVersion: String, snapshot: Boolean = true, alpha: Boolean = false, beta: Boolean = false): Version {
+        return Version(baseVersion, SemanticVersionConfig(null, null, snapshot, alpha, beta))
     }
 }

@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       versionIncrementType:
-        description: 'Define the type of increment.'
+        description: 'The type of increment'
         type: choice
         required: true
         options:
@@ -11,7 +11,7 @@ on:
           - MINOR
           - PATCH
       versionIncrementBranch:
-        description: 'The branch where the version increment will be committed and pushed.'
+        description: 'The branch where the version increment will be committed and pushed'
         required: true
         default: 'master'
 jobs:
