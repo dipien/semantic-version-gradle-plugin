@@ -26,14 +26,14 @@ version = "1.0.0"
 The plugin will assign the root project version to all its subprojects.
 
 ## Printing the project version
-The printVersion task prints the project version on the console.
+The `printVersion` task prints the project version on the console.
 
 ```
 > Task :printVersion
 Version: 1.0.0-SNAPSHOT
 ```
 
-By default, the SNAPSHOT classifier is enabled. You can use the -Psnapshot=false parameter any time you want to use a stable version. For example when publishing an artifact, generating the release android app bundle, etc.
+By default, the `SNAPSHOT` classifier is enabled. You can use the `-Psnapshot=false` parameter any time you want to use a stable version. For example when publishing an artifact, generating the release android app bundle, etc.
 
 ```
 > Task :printVersion -Psnapshot=false
