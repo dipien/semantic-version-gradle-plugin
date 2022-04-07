@@ -29,7 +29,7 @@ open class Version {
     var maximumVersion: Int?
 
     protected open val defaultMaximumVersion: Int
-        get() = 999
+        get() = 99
 
     val baseVersion: String
         get() = versionMajor.toString() + BASE_VERSION_SEPARATOR + versionMinor + BASE_VERSION_SEPARATOR + versionPatch

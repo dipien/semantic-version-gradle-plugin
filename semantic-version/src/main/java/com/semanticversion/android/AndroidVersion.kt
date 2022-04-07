@@ -30,9 +30,6 @@ class AndroidVersion : Version {
     var versionCodeExtraBit: Int? = null
     val versionCode: Int
 
-    override val defaultMaximumVersion: Int
-        get() = 99
-
     constructor(
         baseVersion: String,
         config: AndroidSemanticVersionConfig
