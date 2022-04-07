@@ -208,7 +208,7 @@ class VersionTest {
 
     @Test(expected = RuntimeException::class)
     fun `GIVEN a version with the maximum possible major WHEN creating invoking incrementMajor() THEN it throws an exception`() {
-        val version = createVersion("999.2.3")
+        val version = createVersion("99.2.3")
         version.incrementMajor()
     }
 
@@ -223,7 +223,7 @@ class VersionTest {
 
     @Test
     fun `GIVEN a version with the maximum minor WHEN creating invoking incrementMinor() THEN it increments major and reset minor & patch`() {
-        val version = createVersion("1.999.3")
+        val version = createVersion("1.99.3")
         version.incrementMinor()
         Truth.assertThat(version.versionMajor).isEqualTo(2)
         Truth.assertThat(version.versionMinor).isEqualTo(0)
@@ -232,7 +232,7 @@ class VersionTest {
 
     @Test(expected = RuntimeException::class)
     fun `GIVEN a version with the maximum possible major & minor WHEN creating invoking incrementMinor() THEN it throws an exception`() {
-        val version = createVersion("999.999.3")
+        val version = createVersion("99.99.3")
         version.incrementMinor()
     }
 
@@ -247,7 +247,7 @@ class VersionTest {
 
     @Test
     fun `GIVEN a version with the maximum patch WHEN creating invoking incrementPatch() THEN it increments minor and reset patch`() {
-        val version = createVersion("1.2.999")
+        val version = createVersion("1.2.99")
         version.incrementPatch()
         Truth.assertThat(version.versionMajor).isEqualTo(1)
         Truth.assertThat(version.versionMinor).isEqualTo(3)
@@ -256,7 +256,7 @@ class VersionTest {
 
     @Test(expected = RuntimeException::class)
     fun `GIVEN a version with the maximum possible major, minor & patch WHEN creating invoking incrementPatch() THEN it throws an exception`() {
-        val version = createVersion("999.999.999")
+        val version = createVersion("99.99.99")
         version.incrementPatch()
     }
 
