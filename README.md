@@ -3,7 +3,7 @@
 # Semantic Version Gradle Plugin
 
 With the Semantic Version Gradle Plugin you can automatically apply the [Semantic Versioning](https://semver.org/) specification to your Gradle project.
-Apply the plugin on the root `build.gradle[.kts]`:
+Apply the plugin on the root `build.gradle[.kts]`, replacing `X.Y.Z` with the [latest](https://github.com/dipien/semantic-version-gradle-plugin/releases/latest) version:
 
 ```groovy
 buildscript {
@@ -122,7 +122,7 @@ The `versionClassifier` parameter represents the classifier appended to the vers
 
 ## Android Support
 The plugin has some special features for Android projects. You just need to apply the `com.dipien.android.semantic-version` plugin instead of `com.dipien.semantic-version`.
-Just add this configuration to your root `build.gradle[.kts]` file, replacing `X.Y.Z` with the latest version
+Just add this configuration to your root `build.gradle[.kts]` file, replacing `X.Y.Z` with the [latest](https://github.com/dipien/semantic-version-gradle-plugin/releases/latest) version
 
 ```groovy
 buildscript {
