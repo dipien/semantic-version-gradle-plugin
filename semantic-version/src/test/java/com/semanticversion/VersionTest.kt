@@ -22,10 +22,10 @@ class VersionTest {
         Truth.assertThat(version.baseVersion).isEqualTo("1.2.3")
         Truth.assertThat(version.toString()).isEqualTo("1.2.3-SNAPSHOT")
 
-        version = createVersion("111.222.333")
-        Truth.assertThat(version.versionMajor).isEqualTo(111)
-        Truth.assertThat(version.versionMinor).isEqualTo(222)
-        Truth.assertThat(version.versionPatch).isEqualTo(333)
+        version = createVersion("11.22.33")
+        Truth.assertThat(version.versionMajor).isEqualTo(11)
+        Truth.assertThat(version.versionMinor).isEqualTo(22)
+        Truth.assertThat(version.versionPatch).isEqualTo(33)
         Truth.assertThat(version.isSnapshot).isTrue()
         Truth.assertThat(version.isBeta).isFalse()
         Truth.assertThat(version.isAlpha).isFalse()
@@ -33,8 +33,8 @@ class VersionTest {
         // Truth.assertThat(version.isVersionTimestampEnabled).isFalse()
         // Truth.assertThat(version.featureName).isNull()
         Truth.assertThat(version.versionClassifier).isEqualTo("SNAPSHOT")
-        Truth.assertThat(version.baseVersion).isEqualTo("111.222.333")
-        Truth.assertThat(version.toString()).isEqualTo("111.222.333-SNAPSHOT")
+        Truth.assertThat(version.baseVersion).isEqualTo("11.22.33")
+        Truth.assertThat(version.toString()).isEqualTo("11.22.33-SNAPSHOT")
     }
 
     @Test
@@ -273,11 +273,11 @@ class VersionTest {
         // Truth.assertThat(version.isLocal).isFalse()
         // Truth.assertThat(version.isVersionTimestampEnabled).isFalse()
 
-        version = Version("111.222.333")
-        Truth.assertThat(version.versionMajor).isEqualTo(111)
-        Truth.assertThat(version.versionMinor).isEqualTo(222)
-        Truth.assertThat(version.versionPatch).isEqualTo(333)
-        Truth.assertThat(version.toString()).isEqualTo("111.222.333")
+        version = Version("11.22.33")
+        Truth.assertThat(version.versionMajor).isEqualTo(11)
+        Truth.assertThat(version.versionMinor).isEqualTo(22)
+        Truth.assertThat(version.versionPatch).isEqualTo(33)
+        Truth.assertThat(version.toString()).isEqualTo("11.22.33")
         Truth.assertThat(version.isSnapshot).isFalse()
         Truth.assertThat(version.isBeta).isFalse()
         Truth.assertThat(version.isAlpha).isFalse()
