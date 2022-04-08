@@ -153,7 +153,8 @@ So you can just use a 6 digits version code that represents the semantic version
 
 As you can see, you can go from version `0.0.1` to `99.99.99`. So, you have room for more than 192 years of versions, releasing weekly and without taking into account the hotfixes !!!
 This simple versioning scheme is the default scheme on the plugin.
-For Android projects, the printVersion task prints the project version, the android app version name & version code.
+
+For Android projects, the `printVersion` task prints the project version, the android app version name & version code.
 
 ```
 > Task :printVersion
