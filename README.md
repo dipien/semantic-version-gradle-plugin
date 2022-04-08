@@ -151,6 +151,8 @@ As described [here](http://developer.android.com/google/play/publishing/multiple
 Thanks to the introduction of the App Bundle format, in most cases, you are not going to need the multiple APKs support.
 So you can just use a 6 digits version code that represents the semantic version: the first two digits for the `MAJOR` version, then two for the `MINOR` and the last two for the `PATCH` version.
 
+![](wiki/versioncode.png)
+
 As you can see, you can go from version `0.0.1` to `99.99.99`. So, you have room for more than 192 years of versions, releasing weekly and without taking into account the hotfixes !!!
 This simple versioning scheme is the default scheme on the plugin.
 
