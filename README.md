@@ -185,5 +185,6 @@ Sponsor this open source project to help us get the funding we need to continue 
 * [Twitter](http://twitter.dipien.com)
 * [Medium](http://medium.dipien.com)
 * [Instagram](http://instagram.dipien.com)
+* [TikTok](https://tiktok.dipien.com)
 * [Pinterest](http://pinterest.dipien.com)
 * [GitHub](http://github.dipien.com)
