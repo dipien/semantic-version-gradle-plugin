@@ -38,6 +38,38 @@ class VersionTest {
     }
 
     @Test
+    fun `GIVEN a valid snapshot (by default) version WHEN creating a version THEN it is successfully created`() {
+        var version = createVersion("1.2.3", snapshot = null)
+
+        Truth.assertThat(version.versionMajor).isEqualTo(1)
+        Truth.assertThat(version.versionMinor).isEqualTo(2)
+        Truth.assertThat(version.versionPatch).isEqualTo(3)
+        Truth.assertThat(version.isSnapshot).isTrue()
+        Truth.assertThat(version.isBeta).isFalse()
+        Truth.assertThat(version.isAlpha).isFalse()
+        // Truth.assertThat(version.isLocal).isFalse()
+        // Truth.assertThat(version.isVersionTimestampEnabled).isFalse()
+        // Truth.assertThat(version.featureName).isNull()
+        Truth.assertThat(version.versionClassifier).isEqualTo("SNAPSHOT")
+        Truth.assertThat(version.baseVersion).isEqualTo("1.2.3")
+        Truth.assertThat(version.toString()).isEqualTo("1.2.3-SNAPSHOT")
+
+        version = createVersion("11.22.33")
+        Truth.assertThat(version.versionMajor).isEqualTo(11)
+        Truth.assertThat(version.versionMinor).isEqualTo(22)
+        Truth.assertThat(version.versionPatch).isEqualTo(33)
+        Truth.assertThat(version.isSnapshot).isTrue()
+        Truth.assertThat(version.isBeta).isFalse()
+        Truth.assertThat(version.isAlpha).isFalse()
+        // Truth.assertThat(version.isLocal).isFalse()
+        // Truth.assertThat(version.isVersionTimestampEnabled).isFalse()
+        // Truth.assertThat(version.featureName).isNull()
+        Truth.assertThat(version.versionClassifier).isEqualTo("SNAPSHOT")
+        Truth.assertThat(version.baseVersion).isEqualTo("11.22.33")
+        Truth.assertThat(version.toString()).isEqualTo("11.22.33-SNAPSHOT")
+    }
+
+    @Test
     fun `GIVEN a valid alpha version WHEN creating a version THEN it is successfully created`() {
         val version = createVersion("1.2.3", snapshot = false, alpha = true)
 
@@ -375,7 +407,7 @@ class VersionTest {
         createVersion("1.2.3333")
     }
 
-    private fun createVersion(baseVersion: String, snapshot: Boolean = true, beta: Boolean = false, alpha: Boolean = false): Version {
+    private fun createVersion(baseVersion: String, snapshot: Boolean? = true, beta: Boolean = false, alpha: Boolean = false): Version {
         return Version(baseVersion, SemanticVersionConfig(null, null, snapshot, beta, alpha))
     }
 }

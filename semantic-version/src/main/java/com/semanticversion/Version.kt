@@ -115,7 +115,7 @@ open class Version {
                     isBeta = true
                     isSnapshot = false
                 } else {
-                    if (config.snapshot == true) {
+                    if (config.snapshot == true || config.snapshot == null) {
                         versionClassifier = SNAPSHOT_CLASSIFIER
 
                         isAlpha = false
