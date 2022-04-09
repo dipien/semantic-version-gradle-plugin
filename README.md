@@ -29,31 +29,32 @@ The plugin will assign the root project version to all its subprojects.
 The `printVersion` task prints the project version on the console.
 
 ```
-> Task :printVersion
-Version: 1.0.0-SNAPSHOT
+./gradlew printVersion
+OUTPUT: Version: 1.0.0-SNAPSHOT
 ```
 
 By default, the `SNAPSHOT` classifier is enabled. You can use the `-Psnapshot=false` parameter any time you want to use a stable version. For example when publishing an artifact, generating the release android app bundle, etc.
 
 ```
-> Task :printVersion -Psnapshot=false
-Version: 1.0.0
+./gradlew printVersion -Psnapshot=false
+OUTPUT: Version: 1.0.0
 ```
 
 You can use alpha or beta classifiers:
 
 ```
-> Task :printVersion -Palpha=true
-Version: 1.0.0-ALPHA
-> Task :printVersion -Pbeta=true
-Version: 1.0.0-BETA
+./gradlew printVersion -Palpha=true
+OUTPUT: Version: 1.0.0-ALPHA
+
+./gradlew printVersion -Pbeta=true
+OUTPUT: 1.0.0-BETA
 ```
 
 You can also assign custom classifiers using the `versionClassifier` parameter:
 
 ```
-> Task :printVersion -PversionClassifier=canary
-Version: 1.0.0-canary
+./gradlew printVersion -PversionClassifier=canary
+OUTPUT: 1.0.0-canary
 ```
 
 ## Incrementing the project version
@@ -159,7 +160,8 @@ This simple versioning scheme is the default scheme on the plugin.
 For Android projects, the `printVersion` task prints the project version, the android app version name & version code.
 
 ```
-> Task :printVersion
+./gradlew printVersion
+OUTPUT:
 Version: 1.0.0-SNAPSHOT
 Version code: 10000
 Version name: 1.0.0-SNAPSHOT
