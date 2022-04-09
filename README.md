@@ -59,13 +59,15 @@ OUTPUT: 1.0.0-canary
 
 ## Incrementing the project version
 
-The incrementVersion task increments the project version on your root `build.gradle[.kts]` file. The `versionIncrementType` option defines the type of increment: `MAJOR`, `MINOR` or `PATCH`
+The `incrementVersion` task increments the project version on your root `build.gradle[.kts]` file. The `versionIncrementType` option defines the type of increment: `MAJOR`, `MINOR` or `PATCH`
 
 ```
 // Increments the major from 1.0.0 to 2.0.0
 ./gradlew incrementVersion --versionIncrementType=MAJOR
+
 // Increments the minor from 1.0.0 to 1.1.0
 ./gradlew incrementVersion --versionIncrementType=MINOR
+
 // Increments the patch from 1.0.0 to 1.0.1
 ./gradlew incrementVersion --versionIncrementType=PATCH
 ```
@@ -78,7 +80,8 @@ If you want to also commit and push the version change, just add the `versionInc
 
 ## Advanced Configuration
 All the configuration properties can be added using any of the following ways:
-Using the `semanticVersion` extension on the root `build.gradle[.kts]`
+
+* Using the `semanticVersion` extension on the root `build.gradle[.kts]`
 
 ```groovy
 semanticVersion {
@@ -86,25 +89,25 @@ semanticVersion {
 }
 ```
 
-As a command-line parameter:
+* As a command-line parameter:
 
 ```
 ./gradlew ... -PgitUserEmail="email@mail.com"
 ```
 
-As a property on a `gradle.properties` file:
+* As a property on a `gradle.properties` file:
 
 ```
 gitUserEmail = "email@mail.com"
 ```
 
-As an extra property on the root `build.gradle[.kts]`:
+* As an extra property on the root `build.gradle[.kts]`:
 
 ```
 ext.gitUserEmail = "email@mail.com"
 ```
 
-As a System Environment property
+* As a System Environment property
 
 ### Maximum Version
 The `maximumVersion` parameter represents the maximum value allowed for a `MAJOR`, `MINOR` or `PATCH`. The default value is `99`, so by default `99.99.99` is the maximum supported version.
