@@ -18,7 +18,6 @@ class IncrementVersionHelperTest {
         testIncrement(" version = \"1.0.0\"\n", VersionIncrementType.MAJOR, "2.0.0", "version = \"2.0.0\"\n")
         testIncrement("version = \"1.0.0\"// This is a comment\n", VersionIncrementType.MAJOR, "2.0.0", "version = \"2.0.0\"// This is a comment\n")
         testIncrement("version = \"10.10.10\"\n", VersionIncrementType.MAJOR, "11.0.0", "version = \"11.0.0\"\n")
-        testIncrement("version = \"100.100.100\"\n", VersionIncrementType.MAJOR, "101.0.0", "version = \"101.0.0\"\n")
     }
 
     @Test
@@ -31,14 +30,14 @@ class IncrementVersionHelperTest {
     fun `GIVEN a version file WHEN incrementing the minor THEN the version is properly incremented`() {
         testIncrement("version = \"1.0.0\"\n", VersionIncrementType.MINOR, "1.1.0", "version = \"1.1.0\"\n")
         testIncrement("version = \"10.10.10\"\n", VersionIncrementType.MINOR, "10.11.0", "version = \"10.11.0\"\n")
-        testIncrement("version = \"100.100.100\"\n", VersionIncrementType.MINOR, "100.101.0", "version = \"100.101.0\"\n")
+        testIncrement("version = \"10.99.0\"\n", VersionIncrementType.MINOR, "11.0.0", "version = \"11.0.0\"\n")
     }
 
     @Test
     fun `GIVEN a version file WHEN incrementing the patch THEN the version is properly incremented`() {
         testIncrement("version = \"1.0.0\"\n", VersionIncrementType.PATCH, "1.0.1", "version = \"1.0.1\"\n")
         testIncrement("version = \"10.10.10\"\n", VersionIncrementType.PATCH, "10.10.11", "version = \"10.10.11\"\n")
-        testIncrement("version = \"100.100.100\"\n", VersionIncrementType.PATCH, "100.100.101", "version = \"100.100.101\"\n")
+        testIncrement("version = \"10.10.99\"\n", VersionIncrementType.PATCH, "10.11.0", "version = \"10.11.0\"\n")
     }
 
     @Test(expected = RuntimeException::class)
