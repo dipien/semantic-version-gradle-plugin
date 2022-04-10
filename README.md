@@ -177,6 +177,10 @@ Version name: 1.0.0-SNAPSHOT
 
 Given that the default value of the `maximumVersion` parameter is `99`, the maximum generated version code will be `999999`. Be careful, increasing this value, it impacts the generated version code, which is limited to `2100000000`
 
+## More info
+
+You can read more details about this plugin on this [article](https://blog.dipien.com/automatic-semantic-versioning-on-your-gradle-project-6343b626b27b)
+
 ## Sponsor this project
 
 Sponsor this open source project to help us get the funding we need to continue working on it.
