@@ -156,6 +156,8 @@ You can get more details [here](http://developer.android.com/tools/publishing/ve
 It's a good practice to have a direct relationship between both versions to avoid confusion during the development and release process. At least, you should be able to infer the version name given a version code.
 As described [here](http://developer.android.com/google/play/publishing/multiple-apks.html#VersionCodes), the official documentation proposes using a version code scheme that associates the version code and name, and also supports multiple APKs. The plugin uses that scheme but with some changes to also support Semantic Versioning.
 
+The Semantic Version Gradle Plugin automatically generates and configures the `versionCode` and `versionName` on the `defaultConfig` section at build time. It uses the version defined at the root `build.gradle[.kts]` to configure those fields. **It's important to remember you don't have to set those fields on the `defaultConfig` section.**
+
 ### Simple versioning scheme
 Thanks to the introduction of the App Bundle format, in most cases, you are not going to need the multiple APKs support.
 So you can just use a 6 digits version code that represents the semantic version: the first two digits for the `MAJOR` version, then two for the `MINOR` and the last two for the `PATCH` version.
@@ -175,7 +177,7 @@ Version code: 10000
 Version name: 1.0.0-SNAPSHOT
 ```
 
-Given that the default value of the `maximumVersion` parameter is `99`, the maximum generated version code will be `999999`. Be careful, increasing this value, it impacts the generated version code, which is limited to `2100000000`
+Given that the default value of the `maximumVersion` parameter is `99`, the maximum generated version code will be `999999`. Be careful, increasing this value, impacts the generated version code, which is limited to `2100000000`
 
 ## More info
 
