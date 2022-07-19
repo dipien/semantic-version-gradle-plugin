@@ -1,19 +1,11 @@
 buildscript {
 	repositories {
-		mavenCentral()
-		if (project.hasProperty("LOCAL_MAVEN_REPO")) {
-			val localMavenRepo = extra.get("LOCAL_MAVEN_REPO") ?: System.getenv("LOCAL_MAVEN_REPO")
-			if (localMavenRepo != null) {
-				maven(url = localMavenRepo)
-			}
-		}
-
-		maven(url = "https://oss.sonatype.org/content/repositories/snapshots/")
+		gradlePluginPortal()
 	}
 
 	buildscript {
 		dependencies {
-			classpath("com.dipien:semantic-version-gradle-plugin:1.0.0-SNAPSHOT")
+			classpath("com.dipien:semantic-version-gradle-plugin:1.0.0")
 		}
 	}
 }
