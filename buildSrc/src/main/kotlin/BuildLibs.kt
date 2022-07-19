@@ -14,5 +14,5 @@ object BuildLibs {
     const val RELEASES_HUB_GRADLE_PLUGIN = "com.dipien:releases-hub-gradle-plugin:3.1.0"
 
     // https://github.com/dipien/semantic-version-gradle-plugin/blob/master/CHANGELOG.md
-    const val SEMANTIC_VERSION_GRADLE_PLUGIN = "com.dipien:semantic-version-gradle-plugin:1.0.0"
+    const val SEMANTIC_VERSION_GRADLE_PLUGIN = "com.dipien:semantic-version-gradle-plugin:1.1.0"
 }
