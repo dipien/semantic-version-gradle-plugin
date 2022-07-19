@@ -36,6 +36,14 @@ open class SemanticVersionAndroidGradlePlugin : SemanticVersionGradlePlugin() {
                         semanticVersionAndroidExtension.versionCodeExtraBit,
                         androidAppExtension.defaultConfig.minSdkVersion!!.apiLevel)
 
+                    if (androidAppExtension.defaultConfig.versionCode != null) {
+                        throw RuntimeException("You shouldn't define the versionCode on the defaultConfig section. The Semantic Versioning Gradle Plugin automatically set that value on build time.")
+                    }
+
+                    if (androidAppExtension.defaultConfig.versionName != null) {
+                        throw RuntimeException("You shouldn't define the versionName on the defaultConfig section. The Semantic Versioning Gradle Plugin automatically set that value on build time.")
+                    }
+
                     androidAppExtension.defaultConfig.versionCode = AndroidVersion(baseVersion, config).versionCode
                     androidAppExtension.defaultConfig.versionName = project.version.toString()
                 }
