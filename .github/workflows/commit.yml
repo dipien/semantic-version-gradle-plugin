@@ -37,7 +37,7 @@ jobs:
         run: sed -i 's/-all.zip/-bin.zip/' gradle/wrapper/gradle-wrapper.properties
 
       - name: Ktlint
-        uses: ./gradlew ktlint --stacktrace
+        run: ./gradlew ktlint --stacktrace
 
   build:
     runs-on: ubuntu-latest
@@ -57,10 +57,10 @@ jobs:
         run: sed -i 's/-all.zip/-bin.zip/' gradle/wrapper/gradle-wrapper.properties
 
       - name: Assemble
-        uses: ./gradlew assemble --stacktrace
+        run: ./gradlew assemble --stacktrace
 
       - name: Tests
-        uses: ./gradlew test --stacktrace
+        run: ./gradlew test --stacktrace
 
       - name: Validate plugins
-        uses: ./gradlew validatePlugins --stacktrace
+        run: ./gradlew validatePlugins --stacktrace
