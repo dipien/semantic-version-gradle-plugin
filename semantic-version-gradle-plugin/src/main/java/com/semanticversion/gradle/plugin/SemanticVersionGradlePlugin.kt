@@ -7,7 +7,7 @@ import com.semanticversion.gradle.plugin.increment.IncrementVersionTask
 import com.semanticversion.gradle.plugin.print.PrintVersionTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import java.lang.RuntimeException
+import kotlin.RuntimeException
 
 open class SemanticVersionGradlePlugin : Plugin<Project> {
 
@@ -30,13 +30,8 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
             throw RuntimeException("The Semantic Version Gradle plugin must be applied only on the root project")
         }
 
-        // if (project.version == Project.DEFAULT_VERSION) {
-        //     project.version = project.rootProject.version
-        // }
-
         if (project.version == Project.DEFAULT_VERSION) {
-            project.logger.warn("Version not specified on project [${project.name}] or its root project. Assigned v0.1.0 as default version")
-            project.version = "0.1.0"
+            throw RuntimeException("Version not specified on root project. Remember to define the version before applying this plugin")
         }
 
         extension = project.extensions.create(EXTENSION_NAME, getExtensionClass(), project.propertyResolver)
