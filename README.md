@@ -19,16 +19,11 @@ buildscript {
         classpath("com.dipien:semantic-version-gradle-plugin:X.Y.Z")
     }
 }
+version = "1.0.0"
 apply plugin: "com.dipien.semantic-version"
 ```
 
-Define your project version on your root `build.gradle[.kts]` using the Semantic Versioning specification but without any classifier:
-
-```groovy
-version = "1.0.0"
-```
-
-The plugin will assign the root project version to all its subprojects.
+Define your project version on your root `build.gradle[.kts]` using the Semantic Versioning specification but without any classifier. It's important you define the version before applying the plugin. The plugin will assign the root project version to all its subprojects.
 
 ## Printing the project version
 The `printVersion` task prints the project version on the console.
