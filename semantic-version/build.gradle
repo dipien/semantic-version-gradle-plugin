@@ -2,16 +2,27 @@ ext.PROJECT_NAME = "Semantic Version Library"
 description = "Library to handle Semantic Version"
 ext.ARTIFACT_ID = "semantic-version"
 
+apply plugin: "kotlin"
 apply plugin: 'com.jdroidtools.java.library'
 
 buildscript {
 	dependencies {
+		classpath(BuildLibs.KOTLIN_GRADLE_PLUGIN)
 		classpath(BuildLibs.JDROID_GRADLE_JAVA_PLUGIN)
 	}
 }
 
 dependencies {
+	implementation(Libs.KOTLIN)
 	implementation(Libs.JDROID_JAVA_CORE)
 	testImplementation(Libs.JUNIT)
 	testImplementation(Libs.TRUTH)
+}
+
+compileKotlin.kotlinOptions {
+	jvmTarget = JavaVersion.VERSION_1_8.toString()
+}
+
+compileTestKotlin.kotlinOptions {
+	jvmTarget = JavaVersion.VERSION_1_8.toString()
 }

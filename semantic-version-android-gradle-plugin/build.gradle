@@ -5,10 +5,12 @@ ext.GRADLE_PLUGIN_ID = "com.dipien.android.semantic-version"
 ext.GRADLE_PLUGIN_IMPLEMENTATION_CLASS = "com.semanticversion.android.gradle.plugin.SemanticVersionAndroidGradlePlugin"
 ext.GRADLE_PLUGIN_PORTAL_TAGS = ["gradle", "plugin", "semantic-versioning", "android"]
 
+apply plugin: "kotlin"
 apply plugin: "com.jdroidtools.gradle.plugin"
 
 buildscript {
 	dependencies {
+		classpath(BuildLibs.KOTLIN_GRADLE_PLUGIN)
 		classpath(BuildLibs.JDROID_GRADLE_PROJECT_PLUGIN)
 	}
 }
@@ -16,8 +18,17 @@ buildscript {
 dependencies {
 	implementation(project(":semantic-version"))
 	implementation(project(":semantic-version-gradle-plugin"))
+	implementation(Libs.KOTLIN)
 	implementation(Libs.JDROID_JAVA_CORE)
 	implementation(Libs.ANDROID_GRADLE_PLUGIN)
 	testImplementation(Libs.JUNIT)
 	testImplementation(Libs.TRUTH)
+}
+
+compileKotlin.kotlinOptions {
+	jvmTarget = JavaVersion.VERSION_1_8.toString()
+}
+
+compileTestKotlin.kotlinOptions {
+	jvmTarget = JavaVersion.VERSION_1_8.toString()
 }
