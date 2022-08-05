@@ -183,7 +183,7 @@ You can read more details about this plugin on this [article](https://blog.dipie
 Sponsor this open source project to help us get the funding we need to continue working on it.
 
 * [Donate cryptocurrency](http://coinbase.dipien.com/)
-* [Donate with PayPal](http://paypal.dipien.com/)
+* [Donate with credit card](http://kofi.dipien.com/)
 * [Donate on Patreon](http://patreon.dipien.com/)
 * [Become a member of Medium](https://membership.medium.dipien.com) [We will receive a portion of your membership fee]
 
