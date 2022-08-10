@@ -10,6 +10,13 @@ buildscript {
 	}
 }
 
+allprojects {
+	repositories {
+		google()
+		mavenCentral()
+	}
+}
+
 version = "1.1.0"
 
 apply(plugin = "com.dipien.semantic-version")
