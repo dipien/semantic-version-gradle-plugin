@@ -56,6 +56,7 @@ open class SemanticVersionAndroidGradlePlugin : SemanticVersionGradlePlugin() {
     }
 
     override fun createPrintTask() {
-        project.tasks.create(PrintVersionTask.TASK_NAME, PrintAndroidVersionTask::class.java)
+        val printAndroidVersionTask = project.tasks.create(PrintVersionTask.TASK_NAME, PrintAndroidVersionTask::class.java)
+        printAndroidVersionTask.notCompatibleWithConfigurationCache("Not implemented yet")
     }
 }

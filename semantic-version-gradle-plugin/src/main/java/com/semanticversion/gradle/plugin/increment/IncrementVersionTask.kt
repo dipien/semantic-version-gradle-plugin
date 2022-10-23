@@ -18,8 +18,19 @@ open class IncrementVersionTask : AbstractTask() {
     }
 
     @get:Input
+    @get:Optional
     @Option(description = "")
-    lateinit var versionIncrementType: String
+    var gitUserName: String? = null
+
+    @get:Input
+    @get:Optional
+    @Option(description = "")
+    var gitUserEmail: String? = null
+
+    @get:Input
+    @get:Optional
+    @Option(description = "")
+    var versionIncrementType: String? = null
 
     @get:Input
     @get:Optional
@@ -27,14 +38,16 @@ open class IncrementVersionTask : AbstractTask() {
     var versionIncrementBranch: String? = null
 
     override fun onExecute() {
-        val extension = SemanticVersionGradlePlugin.getExtension(project)
+
+        requireNotNull(versionIncrementType) { "The '${::versionIncrementType.name}' property is required" }
+
         val buildGradleFile = project.buildFile
         val newVersion = IncrementVersionHelper.increment(
             buildGradleFile,
-            VersionIncrementType.valueOf(versionIncrementType.toUpperCase()),
+            VersionIncrementType.valueOf(versionIncrementType!!.toUpperCase()),
             versionIncrementBranch,
-            extension.gitUserName,
-            extension.gitUserEmail,
+            gitUserName,
+            gitUserEmail,
             gitHelper
         )
         project.version = newVersion.toString()

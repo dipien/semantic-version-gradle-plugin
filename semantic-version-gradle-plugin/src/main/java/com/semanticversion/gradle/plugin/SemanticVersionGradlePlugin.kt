@@ -44,7 +44,10 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
             it.version = version.toString()
         }
 
-        project.tasks.create(IncrementVersionTask.TASK_NAME, IncrementVersionTask::class.java)
+        val incrementVersionTask = project.tasks.create(IncrementVersionTask.TASK_NAME, IncrementVersionTask::class.java)
+        incrementVersionTask.gitUserName = extension.gitUserName
+        incrementVersionTask.gitUserEmail = extension.gitUserEmail
+        incrementVersionTask.notCompatibleWithConfigurationCache("Not implemented yet")
 
         createPrintTask()
     }
@@ -54,6 +57,7 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
     }
 
     protected open fun createPrintTask() {
-        project.tasks.create(PrintVersionTask.TASK_NAME, PrintVersionTask::class.java)
+        val printVersionTask = project.tasks.create(PrintVersionTask.TASK_NAME, PrintVersionTask::class.java)
+        printVersionTask.notCompatibleWithConfigurationCache("Not implemented yet")
     }
 }
