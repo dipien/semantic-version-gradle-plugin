@@ -78,6 +78,12 @@ If you want to also commit and push the version change, just add the `versionInc
 ./gradlew incrementVersion --versionIncrementType=MAJOR --versionIncrementBranch=master -PgitUserName=userName -PgitUserEmail=email@mail.com
 ```
 
+You can configure the commit message adding a prefix with the `commitMessagePrefix` option. For example
+
+```
+./gradlew incrementVersion --versionIncrementType=MAJOR --versionIncrementBranch=master --commitMessagePrefix="[my prefix] "
+```
+
 ## Advanced Configuration
 All the configuration properties can be added using any of the following ways:
 
