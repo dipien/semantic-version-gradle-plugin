@@ -81,7 +81,7 @@ If you want to also commit and push the version change, just add the `versionInc
 You can configure the commit message adding a prefix with the `commitMessagePrefix` option. For example
 
 ```
-./gradlew incrementVersion --versionIncrementType=MAJOR --versionIncrementBranch=master --commitMessagePrefix="[my prefix] "
+./gradlew incrementVersion --commitMessagePrefix="[my prefix] " --versionIncrementType=MAJOR --versionIncrementBranch=master
 ```
 
 ## Advanced Configuration
