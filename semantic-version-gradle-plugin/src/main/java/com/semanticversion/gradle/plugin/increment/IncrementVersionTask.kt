@@ -37,6 +37,11 @@ open class IncrementVersionTask : AbstractTask() {
     @Option(description = "")
     var versionIncrementBranch: String? = null
 
+    @get:Input
+    @get:Optional
+    @Option(description = "")
+    var commitMessagePrefix: String? = null
+
     override fun onExecute() {
 
         requireNotNull(versionIncrementType) { "The '${::versionIncrementType.name}' property is required" }
@@ -46,6 +51,7 @@ open class IncrementVersionTask : AbstractTask() {
             buildGradleFile,
             VersionIncrementType.valueOf(versionIncrementType!!.toUpperCase()),
             versionIncrementBranch,
+            commitMessagePrefix,
             gitUserName,
             gitUserEmail,
             gitHelper

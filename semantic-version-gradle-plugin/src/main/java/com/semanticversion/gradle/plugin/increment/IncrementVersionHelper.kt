@@ -13,6 +13,7 @@ object IncrementVersionHelper {
         versionFile: File,
         versionIncrementType: VersionIncrementType,
         versionIncrementBranch: String?,
+        commitMessagePrefix: String?,
         gitUserName: String?,
         gitUserEmail: String?,
         gitHelper: GitHelper
@@ -47,7 +48,7 @@ object IncrementVersionHelper {
                 }
                 gitHelper.add(versionFile.absolutePath)
                 gitHelper.diffHead()
-                gitHelper.commit("Changed project version to v${newVersion.toString()}")
+                gitHelper.commit(commitMessagePrefix.orEmpty() + "Changed project version to v${newVersion.toString()}")
                 gitHelper.push(versionIncrementBranch)
             }
         } else {
