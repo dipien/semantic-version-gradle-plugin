@@ -24,32 +24,28 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
     protected lateinit var extension: SemanticVersionExtension
 
     override fun apply(project: Project) {
-        this.project = project
+        project.allprojects { project ->
 
-        if (project != project.rootProject) {
-            throw RuntimeException("The Semantic Version Gradle plugin must be applied only on the root project")
+            this.project = project
+
+            if (project.version == Project.DEFAULT_VERSION) {
+                throw RuntimeException("Version not specified on project ${project.name}. Remember to define the version before applying this plugin")
+            }
+
+            extension = project.extensions.create(EXTENSION_NAME, getExtensionClass(), project.propertyResolver)
+
+            baseVersion = Version(project.version.toString()).baseVersion
+            val version = Version(baseVersion, SemanticVersionConfig(extension.maximumVersion, extension.versionClassifier, extension.snapshot, extension.beta, extension.alpha))
+            project.version = version.toString()
+
+            val incrementVersionTask = project.tasks.create(IncrementVersionTask.TASK_NAME, IncrementVersionTask::class.java)
+            incrementVersionTask.gitUserName = extension.gitUserName
+            incrementVersionTask.gitUserEmail = extension.gitUserEmail
+            incrementVersionTask.notCompatibleWithConfigurationCache("Not implemented yet")
+
+            createPrintTask()
+
         }
-
-        if (project.version == Project.DEFAULT_VERSION) {
-            throw RuntimeException("Version not specified on root project. Remember to define the version before applying this plugin")
-        }
-
-        extension = project.extensions.create(EXTENSION_NAME, getExtensionClass(), project.propertyResolver)
-
-        baseVersion = Version(project.version.toString()).baseVersion
-        val version = Version(baseVersion, SemanticVersionConfig(extension.maximumVersion, extension.versionClassifier, extension.snapshot, extension.beta, extension.alpha))
-        project.version = version.toString()
-
-        project.subprojects.forEach {
-            it.version = version.toString()
-        }
-
-        val incrementVersionTask = project.tasks.create(IncrementVersionTask.TASK_NAME, IncrementVersionTask::class.java)
-        incrementVersionTask.gitUserName = extension.gitUserName
-        incrementVersionTask.gitUserEmail = extension.gitUserEmail
-        incrementVersionTask.notCompatibleWithConfigurationCache("Not implemented yet")
-
-        createPrintTask()
     }
 
     protected open fun getExtensionClass(): Class<out SemanticVersionExtension> {

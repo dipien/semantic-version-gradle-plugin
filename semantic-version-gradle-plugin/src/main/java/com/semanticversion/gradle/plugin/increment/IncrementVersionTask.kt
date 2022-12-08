@@ -1,7 +1,6 @@
 package com.semanticversion.gradle.plugin.increment
 
 import com.semanticversion.VersionIncrementType
-import com.semanticversion.gradle.plugin.SemanticVersionGradlePlugin
 import com.semanticversion.gradle.plugin.commons.AbstractTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
@@ -40,6 +39,11 @@ open class IncrementVersionTask : AbstractTask() {
     @get:Input
     @get:Optional
     @Option(description = "")
+    var includeTag: Boolean? = false
+
+    @get:Input
+    @get:Optional
+    @Option(description = "")
     var commitMessagePrefix: String? = null
 
     override fun onExecute() {
@@ -48,9 +52,11 @@ open class IncrementVersionTask : AbstractTask() {
 
         val buildGradleFile = project.buildFile
         val newVersion = IncrementVersionHelper.increment(
+            project,
             buildGradleFile,
             VersionIncrementType.valueOf(versionIncrementType!!.toUpperCase()),
             versionIncrementBranch,
+            includeTag,
             commitMessagePrefix,
             gitUserName,
             gitUserEmail,

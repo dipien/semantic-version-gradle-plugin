@@ -35,10 +35,16 @@ class GitHelperImpl(private val propertyResolver: PropertyResolver, private val 
         commandExecutor.execute("git push origin HEAD:$headBranch")
     }
 
+    override fun pushWithTag(headBranch: String) {
+        commandExecutor.execute("git push --follow-tags origin HEAD:$headBranch")
+    }
+
+    override fun tag(tagName: String, message: String) {
+        commandExecutor.execute("git tag -a \"$tagName\" -m \"$message\"")
+    }
+
     override fun add(filePath: String) {
         commandExecutor.execute("git add $filePath")
     }
-
-
 
 }

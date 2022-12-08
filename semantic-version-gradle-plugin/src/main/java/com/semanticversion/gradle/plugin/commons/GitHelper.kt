@@ -15,4 +15,8 @@ interface GitHelper {
     fun commit(message: String)
 
     fun push(headBranch: String)
+
+    fun pushWithTag(headBranch: String)
+
+    fun tag(tagName: String, message: String)
 }

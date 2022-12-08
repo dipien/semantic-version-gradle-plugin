@@ -4,15 +4,18 @@ import com.jdroid.java.utils.FileUtils
 import com.semanticversion.Version
 import com.semanticversion.VersionIncrementType
 import com.semanticversion.gradle.plugin.commons.GitHelper
+import org.gradle.api.Project
 import java.util.regex.Pattern
 import java.io.File
 
 object IncrementVersionHelper {
 
     fun increment(
+        project: Project,
         versionFile: File,
         versionIncrementType: VersionIncrementType,
         versionIncrementBranch: String?,
+        includeTag: Boolean?,
         commitMessagePrefix: String?,
         gitUserName: String?,
         gitUserEmail: String?,
@@ -48,8 +51,14 @@ object IncrementVersionHelper {
                 }
                 gitHelper.add(versionFile.absolutePath)
                 gitHelper.diffHead()
-                gitHelper.commit(commitMessagePrefix.orEmpty() + "Changed project version to v${newVersion.toString()}")
-                gitHelper.push(versionIncrementBranch)
+                gitHelper.commit(commitMessagePrefix.orEmpty() + "Version for project ${project.name} is now v${newVersion.toString()}")
+
+                if (includeTag == true) {
+                    gitHelper.tag("${project.name}@${newVersion.toString()}", "Version for project ${project.name} is now v${newVersion.toString()}")
+                    gitHelper.pushWithTag(versionIncrementBranch);
+                } else {
+                    gitHelper.push(versionIncrementBranch)
+                }
             }
         } else {
             throw RuntimeException("Version not defined on " + versionFile.absolutePath)
