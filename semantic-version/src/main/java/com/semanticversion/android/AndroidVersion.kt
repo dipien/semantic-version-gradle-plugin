@@ -1,7 +1,9 @@
 package com.semanticversion.android
 
 import com.semanticversion.Version
+import com.semanticversion.utils.countDigits
 import kotlin.math.max
+import kotlin.math.pow
 
 class AndroidVersion : Version {
 
@@ -44,7 +46,9 @@ class AndroidVersion : Version {
             this.versionCodePrefix = config.versionCodePrefix
         }
         this.versionCodeExtraBit = config.versionCodeExtraBit
-        versionCode = this.versionCodePrefix!! * 10000000 + this.versionCodeExtraBit!! * 1000000 + versionMajor!! * 10000 + versionMinor!! * 100 + versionPatch!!
+        val versionMultiplier = 10.0.pow(maximumVersion!!.countDigits().toDouble()).toInt()
+        val versionCodeExtraBitMultiplier = 10.0.pow(versionCodeExtraBit!!.countDigits().toDouble()).toInt()
+        versionCode = this.versionCodePrefix!! * versionCodeExtraBitMultiplier * versionMultiplier * versionMultiplier * versionMultiplier + this.versionCodeExtraBit!! * versionMultiplier * versionMultiplier * versionMultiplier + versionMajor!! * versionMultiplier * versionMultiplier + versionMinor!! * versionMultiplier + versionPatch!!
     }
 
     constructor(versionCode: Int) : super(fromVersionCodeToVersionName(versionCode)) {

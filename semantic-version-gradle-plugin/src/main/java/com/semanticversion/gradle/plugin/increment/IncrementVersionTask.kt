@@ -1,9 +1,9 @@
 package com.semanticversion.gradle.plugin.increment
 
 import com.semanticversion.VersionIncrementType
-import com.semanticversion.gradle.plugin.SemanticVersionGradlePlugin
 import com.semanticversion.gradle.plugin.commons.AbstractTask
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.options.Option
 
@@ -37,6 +37,9 @@ open class IncrementVersionTask : AbstractTask() {
     @Option(description = "")
     var versionIncrementBranch: String? = null
 
+    @get:Internal
+    var maximumVersion: Int? = null
+
     @get:Input
     @get:Optional
     @Option(description = "")
@@ -51,6 +54,7 @@ open class IncrementVersionTask : AbstractTask() {
             buildGradleFile,
             VersionIncrementType.valueOf(versionIncrementType!!.toUpperCase()),
             versionIncrementBranch,
+            maximumVersion,
             commitMessagePrefix,
             gitUserName,
             gitUserEmail,

@@ -1,4 +1,4 @@
-version = "1.4.0"
+version = "1.4.1"
 
 ext.GITHUB_REPOSITORY_NAME = "semantic-version-gradle-plugin"
 

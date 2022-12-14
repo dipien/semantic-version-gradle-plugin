@@ -36,7 +36,7 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
 
         extension = project.extensions.create(EXTENSION_NAME, getExtensionClass(), project.propertyResolver)
 
-        baseVersion = Version(project.version.toString()).baseVersion
+        baseVersion = Version(project.version.toString(), extension.maximumVersion).baseVersion
         val version = Version(baseVersion, SemanticVersionConfig(extension.maximumVersion, extension.versionClassifier, extension.snapshot, extension.beta, extension.alpha))
         project.version = version.toString()
 
@@ -47,6 +47,7 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
         val incrementVersionTask = project.tasks.create(IncrementVersionTask.TASK_NAME, IncrementVersionTask::class.java)
         incrementVersionTask.gitUserName = extension.gitUserName
         incrementVersionTask.gitUserEmail = extension.gitUserEmail
+        incrementVersionTask.maximumVersion = extension.maximumVersion
         incrementVersionTask.notCompatibleWithConfigurationCache("Not implemented yet")
 
         createPrintTask()

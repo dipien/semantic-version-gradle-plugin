@@ -42,8 +42,8 @@ open class Version {
         validateBaseVersion()
     }
 
-    constructor(version: String) {
-        maximumVersion = defaultMaximumVersion
+    constructor(version: String, maximumVersion: Int? = null) {
+        this.maximumVersion = maximumVersion ?: defaultMaximumVersion
         val split = version.split(VERSION_CLASSIFIER_SEPARATOR)
         val baseVersion = split[0]
         parseBaseVersion(baseVersion)
