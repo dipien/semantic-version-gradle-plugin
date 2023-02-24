@@ -10,8 +10,9 @@ class AndroidSemanticVersionConfig(
     snapshot: Boolean? = null,
     beta: Boolean? = null,
     alpha: Boolean? = null,
+    rc: Boolean? = null,
     var versionCodePrefix: Int?,
     var minSdkVersionAsVersionCodePrefix: Boolean,
     var versionCodeExtraBit: Int,
     var minSdkVersion: Int
-) : SemanticVersionConfig(maximumMajorVersion, maximumMinorVersion, maximumPatchVersion, versionClassifier, snapshot, beta, alpha)
+) : SemanticVersionConfig(maximumMajorVersion, maximumMinorVersion, maximumPatchVersion, versionClassifier, snapshot, alpha, beta, rc)

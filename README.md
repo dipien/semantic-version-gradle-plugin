@@ -119,11 +119,14 @@ The `maximumPatchVersion` parameter represents the maximum value allowed for the
 ### Snapshot
 The `snapshot` parameter represents whether the version should have the `-SNAPSHOT` classifier or not. By default, all the versions are considered as snapshots, so all the local builds don't interfere with the release builds.
 
+### Alpha
+The `alpha` parameter represents whether the version should have the `-ALPHA` classifier or not.
+
 ### Beta
 The `beta` parameter represents whether the version should have the `-BETA` classifier or not.
 
-### Alpha
-The `alpha` parameter represents whether the version should have the `-ALPHA` classifier or not.
+### RC
+The `rc` parameter represents whether the version should have the `-RC` classifier or not.
 
 ### Version Classifier
 The `versionClassifier` parameter represents the classifier appended to the version. You can use this property to define a custom version classifier.

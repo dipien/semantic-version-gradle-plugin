@@ -5,8 +5,9 @@ open class Version {
     companion object {
         const val VERSION_CLASSIFIER_SEPARATOR = "-"
         const val SNAPSHOT_CLASSIFIER = "SNAPSHOT"
-        const val BETA_CLASSIFIER = "BETA"
         const val ALPHA_CLASSIFIER = "ALPHA"
+        const val BETA_CLASSIFIER = "BETA"
+        const val RC_CLASSIFIER = "RC"
         const val BASE_VERSION_SEPARATOR = "."
         // const val LOCAL_CLASSIFIER = "LOCAL"
         // const val VERSION_TIMESTAMP_FORMAT = "YYYYMMddHHmmss"
@@ -17,8 +18,9 @@ open class Version {
     var versionPatch: Int? = null
     var versionClassifier: String? = null
     var isSnapshot: Boolean = true
-    var isBeta: Boolean = false
     var isAlpha: Boolean = false
+    var isBeta: Boolean = false
+    var isRc: Boolean = false
 
     // TODO Add support to this
     // var isVersionTimestampEnabled: Boolean = false
@@ -109,32 +111,45 @@ open class Version {
             //     versionClassifier += format(now(), VERSION_TIMESTAMP_FORMAT)
             // }
 
+            if (config.snapshot == true || config.snapshot == null) {
+                versionClassifier = SNAPSHOT_CLASSIFIER
+
+                isSnapshot = true
+                isAlpha = false
+                isBeta = false
+                isRc = false
+            } else {
+                isSnapshot = false
+                isAlpha = false
+                isBeta = false
+                isRc = false
+            }
+
             if (config.alpha == true) {
                 versionClassifier = ALPHA_CLASSIFIER
 
+                isSnapshot = false
                 isAlpha = true
                 isBeta = false
+                isRc = false
+            }
+
+            if (config.beta == true) {
+                versionClassifier = BETA_CLASSIFIER
+
                 isSnapshot = false
-            } else {
-                if (config.beta == true) {
-                    versionClassifier = BETA_CLASSIFIER
+                isAlpha = false
+                isBeta = true
+                isRc = false
+            }
 
-                    isAlpha = false
-                    isBeta = true
-                    isSnapshot = false
-                } else {
-                    if (config.snapshot == true || config.snapshot == null) {
-                        versionClassifier = SNAPSHOT_CLASSIFIER
+            if (config.rc == true) {
+                versionClassifier = RC_CLASSIFIER
 
-                        isAlpha = false
-                        isBeta = false
-                        isSnapshot = true
-                    } else {
-                        isAlpha = false
-                        isBeta = false
-                        isSnapshot = false
-                    }
-                }
+                isSnapshot = false
+                isAlpha = false
+                isBeta = false
+                isRc = true
             }
         } else {
             parseVersionClassifier(versionClassifier!!)
@@ -145,25 +160,35 @@ open class Version {
 
     private fun parseVersionClassifier(versionClassifier: String) {
         when (versionClassifier) {
+            SNAPSHOT_CLASSIFIER -> {
+                isSnapshot = true
+                isBeta = false
+                isAlpha = false
+                isRc = false
+            }
             ALPHA_CLASSIFIER -> {
                 isSnapshot = false
                 isBeta = false
                 isAlpha = true
+                isRc = false
             }
             BETA_CLASSIFIER -> {
                 isSnapshot = false
                 isBeta = true
                 isAlpha = false
+                isRc = false
             }
-            SNAPSHOT_CLASSIFIER -> {
-                isSnapshot = true
+            RC_CLASSIFIER -> {
+                isSnapshot = false
                 isBeta = false
                 isAlpha = false
+                isRc = true
             }
             else -> {
                 isSnapshot = false
                 isBeta = false
                 isAlpha = false
+                isRc = false
             }
         }
     }

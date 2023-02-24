@@ -6,8 +6,9 @@ open class SemanticVersionConfig(
     var maximumPatchVersion: Int? = null,
     var versionClassifier: String? = null,
     var snapshot: Boolean? = null,
+    var alpha: Boolean? = null,
     var beta: Boolean? = null,
-    var alpha: Boolean? = null
+    var rc: Boolean? = null
 )
 
 // var featureBranchPrefix: String? = propertyResolver.getStringProp(::featureBranchPrefix.name)

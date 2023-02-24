@@ -40,15 +40,16 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
         val propertyResolver = project.propertyResolver
         val snapshot: Boolean? = propertyResolver.getBooleanProp("snapshot")
         val versionClassifier: String? = propertyResolver.getStringProp("versionClassifier")
-        val beta: Boolean? = propertyResolver.getBooleanProp("beta")
         val alpha: Boolean? = propertyResolver.getBooleanProp("alpha")
+        val beta: Boolean? = propertyResolver.getBooleanProp("beta")
+        val rc: Boolean? = propertyResolver.getBooleanProp("rc")
         // The maximum number the MAJOR, MINOR or PATCH version can achieve. If it is not specified,
         // 99 is used for Android projects and 999 for non Android projects
         val maximumMajorVersion: Int? = propertyResolver.getIntegerProp("maximumMajorVersion")
         val maximumMinorVersion: Int? = propertyResolver.getIntegerProp("maximumMinorVersion")
         val maximumPatchVersion: Int? = propertyResolver.getIntegerProp("maximumPatchVersion")
 
-        semanticVersionConfig = SemanticVersionConfig(maximumMajorVersion, maximumMinorVersion, maximumPatchVersion, versionClassifier, snapshot, beta, alpha)
+        semanticVersionConfig = SemanticVersionConfig(maximumMajorVersion, maximumMinorVersion, maximumPatchVersion, versionClassifier, snapshot, alpha, beta, rc)
 
         baseVersion = Version(project.version.toString(), maximumMajorVersion, maximumMinorVersion, maximumPatchVersion).baseVersion
         val version = Version(baseVersion, semanticVersionConfig)
