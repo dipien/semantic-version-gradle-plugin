@@ -6,6 +6,7 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.options.Option
+import java.util.Locale
 
 open class IncrementVersionTask : AbstractTask() {
 
@@ -52,7 +53,7 @@ open class IncrementVersionTask : AbstractTask() {
         val buildGradleFile = project.buildFile
         val newVersion = IncrementVersionHelper.increment(
             buildGradleFile,
-            VersionIncrementType.valueOf(versionIncrementType!!.toUpperCase()),
+            VersionIncrementType.valueOf(versionIncrementType!!.uppercase(Locale.getDefault())),
             versionIncrementBranch,
             maximumVersion,
             commitMessagePrefix,
