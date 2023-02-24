@@ -67,6 +67,8 @@ class IncrementVersionHelperTest {
             null,
             null,
             null,
+            null,
+            null,
             FakeGitHelper()
         )
 
@@ -81,6 +83,8 @@ class IncrementVersionHelperTest {
         IncrementVersionHelper.increment(
             versionFile,
             versionIncrementType,
+            null,
+            null,
             null,
             null,
             null,

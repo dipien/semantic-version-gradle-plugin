@@ -26,11 +26,14 @@ open class SemanticVersionAndroidGradlePlugin : SemanticVersionGradlePlugin() {
                 val androidAppExtension = it.extensions.findByType(AppExtension::class.java)
                 if (androidAppExtension != null) {
                     val config = AndroidSemanticVersionConfig(
-                        semanticVersionAndroidExtension.maximumVersion,
-                        semanticVersionAndroidExtension.versionClassifier,
-                        semanticVersionAndroidExtension.snapshot,
-                        semanticVersionAndroidExtension.beta,
-                        semanticVersionAndroidExtension.alpha,
+                        semanticVersionConfig.maximumMajorVersion,
+                        semanticVersionConfig.maximumMinorVersion,
+                        semanticVersionConfig.maximumPatchVersion,
+                        semanticVersionConfig.versionClassifier,
+                        semanticVersionConfig.snapshot,
+                        semanticVersionConfig.alpha,
+                        semanticVersionConfig.beta,
+                        semanticVersionConfig.rc,
                         semanticVersionAndroidExtension.versionCodePrefix,
                         semanticVersionAndroidExtension.minSdkVersionAsVersionCodePrefix,
                         semanticVersionAndroidExtension.versionCodeExtraBit,

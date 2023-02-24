@@ -93,7 +93,7 @@ class AndroidVersionTest {
 
     private fun createVersion(version: String, versionCodePrefix: Int? = null, versionCodeExtraBit: Int = 0, minSdkVersionAsVersionCodePrefix: Boolean = true): AndroidVersion {
         return AndroidVersion(version,
-                AndroidSemanticVersionConfig(null, null, null, null, null,
+                AndroidSemanticVersionConfig(null, null, null, null, null, null, null, null,
                 versionCodePrefix,
                 minSdkVersionAsVersionCodePrefix,
                 versionCodeExtraBit,

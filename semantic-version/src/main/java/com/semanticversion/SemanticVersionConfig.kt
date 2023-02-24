@@ -1,11 +1,14 @@
 package com.semanticversion
 
 open class SemanticVersionConfig(
-    var maximumVersion: Int? = null,
+    var maximumMajorVersion: Int? = null,
+    var maximumMinorVersion: Int? = null,
+    var maximumPatchVersion: Int? = null,
     var versionClassifier: String? = null,
     var snapshot: Boolean? = null,
+    var alpha: Boolean? = null,
     var beta: Boolean? = null,
-    var alpha: Boolean? = null
+    var rc: Boolean? = null
 )
 
 // var featureBranchPrefix: String? = propertyResolver.getStringProp(::featureBranchPrefix.name)

@@ -5,8 +5,9 @@ open class Version {
     companion object {
         const val VERSION_CLASSIFIER_SEPARATOR = "-"
         const val SNAPSHOT_CLASSIFIER = "SNAPSHOT"
-        const val BETA_CLASSIFIER = "BETA"
         const val ALPHA_CLASSIFIER = "ALPHA"
+        const val BETA_CLASSIFIER = "BETA"
+        const val RC_CLASSIFIER = "RC"
         const val BASE_VERSION_SEPARATOR = "."
         // const val LOCAL_CLASSIFIER = "LOCAL"
         // const val VERSION_TIMESTAMP_FORMAT = "YYYYMMddHHmmss"
@@ -17,8 +18,9 @@ open class Version {
     var versionPatch: Int? = null
     var versionClassifier: String? = null
     var isSnapshot: Boolean = true
-    var isBeta: Boolean = false
     var isAlpha: Boolean = false
+    var isBeta: Boolean = false
+    var isRc: Boolean = false
 
     // TODO Add support to this
     // var isVersionTimestampEnabled: Boolean = false
@@ -26,7 +28,9 @@ open class Version {
     // var featureName: String? = null
     // var featureBranchPrefix: String? = null
 
-    var maximumVersion: Int?
+    var maximumMajorVersion: Int?
+    var maximumMinorVersion: Int?
+    var maximumPatchVersion: Int?
 
     protected open val defaultMaximumVersion: Int
         get() = 99
@@ -35,15 +39,19 @@ open class Version {
         get() = versionMajor.toString() + BASE_VERSION_SEPARATOR + versionMinor + BASE_VERSION_SEPARATOR + versionPatch
 
     constructor(versionMajor: Int, versionMinor: Int, versionPatch: Int) {
-        maximumVersion = defaultMaximumVersion
+        maximumMajorVersion = defaultMaximumVersion
+        maximumMinorVersion = defaultMaximumVersion
+        maximumPatchVersion = defaultMaximumVersion
         this.versionMajor = versionMajor
         this.versionMinor = versionMinor
         this.versionPatch = versionPatch
         validateBaseVersion()
     }
 
-    constructor(version: String, maximumVersion: Int? = null) {
-        this.maximumVersion = maximumVersion ?: defaultMaximumVersion
+    constructor(version: String, maximumMajorVersion: Int? = null, maximumMinorVersion: Int? = null, maximumPatchVersion: Int? = null) {
+        this.maximumMajorVersion = maximumMajorVersion ?: defaultMaximumVersion
+        this.maximumMinorVersion = maximumMinorVersion ?: defaultMaximumVersion
+        this.maximumPatchVersion = maximumPatchVersion ?: defaultMaximumVersion
         val split = version.split(VERSION_CLASSIFIER_SEPARATOR)
         val baseVersion = split[0]
         parseBaseVersion(baseVersion)
@@ -62,7 +70,9 @@ open class Version {
     }
 
     constructor(baseVersion: String, config: SemanticVersionConfig) {
-        maximumVersion = config.maximumVersion ?: defaultMaximumVersion
+        maximumMajorVersion = config.maximumMajorVersion ?: defaultMaximumVersion
+        maximumMinorVersion = config.maximumMinorVersion ?: defaultMaximumVersion
+        maximumPatchVersion = config.maximumPatchVersion ?: defaultMaximumVersion
         parseBaseVersion(baseVersion)
 
         versionClassifier = config.versionClassifier
@@ -101,32 +111,45 @@ open class Version {
             //     versionClassifier += format(now(), VERSION_TIMESTAMP_FORMAT)
             // }
 
+            if (config.snapshot == true || config.snapshot == null) {
+                versionClassifier = SNAPSHOT_CLASSIFIER
+
+                isSnapshot = true
+                isAlpha = false
+                isBeta = false
+                isRc = false
+            } else {
+                isSnapshot = false
+                isAlpha = false
+                isBeta = false
+                isRc = false
+            }
+
             if (config.alpha == true) {
                 versionClassifier = ALPHA_CLASSIFIER
 
+                isSnapshot = false
                 isAlpha = true
                 isBeta = false
+                isRc = false
+            }
+
+            if (config.beta == true) {
+                versionClassifier = BETA_CLASSIFIER
+
                 isSnapshot = false
-            } else {
-                if (config.beta == true) {
-                    versionClassifier = BETA_CLASSIFIER
+                isAlpha = false
+                isBeta = true
+                isRc = false
+            }
 
-                    isAlpha = false
-                    isBeta = true
-                    isSnapshot = false
-                } else {
-                    if (config.snapshot == true || config.snapshot == null) {
-                        versionClassifier = SNAPSHOT_CLASSIFIER
+            if (config.rc == true) {
+                versionClassifier = RC_CLASSIFIER
 
-                        isAlpha = false
-                        isBeta = false
-                        isSnapshot = true
-                    } else {
-                        isAlpha = false
-                        isBeta = false
-                        isSnapshot = false
-                    }
-                }
+                isSnapshot = false
+                isAlpha = false
+                isBeta = false
+                isRc = true
             }
         } else {
             parseVersionClassifier(versionClassifier!!)
@@ -137,25 +160,35 @@ open class Version {
 
     private fun parseVersionClassifier(versionClassifier: String) {
         when (versionClassifier) {
+            SNAPSHOT_CLASSIFIER -> {
+                isSnapshot = true
+                isBeta = false
+                isAlpha = false
+                isRc = false
+            }
             ALPHA_CLASSIFIER -> {
                 isSnapshot = false
                 isBeta = false
                 isAlpha = true
+                isRc = false
             }
             BETA_CLASSIFIER -> {
                 isSnapshot = false
                 isBeta = true
                 isAlpha = false
+                isRc = false
             }
-            SNAPSHOT_CLASSIFIER -> {
-                isSnapshot = true
+            RC_CLASSIFIER -> {
+                isSnapshot = false
                 isBeta = false
                 isAlpha = false
+                isRc = true
             }
             else -> {
                 isSnapshot = false
                 isBeta = false
                 isAlpha = false
+                isRc = false
             }
         }
     }
@@ -172,19 +205,19 @@ open class Version {
     }
 
     private fun validateBaseVersion() {
-        if (versionMajor!! > maximumVersion!! || versionMajor!! < 0) {
-            throw RuntimeException("The version major [$versionMajor] should be a number between 0 and $maximumVersion")
+        if (versionMajor!! > maximumMajorVersion!! || versionMajor!! < 0) {
+            throw RuntimeException("The version major [$versionMajor] should be a number between 0 and $maximumMajorVersion")
         }
-        if (versionMinor!! > maximumVersion!! || versionMinor!! < 0) {
-            throw RuntimeException("The version minor [$versionMinor] should be a number between 0 and $maximumVersion")
+        if (versionMinor!! > maximumMinorVersion!! || versionMinor!! < 0) {
+            throw RuntimeException("The version minor [$versionMinor] should be a number between 0 and $maximumMinorVersion")
         }
-        if (versionPatch!! > maximumVersion!! || versionPatch!! < 0) {
-            throw RuntimeException("The version patch [$versionPatch] should be a number between 0 and $maximumVersion")
+        if (versionPatch!! > maximumPatchVersion!! || versionPatch!! < 0) {
+            throw RuntimeException("The version patch [$versionPatch] should be a number between 0 and $maximumPatchVersion")
         }
     }
 
     fun incrementMajor() {
-        if (versionMajor!! < maximumVersion!!) {
+        if (versionMajor!! < maximumMajorVersion!!) {
             versionMajor = versionMajor!! + 1
             versionMinor = 0
             versionPatch = 0
@@ -194,7 +227,7 @@ open class Version {
     }
 
     fun incrementMinor() {
-        if (versionMinor!! < maximumVersion!!) {
+        if (versionMinor!! < maximumMinorVersion!!) {
             versionMinor = versionMinor!! + 1
             versionPatch = 0
         } else {
@@ -203,7 +236,7 @@ open class Version {
     }
 
     fun incrementPatch() {
-        if (versionPatch!! < maximumVersion!!) {
+        if (versionPatch!! < maximumPatchVersion!!) {
             versionPatch = versionPatch!! + 1
         } else {
             incrementMinor()

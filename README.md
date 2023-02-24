@@ -40,7 +40,7 @@ By default, the `SNAPSHOT` classifier is enabled. You can use the `-Psnapshot=fa
 OUTPUT: Version: 1.0.0
 ```
 
-You can use alpha or beta classifiers:
+You can use alpha, beta or rc classifiers:
 
 ```
 ./gradlew printVersion -Palpha=true
@@ -48,6 +48,9 @@ OUTPUT: Version: 1.0.0-ALPHA
 
 ./gradlew printVersion -Pbeta=true
 OUTPUT: 1.0.0-BETA
+
+./gradlew printVersion -Prc=true
+OUTPUT: 1.0.0-RC
 ```
 
 You can also assign custom classifiers using the `versionClassifier` parameter:
@@ -87,14 +90,6 @@ You can configure the commit message adding a prefix with the `commitMessagePref
 ## Advanced Configuration
 All the configuration properties can be added using any of the following ways:
 
-* Using the `semanticVersion` extension on the root `build.gradle[.kts]`
-
-```groovy
-semanticVersion {
-    gitUserEmail = "email@mail.com"
-}
-```
-
 * As a command-line parameter:
 
 ```
@@ -107,7 +102,7 @@ semanticVersion {
 gitUserEmail = "email@mail.com"
 ```
 
-* As an extra property on the root `build.gradle[.kts]`:
+* As an extra property on the root `build.gradle[.kts]`, before applying the plugin:
 
 ```
 ext.gitUserEmail = "email@mail.com"
@@ -115,17 +110,26 @@ ext.gitUserEmail = "email@mail.com"
 
 * As a System Environment property
 
-### Maximum Version
-The `maximumVersion` parameter represents the maximum value allowed for a `MAJOR`, `MINOR` or `PATCH`. The default value is `99`, so by default `99.99.99` is the maximum supported version.
+### Maximum Major Version
+The `maximumMajorVersion` parameter represents the maximum value allowed for the `MAJOR`. The default value is `99`, so by default `99.99.99` is the maximum supported version.
+
+### Maximum Minor Version
+The `maximumMinorVersion` parameter represents the maximum value allowed for the `MINOR`. The default value is `99`, so by default `99.99.99` is the maximum supported version.
+
+### Maximum Patch Version
+The `maximumPatchVersion` parameter represents the maximum value allowed for the `PATCH`. The default value is `99`, so by default `99.99.99` is the maximum supported version.
 
 ### Snapshot
 The `snapshot` parameter represents whether the version should have the `-SNAPSHOT` classifier or not. By default, all the versions are considered as snapshots, so all the local builds don't interfere with the release builds.
 
+### Alpha
+The `alpha` parameter represents whether the version should have the `-ALPHA` classifier or not.
+
 ### Beta
 The `beta` parameter represents whether the version should have the `-BETA` classifier or not.
 
-### Alpha
-The `alpha` parameter represents whether the version should have the `-ALPHA` classifier or not.
+### RC
+The `rc` parameter represents whether the version should have the `-RC` classifier or not.
 
 ### Version Classifier
 The `versionClassifier` parameter represents the classifier appended to the version. You can use this property to define a custom version classifier.
