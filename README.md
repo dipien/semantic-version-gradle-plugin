@@ -40,7 +40,7 @@ By default, the `SNAPSHOT` classifier is enabled. You can use the `-Psnapshot=fa
 OUTPUT: Version: 1.0.0
 ```
 
-You can use alpha or beta classifiers:
+You can use alpha, beta or rc classifiers:
 
 ```
 ./gradlew printVersion -Palpha=true
@@ -48,6 +48,9 @@ OUTPUT: Version: 1.0.0-ALPHA
 
 ./gradlew printVersion -Pbeta=true
 OUTPUT: 1.0.0-BETA
+
+./gradlew printVersion -Prc=true
+OUTPUT: 1.0.0-RC
 ```
 
 You can also assign custom classifiers using the `versionClassifier` parameter:
