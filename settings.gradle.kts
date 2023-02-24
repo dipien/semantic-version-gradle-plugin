@@ -1,5 +1,5 @@
 plugins {
-    id("com.gradle.enterprise").version("3.12")
+    id("com.gradle.enterprise").version("3.12.3")
 }
 
 if (System.getenv("CI") == "true") {
