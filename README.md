@@ -102,7 +102,7 @@ All the configuration properties can be added using any of the following ways:
 gitUserEmail = "email@mail.com"
 ```
 
-* As an extra property on the root `build.gradle[.kts]`:
+* As an extra property on the root `build.gradle[.kts]`, before applying the plugin:
 
 ```
 ext.gitUserEmail = "email@mail.com"
