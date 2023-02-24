@@ -5,7 +5,7 @@ buildscript {
 
 	buildscript {
 		dependencies {
-			classpath("com.dipien:semantic-version-gradle-plugin:1.0.0")
+			classpath("com.dipien:semantic-version-gradle-plugin:1.4.1")
 		}
 	}
 }

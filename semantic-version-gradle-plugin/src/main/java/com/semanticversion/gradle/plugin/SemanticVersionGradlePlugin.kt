@@ -22,6 +22,7 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
     protected lateinit var project: Project
     protected lateinit var baseVersion: String
     protected lateinit var extension: SemanticVersionExtension
+    protected lateinit var semanticVersionConfig: SemanticVersionConfig
 
     override fun apply(project: Project) {
         this.project = project
@@ -36,8 +37,19 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
 
         extension = project.extensions.create(EXTENSION_NAME, getExtensionClass(), project.propertyResolver)
 
-        baseVersion = Version(project.version.toString(), extension.maximumVersion).baseVersion
-        val version = Version(baseVersion, SemanticVersionConfig(extension.maximumVersion, extension.versionClassifier, extension.snapshot, extension.beta, extension.alpha))
+        val propertyResolver = project.propertyResolver
+        val snapshot: Boolean? = propertyResolver.getBooleanProp("snapshot")
+        val versionClassifier: String? = propertyResolver.getStringProp("versionClassifier")
+        val beta: Boolean? = propertyResolver.getBooleanProp("beta")
+        val alpha: Boolean? = propertyResolver.getBooleanProp("alpha")
+        // The maximum number the MAJOR, MINOR or PATCH version can achieve. If it is not specified,
+        // 99 is used for Android projects and 999 for non Android projects
+        val maximumVersion: Int? = propertyResolver.getIntegerProp("maximumVersion")
+
+        semanticVersionConfig = SemanticVersionConfig(maximumVersion, versionClassifier, snapshot, beta, alpha)
+
+        baseVersion = Version(project.version.toString(), maximumVersion).baseVersion
+        val version = Version(baseVersion, semanticVersionConfig)
         project.version = version.toString()
 
         project.subprojects.forEach {
@@ -45,10 +57,12 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
         }
 
         val incrementVersionTask = project.tasks.create(IncrementVersionTask.TASK_NAME, IncrementVersionTask::class.java)
-        incrementVersionTask.gitUserName = extension.gitUserName
-        incrementVersionTask.gitUserEmail = extension.gitUserEmail
-        incrementVersionTask.maximumVersion = extension.maximumVersion
-        incrementVersionTask.notCompatibleWithConfigurationCache("Not implemented yet")
+        project.afterEvaluate {
+            incrementVersionTask.gitUserName = extension.gitUserName
+            incrementVersionTask.gitUserEmail = extension.gitUserEmail
+            incrementVersionTask.maximumVersion = maximumVersion
+            incrementVersionTask.notCompatibleWithConfigurationCache("Not implemented yet")
+        }
 
         createPrintTask()
     }

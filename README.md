@@ -87,14 +87,6 @@ You can configure the commit message adding a prefix with the `commitMessagePref
 ## Advanced Configuration
 All the configuration properties can be added using any of the following ways:
 
-* Using the `semanticVersion` extension on the root `build.gradle[.kts]`
-
-```groovy
-semanticVersion {
-    gitUserEmail = "email@mail.com"
-}
-```
-
 * As a command-line parameter:
 
 ```
