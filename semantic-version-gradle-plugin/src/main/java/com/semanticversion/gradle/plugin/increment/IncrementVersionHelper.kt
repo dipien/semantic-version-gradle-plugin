@@ -13,7 +13,9 @@ object IncrementVersionHelper {
         versionFile: File,
         versionIncrementType: VersionIncrementType,
         versionIncrementBranch: String?,
-        maximumVersion: Int?,
+        maximumMajorVersion: Int?,
+        maximumMinorVersion: Int?,
+        maximumPatchVersion: Int?,
         commitMessagePrefix: String?,
         gitUserName: String?,
         gitUserEmail: String?,
@@ -27,7 +29,7 @@ object IncrementVersionHelper {
                 val versionMatcher = versionPattern.matcher(line)
                 if (versionMatcher.find()) {
                     val versionText = versionMatcher.group(1)
-                    newVersion = Version(versionText, maximumVersion)
+                    newVersion = Version(versionText, maximumMajorVersion, maximumMinorVersion, maximumPatchVersion)
                     versionIncrementType.increment(newVersion!!)
                     val newLineContent = versionMatcher.replaceFirst("""version = "${newVersion!!}"""")
                     lines.add(newLineContent)

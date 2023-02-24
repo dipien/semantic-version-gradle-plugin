@@ -39,7 +39,13 @@ open class IncrementVersionTask : AbstractTask() {
     var versionIncrementBranch: String? = null
 
     @get:Internal
-    var maximumVersion: Int? = null
+    var maximumMajorVersion: Int? = null
+
+    @get:Internal
+    var maximumMinorVersion: Int? = null
+
+    @get:Internal
+    var maximumPatchVersion: Int? = null
 
     @get:Input
     @get:Optional
@@ -55,7 +61,9 @@ open class IncrementVersionTask : AbstractTask() {
             buildGradleFile,
             VersionIncrementType.valueOf(versionIncrementType!!.uppercase(Locale.getDefault())),
             versionIncrementBranch,
-            maximumVersion,
+            maximumMajorVersion,
+            maximumMinorVersion,
+            maximumPatchVersion,
             commitMessagePrefix,
             gitUserName,
             gitUserEmail,

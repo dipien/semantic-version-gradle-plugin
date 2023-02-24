@@ -26,7 +26,9 @@ open class SemanticVersionAndroidGradlePlugin : SemanticVersionGradlePlugin() {
                 val androidAppExtension = it.extensions.findByType(AppExtension::class.java)
                 if (androidAppExtension != null) {
                     val config = AndroidSemanticVersionConfig(
-                        semanticVersionConfig.maximumVersion,
+                        semanticVersionConfig.maximumMajorVersion,
+                        semanticVersionConfig.maximumMinorVersion,
+                        semanticVersionConfig.maximumPatchVersion,
                         semanticVersionConfig.versionClassifier,
                         semanticVersionConfig.snapshot,
                         semanticVersionConfig.beta,

@@ -107,8 +107,14 @@ ext.gitUserEmail = "email@mail.com"
 
 * As a System Environment property
 
-### Maximum Version
-The `maximumVersion` parameter represents the maximum value allowed for a `MAJOR`, `MINOR` or `PATCH`. The default value is `99`, so by default `99.99.99` is the maximum supported version.
+### Maximum Major Version
+The `maximumMajorVersion` parameter represents the maximum value allowed for the `MAJOR`. The default value is `99`, so by default `99.99.99` is the maximum supported version.
+
+### Maximum Minor Version
+The `maximumMinorVersion` parameter represents the maximum value allowed for the `MINOR`. The default value is `99`, so by default `99.99.99` is the maximum supported version.
+
+### Maximum Patch Version
+The `maximumPatchVersion` parameter represents the maximum value allowed for the `PATCH`. The default value is `99`, so by default `99.99.99` is the maximum supported version.
 
 ### Snapshot
 The `snapshot` parameter represents whether the version should have the `-SNAPSHOT` classifier or not. By default, all the versions are considered as snapshots, so all the local builds don't interfere with the release builds.

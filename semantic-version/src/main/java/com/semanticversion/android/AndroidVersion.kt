@@ -46,9 +46,11 @@ class AndroidVersion : Version {
             this.versionCodePrefix = config.versionCodePrefix
         }
         this.versionCodeExtraBit = config.versionCodeExtraBit
-        val versionMultiplier = 10.0.pow(maximumVersion!!.countDigits().toDouble()).toInt()
+        val majorVersionMultiplier = 10.0.pow(maximumMajorVersion!!.countDigits().toDouble()).toInt()
+        val minorVersionMultiplier = 10.0.pow(maximumMinorVersion!!.countDigits().toDouble()).toInt()
+        val patchVersionMultiplier = 10.0.pow(maximumPatchVersion!!.countDigits().toDouble()).toInt()
         val versionCodeExtraBitMultiplier = 10.0.pow(versionCodeExtraBit!!.countDigits().toDouble()).toInt()
-        versionCode = this.versionCodePrefix!! * versionCodeExtraBitMultiplier * versionMultiplier * versionMultiplier * versionMultiplier + this.versionCodeExtraBit!! * versionMultiplier * versionMultiplier * versionMultiplier + versionMajor!! * versionMultiplier * versionMultiplier + versionMinor!! * versionMultiplier + versionPatch!!
+        versionCode = this.versionCodePrefix!! * versionCodeExtraBitMultiplier * majorVersionMultiplier * minorVersionMultiplier * patchVersionMultiplier + this.versionCodeExtraBit!! * majorVersionMultiplier * minorVersionMultiplier * patchVersionMultiplier + versionMajor!! * minorVersionMultiplier * patchVersionMultiplier + versionMinor!! * patchVersionMultiplier + versionPatch!!
     }
 
     constructor(versionCode: Int) : super(fromVersionCodeToVersionName(versionCode)) {

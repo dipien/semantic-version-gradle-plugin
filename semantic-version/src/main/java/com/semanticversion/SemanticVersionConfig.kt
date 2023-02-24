@@ -1,7 +1,9 @@
 package com.semanticversion
 
 open class SemanticVersionConfig(
-    var maximumVersion: Int? = null,
+    var maximumMajorVersion: Int? = null,
+    var maximumMinorVersion: Int? = null,
+    var maximumPatchVersion: Int? = null,
     var versionClassifier: String? = null,
     var snapshot: Boolean? = null,
     var beta: Boolean? = null,

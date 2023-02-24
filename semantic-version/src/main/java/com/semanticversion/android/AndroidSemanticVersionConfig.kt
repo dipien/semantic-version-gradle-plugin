@@ -3,7 +3,9 @@ package com.semanticversion.android
 import com.semanticversion.SemanticVersionConfig
 
 class AndroidSemanticVersionConfig(
-    maximumVersion: Int? = null,
+    maximumMajorVersion: Int? = null,
+    maximumMinorVersion: Int? = null,
+    maximumPatchVersion: Int? = null,
     versionClassifier: String? = null,
     snapshot: Boolean? = null,
     beta: Boolean? = null,
@@ -12,4 +14,4 @@ class AndroidSemanticVersionConfig(
     var minSdkVersionAsVersionCodePrefix: Boolean,
     var versionCodeExtraBit: Int,
     var minSdkVersion: Int
-) : SemanticVersionConfig(maximumVersion, versionClassifier, snapshot, beta, alpha)
+) : SemanticVersionConfig(maximumMajorVersion, maximumMinorVersion, maximumPatchVersion, versionClassifier, snapshot, beta, alpha)

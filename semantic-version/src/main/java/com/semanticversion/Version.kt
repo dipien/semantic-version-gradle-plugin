@@ -26,7 +26,9 @@ open class Version {
     // var featureName: String? = null
     // var featureBranchPrefix: String? = null
 
-    var maximumVersion: Int?
+    var maximumMajorVersion: Int?
+    var maximumMinorVersion: Int?
+    var maximumPatchVersion: Int?
 
     protected open val defaultMaximumVersion: Int
         get() = 99
@@ -35,15 +37,19 @@ open class Version {
         get() = versionMajor.toString() + BASE_VERSION_SEPARATOR + versionMinor + BASE_VERSION_SEPARATOR + versionPatch
 
     constructor(versionMajor: Int, versionMinor: Int, versionPatch: Int) {
-        maximumVersion = defaultMaximumVersion
+        maximumMajorVersion = defaultMaximumVersion
+        maximumMinorVersion = defaultMaximumVersion
+        maximumPatchVersion = defaultMaximumVersion
         this.versionMajor = versionMajor
         this.versionMinor = versionMinor
         this.versionPatch = versionPatch
         validateBaseVersion()
     }
 
-    constructor(version: String, maximumVersion: Int? = null) {
-        this.maximumVersion = maximumVersion ?: defaultMaximumVersion
+    constructor(version: String, maximumMajorVersion: Int? = null, maximumMinorVersion: Int? = null, maximumPatchVersion: Int? = null) {
+        this.maximumMajorVersion = maximumMajorVersion ?: defaultMaximumVersion
+        this.maximumMinorVersion = maximumMinorVersion ?: defaultMaximumVersion
+        this.maximumPatchVersion = maximumPatchVersion ?: defaultMaximumVersion
         val split = version.split(VERSION_CLASSIFIER_SEPARATOR)
         val baseVersion = split[0]
         parseBaseVersion(baseVersion)
@@ -62,7 +68,9 @@ open class Version {
     }
 
     constructor(baseVersion: String, config: SemanticVersionConfig) {
-        maximumVersion = config.maximumVersion ?: defaultMaximumVersion
+        maximumMajorVersion = config.maximumMajorVersion ?: defaultMaximumVersion
+        maximumMinorVersion = config.maximumMinorVersion ?: defaultMaximumVersion
+        maximumPatchVersion = config.maximumPatchVersion ?: defaultMaximumVersion
         parseBaseVersion(baseVersion)
 
         versionClassifier = config.versionClassifier
@@ -172,19 +180,19 @@ open class Version {
     }
 
     private fun validateBaseVersion() {
-        if (versionMajor!! > maximumVersion!! || versionMajor!! < 0) {
-            throw RuntimeException("The version major [$versionMajor] should be a number between 0 and $maximumVersion")
+        if (versionMajor!! > maximumMajorVersion!! || versionMajor!! < 0) {
+            throw RuntimeException("The version major [$versionMajor] should be a number between 0 and $maximumMajorVersion")
         }
-        if (versionMinor!! > maximumVersion!! || versionMinor!! < 0) {
-            throw RuntimeException("The version minor [$versionMinor] should be a number between 0 and $maximumVersion")
+        if (versionMinor!! > maximumMinorVersion!! || versionMinor!! < 0) {
+            throw RuntimeException("The version minor [$versionMinor] should be a number between 0 and $maximumMinorVersion")
         }
-        if (versionPatch!! > maximumVersion!! || versionPatch!! < 0) {
-            throw RuntimeException("The version patch [$versionPatch] should be a number between 0 and $maximumVersion")
+        if (versionPatch!! > maximumPatchVersion!! || versionPatch!! < 0) {
+            throw RuntimeException("The version patch [$versionPatch] should be a number between 0 and $maximumPatchVersion")
         }
     }
 
     fun incrementMajor() {
-        if (versionMajor!! < maximumVersion!!) {
+        if (versionMajor!! < maximumMajorVersion!!) {
             versionMajor = versionMajor!! + 1
             versionMinor = 0
             versionPatch = 0
@@ -194,7 +202,7 @@ open class Version {
     }
 
     fun incrementMinor() {
-        if (versionMinor!! < maximumVersion!!) {
+        if (versionMinor!! < maximumMinorVersion!!) {
             versionMinor = versionMinor!! + 1
             versionPatch = 0
         } else {
@@ -203,7 +211,7 @@ open class Version {
     }
 
     fun incrementPatch() {
-        if (versionPatch!! < maximumVersion!!) {
+        if (versionPatch!! < maximumPatchVersion!!) {
             versionPatch = versionPatch!! + 1
         } else {
             incrementMinor()

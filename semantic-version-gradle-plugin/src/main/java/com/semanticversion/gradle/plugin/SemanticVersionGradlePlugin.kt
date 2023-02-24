@@ -44,11 +44,13 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
         val alpha: Boolean? = propertyResolver.getBooleanProp("alpha")
         // The maximum number the MAJOR, MINOR or PATCH version can achieve. If it is not specified,
         // 99 is used for Android projects and 999 for non Android projects
-        val maximumVersion: Int? = propertyResolver.getIntegerProp("maximumVersion")
+        val maximumMajorVersion: Int? = propertyResolver.getIntegerProp("maximumMajorVersion")
+        val maximumMinorVersion: Int? = propertyResolver.getIntegerProp("maximumMinorVersion")
+        val maximumPatchVersion: Int? = propertyResolver.getIntegerProp("maximumPatchVersion")
 
-        semanticVersionConfig = SemanticVersionConfig(maximumVersion, versionClassifier, snapshot, beta, alpha)
+        semanticVersionConfig = SemanticVersionConfig(maximumMajorVersion, maximumMinorVersion, maximumPatchVersion, versionClassifier, snapshot, beta, alpha)
 
-        baseVersion = Version(project.version.toString(), maximumVersion).baseVersion
+        baseVersion = Version(project.version.toString(), maximumMajorVersion, maximumMinorVersion, maximumPatchVersion).baseVersion
         val version = Version(baseVersion, semanticVersionConfig)
         project.version = version.toString()
 
@@ -60,7 +62,9 @@ open class SemanticVersionGradlePlugin : Plugin<Project> {
         project.afterEvaluate {
             incrementVersionTask.gitUserName = extension.gitUserName
             incrementVersionTask.gitUserEmail = extension.gitUserEmail
-            incrementVersionTask.maximumVersion = maximumVersion
+            incrementVersionTask.maximumMajorVersion = maximumMajorVersion
+            incrementVersionTask.maximumMinorVersion = maximumMinorVersion
+            incrementVersionTask.maximumPatchVersion = maximumPatchVersion
             incrementVersionTask.notCompatibleWithConfigurationCache("Not implemented yet")
         }
 
