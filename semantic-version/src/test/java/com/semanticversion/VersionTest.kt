@@ -457,6 +457,6 @@ class VersionTest {
     }
 
     private fun createVersion(baseVersion: String, snapshot: Boolean? = true, beta: Boolean = false, alpha: Boolean = false, rc: Boolean = false): Version {
-        return Version(baseVersion, SemanticVersionConfig(null, null, null,null, snapshot, alpha, beta, rc))
+        return Version(baseVersion, SemanticVersionConfig(null, null, null, null, snapshot, alpha, beta, rc))
     }
 }
