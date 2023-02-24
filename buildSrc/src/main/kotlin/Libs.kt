@@ -1,7 +1,7 @@
 object Libs {
 
     // https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
-    const val KOTLIN = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.22"
+    const val KOTLIN = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10"
 
     // https://github.com/maxirosson/jdroid-java/releases
     const val JDROID_JAVA_CORE = "com.jdroidtools:jdroid-java-core:3.1.0"
