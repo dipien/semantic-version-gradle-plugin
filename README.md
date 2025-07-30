@@ -1,4 +1,4 @@
-[![Dipien](https://raw.githubusercontent.com/dipien/dipien-component-builder/master/.github/dipien_logo.png)]([http://www.dipien.com](https://medium.com/dipien))
+[![Dipien](https://raw.githubusercontent.com/dipien/dipien-component-builder/master/.github/dipien_logo.png)](https://medium.com/dipien)
 
 # Semantic Version Gradle Plugin
 
