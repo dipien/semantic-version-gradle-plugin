@@ -1,10 +1,10 @@
-[![Dipien](https://raw.githubusercontent.com/dipien/dipien-component-builder/master/.github/dipien_logo.png)](http://www.dipien.com)
+[![Dipien](https://raw.githubusercontent.com/dipien/dipien-component-builder/master/.github/dipien_logo.png)]([http://www.dipien.com](https://medium.com/dipien))
 
 # Semantic Version Gradle Plugin
 
 With the Semantic Version Gradle Plugin you can automatically apply the [Semantic Versioning](https://semver.org/) specification to your Gradle project.
 
-**You can read more details about this plugin on this [article](https://blog.dipien.com/automatic-semantic-versioning-on-your-gradle-project-6343b626b27b)**
+**You can read more details about this plugin on this [article](https://medium.com/dipien/automatic-semantic-versioning-on-your-gradle-project-6343b626b27b)**
 
 ## Usage
 
@@ -186,21 +186,4 @@ Given that the default value of the `maximumVersion` parameter is `99`, the maxi
 
 ## More info
 
-You can read more details about this plugin on this [article](https://blog.dipien.com/automatic-semantic-versioning-on-your-gradle-project-6343b626b27b)
-
-## Sponsor this project
-
-Sponsor this open source project to help us get the funding we need to continue working on it.
-
-* [Donate with Bitcoin Lightning](https://getalby.com/p/dipien) ⚡️ [dipien@getalby.com](https://getalby.com/p/dipien)
-* [Donate with credit card](http://kofi.dipien.com/)
-* [Donate on Patreon](http://patreon.dipien.com/)
-* [Become a member of Medium](https://membership.medium.dipien.com) [We will receive a portion of your membership fee]
-
-## Follow us
-* [Twitter](http://twitter.dipien.com)
-* [Medium](http://medium.dipien.com)
-* [Instagram](http://instagram.dipien.com)
-* [TikTok](https://tiktok.dipien.com)
-* [Pinterest](http://pinterest.dipien.com)
-* [GitHub](http://github.dipien.com)
+You can read more details about this plugin on this [article](https://medium.com/dipien/automatic-semantic-versioning-on-your-gradle-project-6343b626b27b)
